@@ -17,10 +17,8 @@ type D3D_FEATURE_LEVEL = enum
   D3D_FEATURE_LEVEL_11_0  = 0xb000,
   D3D_FEATURE_LEVEL_11_1  = 0xb100
   
-discard """
+
 type IDXGIAdapterVtbl = object
   QueryInterface: ptr proc (This: ptr IDXGIAdapter, riid: PIID, ppvObject: ptr pointer): HRESULT {.stdcall.}
   AddRef: ptr proc(This: ptr IDXGIObject): culong {.stdcall.}
   Release: ptr proc(This: ptr IDXGIObject): culong {.stdcall.}
-  
-"""
