@@ -9,19 +9,9 @@ export dxgiformat
 type IID = TIID
 type GUID = TGUID
 type IUnknown = object
+type UINT = int32
+type INT = int32
 
-const DXGI_CPU_ACCESS_NONE*  = ( 0 )
-const DXGI_CPU_ACCESS_DYNAMIC*  = ( 1 )
-const DXGI_CPU_ACCESS_READ_WRITE*  = ( 2 )
-const DXGI_CPU_ACCESS_SCRATCH*  = ( 3 )
-const DXGI_CPU_ACCESS_FIELD*  = 15
-const DXGI_USAGE_SHADER_INPUT*  = ( 1 shl (0 + 4) )
-const DXGI_USAGE_RENDER_TARGET_OUTPUT*  = ( 1 shl (1 + 4) )
-const DXGI_USAGE_BACK_BUFFER*  = ( 1 shl (2 + 4) )
-const DXGI_USAGE_SHARED*  = ( 1 shl (3 + 4) )
-const DXGI_USAGE_READ_ONLY*  = ( 1 shl (4 + 4) )
-const DXGI_USAGE_DISCARD_ON_PRESENT*  = ( 1 shl (5 + 4) )
-const DXGI_USAGE_UNORDERED_ACCESS*  = ( 1 shl (6 + 4) )
 
 
 const DXGI_RESOURCE_PRIORITY_MINIMUM*  = ( 0x28000000 )
@@ -127,9 +117,9 @@ var IID_IDXGIKeyedMutex* {.importc.}: IID
 # interface __MIDL_itf_dxgi_0000_0004 
 # [local] 
 
-const DXGI_MAP_READ: culong = 1
-const DXGI_MAP_WRITE: culong = 2
-const DXGI_MAP_DISCARD: culong = 4
+const DXGI_MAP_READ* : culong = 1
+const DXGI_MAP_WRITE* : culong = 2
+const DXGI_MAP_DISCARD* : culong = 4
 
 #var __MIDL_itf_dxgi_0000_0004_v0_0_c_ifspec* {.importc.}: RPC_IF_HANDLE
 
@@ -160,8 +150,8 @@ var IID_IDXGIAdapter* {.importc.}: IID
 # interface __MIDL_itf_dxgi_0000_0007 
 # [local] 
 
-const DXGI_ENUM_MODES_INTERLACED: culong = 1
-const DXGI_ENUM_MODES_SCALING: culong = 2
+const DXGI_ENUM_MODES_INTERLACED* : culong = 1
+const DXGI_ENUM_MODES_SCALING* : culong = 2
 
 #var __MIDL_itf_dxgi_0000_0007_v0_0_c_ifspec* {.importc.}: RPC_IF_HANDLE
 
@@ -175,15 +165,15 @@ var IID_IDXGIOutput* {.importc.}: IID
 # interface __MIDL_itf_dxgi_0000_0008 
 # [local] 
 
-const DXGI_MAX_SWAP_CHAIN_BUFFERS = ( 16 )
-const DXGI_PRESENT_TEST : culong = 0x00000001
-const DXGI_PRESENT_DO_NOT_SEQUENCE : culong = 0x00000002
-const DXGI_PRESENT_RESTART : culong = 0x00000004
-const DXGI_PRESENT_DO_NOT_WAIT : culong = 0x00000008
-const DXGI_PRESENT_STEREO_PREFER_RIGHT : culong = 0x00000010
-const DXGI_PRESENT_STEREO_TEMPORARY_MONO : culong = 0x00000020
-const DXGI_PRESENT_RESTRICT_TO_OUTPUT : culong = 0x00000040
-const DXGI_PRESENT_USE_DURATION : culong = 0x00000100
+const DXGI_MAX_SWAP_CHAIN_BUFFERS*  = ( 16 )
+const DXGI_PRESENT_TEST*  : culong = 0x00000001
+const DXGI_PRESENT_DO_NOT_SEQUENCE*  : culong = 0x00000002
+const DXGI_PRESENT_RESTART*  : culong = 0x00000004
+const DXGI_PRESENT_DO_NOT_WAIT*  : culong = 0x00000008
+const DXGI_PRESENT_STEREO_PREFER_RIGHT*  : culong = 0x00000010
+const DXGI_PRESENT_STEREO_TEMPORARY_MONO*  : culong = 0x00000020
+const DXGI_PRESENT_RESTRICT_TO_OUTPUT*  : culong = 0x00000040
+const DXGI_PRESENT_USE_DURATION*  : culong = 0x00000100
 
 #var __MIDL_itf_dxgi_0000_0008_v0_0_c_ifspec* {.importc.}: RPC_IF_HANDLE
 
@@ -198,10 +188,10 @@ var IID_IDXGISwapChain* {.importc.}: IID
 # interface __MIDL_itf_dxgi_0000_0009 
 # [local] 
 
-const DXGI_MWA_NO_WINDOW_CHANGES = ( 1 shl 0 )
-const DXGI_MWA_NO_ALT_ENTER = ( 1 shl 1 )
-const DXGI_MWA_NO_PRINT_SCREEN = ( 1 shl 2 )
-const DXGI_MWA_VALID = ( 0x7 )
+const DXGI_MWA_NO_WINDOW_CHANGES*  = ( 1 shl 0 )
+const DXGI_MWA_NO_ALT_ENTER*  = ( 1 shl 1 )
+const DXGI_MWA_NO_PRINT_SCREEN*  = ( 1 shl 2 )
+const DXGI_MWA_VALID*  = ( 0x7 )
 
 #var __MIDL_itf_dxgi_0000_0009_v0_0_c_ifspec* {.importc.}: RPC_IF_HANDLE
 

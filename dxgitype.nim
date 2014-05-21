@@ -2,6 +2,8 @@
 #    Copyright (C) Microsoft.  All rights reserved.
 #
 import dxgiformat
+type UINT = uint32
+type INT = int32
 const 
   FACDXGI = 0x0000087A
 

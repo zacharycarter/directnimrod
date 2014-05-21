@@ -14,7 +14,8 @@
 # Forward Declarations 
 # interface __MIDL_itf_dxgiformat_0000_0000 
 # [local] 
-
+type UINT = uint32
+type INT = int32
 type 
   DXGI_FORMAT* {.size: sizeof(cint).} = enum 
     DXGI_FORMAT_UNKNOWN = 0, DXGI_FORMAT_R32G32B32A32_TYPELESS = 1, 
