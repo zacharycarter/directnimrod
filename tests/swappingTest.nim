@@ -1,8 +1,15 @@
+# this test program should display a solid red window
+# just over 100 lines, not half bad :D
+
 import windows
 import dxgi
 import d3d11
 var winClass = "nimrodWindow"
-
+var device: ptr ID3D11Device
+var ctx: ptr ID3D11DeviceContext
+var rtv: ptr ID3D11RenderTargetView
+var swapChain: ptr IDXGISwapChain
+proc Update()
 proc WndProc(wnd: HWND, message: int32, wp: WPARAM, lp: LPARAM): LRESULT {.stdcall.} =
   var
     wmId: cint
@@ -10,15 +17,20 @@ proc WndProc(wnd: HWND, message: int32, wp: WPARAM, lp: LPARAM): LRESULT {.stdca
     ps: PAINTSTRUCT
     hdcr: HDC
   case message:
-    of WM_PAINT:
-      hdcr = BeginPaint(wnd, addr ps)
-      discard EndPaint(wnd, addr ps)
     of WM_DESTROY:
       PostQuitMessage(0)
     else:
       return windows.DefWindowProc(wnd, message, wp, lp)
   return 0.LRESULT
   
+proc Update() =
+  var color: array[4, float32]
+  color[0] = 1.0
+  assert(ctx != nil)
+  assert(rtv != nil)
+  ctx.lpVtbl.ClearRenderTargetView(ctx, rtv, color)
+  discard swapChain.lpVtbl.Present(swapChain, 1,0)
+
 
 proc main() =
   var wcex: WNDCLASSEX
@@ -45,12 +57,8 @@ proc main() =
                       0, GetModuleHandle(nil), nil)
   if wnd == 0:
     quit("failed to make hwnd")
-  discard ShowWindow(wnd, 10)
-  discard UpdateWindow(wnd)
+  
   #d3d stuff
-  var swapChain: ptr IDXGISwapChain
-  var device: ptr ID3D11Device
-  var ctx: ptr ID3D11DeviceContext
   
   var swapChainDesc: DXGI_SWAP_CHAIN_DESC
   swapChainDesc.BufferDesc.width = 0
@@ -62,8 +70,8 @@ proc main() =
   swapChainDesc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED
   swapChainDesc.SampleDesc.Count = 1
   swapChainDesc.SampleDesc.Quality = 0
-  swapChainDesc.BufferUsage = 0
-  swapChainDesc.BufferCount = 2
+  swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT
+  swapChainDesc.BufferCount = 1
   swapChainDesc.OutputWindow = wnd
   swapChainDesc.Windowed = true
   swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD
@@ -84,22 +92,28 @@ proc main() =
   
   var pBackBuffer: ptr ID3D11Texture2D
   echo(repr(pBackBuffer))
-  var renderTargetView: ptr ID3D11RenderTargetView
   echo repr(IID_ID3D11Texture2D)
   result = swapChain.lpvtbl.GetBuffer(swapChain, 0, addr IID_ID3D11Texture2D, cast[ptr LPVOID](addr pBackBuffer))
   if result != S_OK:
     quit("could not get back buffer " & $result)
-  echo repr(pBackBuffer)
-  result = device.lpvtbl.CreateRenderTargetView(device, cast[ptr ID3D11Resource](pBackBuffer), nil, addr renderTargetView)
+  var rtvdesc: D3D11_RENDER_TARGET_VIEW_DESC
+  rtvdesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM
+  rtvdesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D
+  rtvdesc.Union.Texture2D.MipSlice = 0
+  result = device.lpvtbl.CreateRenderTargetView(device, cast[ptr ID3D11Resource](pBackBuffer), addr rtvdesc, addr rtv)
   if result != S_OK:
     quit("could not create the render target view " & $result)
-  ctx.lpvtbl.OMSetRenderTargets(ctx, 1, addr renderTargetView, nil)
+  ctx.lpvtbl.OMSetRenderTargets(ctx, 1, addr rtv, nil)
   
-
+  discard ShowWindow(wnd, 10)
+  discard UpdateWindow(wnd)
   var message: MSG
-  while GetMessage(addr message, 0, 0,0) > 0:
-    discard TranslateMessage(addr message)
-    discard DispatchMessage(addr message)
+  while(message.message != WM_QUIT):
+    if PeekMessage(addr message, cast[HWND](nil), 0, 0, PM_REMOVE) > 0:
+      discard TranslateMessage(addr message)
+      discard DispatchMessage(addr message)
+    else:
+      Update()
   programResult = cast[int](message.wparam)
   
 main()

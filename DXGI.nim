@@ -206,9 +206,9 @@ var IID_IDXGIFactory* {.importc.}: IID
 # [local] 
 
 proc CreateDXGIFactory*(riid: ptr IID; ppFactory: ptr pointer): HRESULT {.
-    stdcall, importc, dynlib:"dxgi.dll".}
+    stdcall, importc.}
 proc CreateDXGIFactory1*(riid: ptr IID; ppFactory: ptr pointer): HRESULT {.
-    stdcall, importc, dynlib:"dxgi.dll".}
+    stdcall, importc.}
 #var __MIDL_itf_dxgi_0000_0010_v0_0_c_ifspec* {.importc.}: RPC_IF_HANDLE
 
 #var __MIDL_itf_dxgi_0000_0010_v0_0_s_ifspec* {.importc.}: RPC_IF_HANDLE

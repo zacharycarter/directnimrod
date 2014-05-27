@@ -6,6 +6,7 @@ type IID = TIID
 type GUID = TGUID
 type UINT = int32
 type INT = int32
+type FLOAT = float32
 type IUnknown = object
 const 
   D3D11_16BIT_INDEX_STRIP_CUT_VALUE* = (0x0000FFFF)
@@ -4588,7 +4589,7 @@ proc D3D11CreateDevice*(pAdapter: ptr IDXGIAdapter; DriverType: D3D_DRIVER_TYPE;
                         ppDevice: ptr ptr ID3D11Device; 
                         pFeatureLevel: ptr D3D_FEATURE_LEVEL; 
                         ppImmediateContext: ptr ptr ID3D11DeviceContext): HRESULT {.
-    stdcall, importc, dynlib: "d3d11.dll".}
+    stdcall, importc}
 #/////////////////////////////////////////////////////////////////////////
 # D3D11CreateDeviceAndSwapChain
 # ------------------------------
@@ -4660,7 +4661,7 @@ proc D3D11CreateDeviceAndSwapChain*(pAdapter: ptr IDXGIAdapter;
                                     ppSwapChain: ptr ptr IDXGISwapChain; 
                                     ppDevice: ptr ptr ID3D11Device; 
                                     pFeatureLevel: ptr D3D_FEATURE_LEVEL; 
-    ppImmediateContext: ptr ptr ID3D11DeviceContext): HRESULT {.stdcall, importc, dynlib: "d3d11.dll".}
+    ppImmediateContext: ptr ptr ID3D11DeviceContext): HRESULT {.stdcall, importc.}
 var IID_ID3D11DeviceChild* {.importc.}: GUID
 
 var IID_ID3D11DepthStencilState* {.importc.}: GUID
