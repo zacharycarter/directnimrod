@@ -1,5 +1,7 @@
 # interface __MIDL_itf_d3d11_0000_0000 
-# [local] 
+# [local]
+{.link: "dxguid.lib".}
+{.link: "d3d11.lib".}
 import windows, dxgi, d3dcommon
 export d3dcommon
 type IID = TIID

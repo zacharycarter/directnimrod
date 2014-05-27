@@ -1,5 +1,6 @@
 # Forward Declarations 
-
+{.link:"dxgi.lib".}
+{.link:"dxguid.lib".}
 
 # interface __MIDL_itf_dxgi_0000_0000 
 # [local] 
