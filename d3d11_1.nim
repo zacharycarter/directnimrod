@@ -1,4 +1,6 @@
 # Forward Declarations 
+{.link: "dxguid.lib".}
+{.link: "d3d11.lib".}
 import windows
 import dxgi
 import dxgi1_2
