@@ -6,7 +6,7 @@ import windows, dxgi, d3dcommon
 export d3dcommon
 type IID = TIID
 type GUID = TGUID
-type UINT = int32
+type UINT = uint32
 type INT = int32
 type FLOAT = float32
 type IUnknown = object

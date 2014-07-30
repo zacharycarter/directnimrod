@@ -78,8 +78,8 @@ proc main() =
   swapChainDesc.Flags = 0
 
 
-  var flags: int32
-  flags = D3D11_CREATE_DEVICE_DEBUG.int32
+  var flags: uint32
+  flags = D3D11_CREATE_DEVICE_DEBUG.uint32
   var result = D3D11CreateDeviceAndSwapChain(nil, D3D_DRIVER_TYPE_HARDWARE,
                                 0, flags, nil, 0, D3D11_SDK_VERSION,
                                 addr swapChainDesc, addr swapChain,
