@@ -45,7 +45,7 @@ proc Update() =
   var offset: uint32 = 0
   ctx.lpvtbl.IASetVertexBuffers(ctx, 0.uint32, 1.uint32, addr vertexBuffer, addr stride, addr offset)
   ctx.lpvtbl.IASetIndexBuffer(ctx, indexBuffer, DXGI_FORMAT_R16_UINT, 0)
-  ctx.lpvtbl.IASetPrimitiveTopology(ctx, D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
+  ctx.lpvtbl.IASetPrimitiveTopology(ctx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
   ctx.lpvtbl.VSSetShader(ctx, vertexShader, nil, 0)
   ctx.lpvtbl.PSSetShader(ctx, pixelShader, nil, 0)
   ctx.lpvtbl.DrawIndexed(ctx, len(index).uint32, 0, 0)
