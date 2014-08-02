@@ -1,3 +1,4 @@
+## DirectX bindings by Charlie Barto
 # Forward Declarations 
 {.link:"dxgi.lib".}
 {.link:"dxguid.lib".}

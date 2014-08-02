@@ -1,3 +1,4 @@
+## directX bindings by Charlie Barto
 import windows
 import dxgitype
 type UINT = uint32

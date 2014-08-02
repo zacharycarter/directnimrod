@@ -1,3 +1,5 @@
+##DirectX bindings by charlie barto
+
 # this ALWAYS GENERATED file contains the definitions for the interfaces 
 # File created by MIDL compiler version 8.00.0603 
 # at Mon May 19 17:37:06 2014

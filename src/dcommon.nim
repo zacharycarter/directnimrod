@@ -1,3 +1,4 @@
+## DirectX bindings by Charlie Barto
 #+--------------------------------------------------------------------------
 #
 #  Copyright (c) Microsoft Corporation.  All rights reserved.

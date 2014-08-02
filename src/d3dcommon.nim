@@ -1,3 +1,4 @@
+## DirectX Bindings by Charlie Barto
 # interface __MIDL_itf_d3dcommon_0000_0000 
 # [local] 
 import windows

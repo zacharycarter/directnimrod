@@ -1,6 +1,5 @@
-#
-#    Copyright (C) Microsoft.  All rights reserved.
-#
+## DirectX bindings by charlie barto
+
 import dxgiformat
 type UINT = uint32
 type INT = int32

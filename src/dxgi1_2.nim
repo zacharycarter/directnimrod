@@ -1,3 +1,4 @@
+## DirectX Bindings by Charlie Barto
 import windows, dxgi
 type IID = TIID
 type GUID = TGUID

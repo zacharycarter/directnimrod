@@ -1,3 +1,4 @@
+## DirectX bindings by Charlie Barto
 # interface __MIDL_itf_d3d11_0000_0000 
 # [local]
 {.link: "dxguid.lib".}
