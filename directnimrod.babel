@@ -1,5 +1,5 @@
 [Package]
-name = "DirectX"
+name = "directnimrod"
 version = "0.1.0"
 author = "Charlie Barto"
 description = """Nimrod wrapper for the
