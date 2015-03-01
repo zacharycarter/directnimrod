@@ -3,13 +3,17 @@
 # [local]
 {.link: "dxguid.lib".}
 {.link: "d3d11.lib".}
-import windows, dxgi, d3dcommon
+import windows, dxgi, d3dcommon, macros
 export d3dcommon
 type IID = TIID
 type GUID = TGUID
 type UINT = uint32
 type INT = int32
 type FLOAT = float32
+type BYTE = TBYTE
+type BOOL = WINBOOL
+type UINT8 = uint8
+type UINT64 = uint64
 type IUnknown = object
 const 
   D3D11_16BIT_INDEX_STRIP_CUT_VALUE* = (0x0000FFFF)
@@ -4848,4 +4852,5 @@ var D3D11_DECODER_PROFILE_HEVC_VLD_MAIN* {.importc.}: GUID
 var D3D11_DECODER_PROFILE_HEVC_VLD_MAIN10* {.importc.}: GUID
 
 # Additional Prototypes for ALL interfaces 
-# end of Additional Prototypes 
+# end of Additional Prototypes
+

@@ -4,6 +4,8 @@
 import windows
 type GUID = TGUID
 type IID = TIID
+type UINT = uint32
+type BYTE = TBYTE
 type 
   D3D_DRIVER_TYPE* {.size: sizeof(cint).} = enum 
     D3D_DRIVER_TYPE_UNKNOWN = 0, 

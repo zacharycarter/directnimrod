@@ -1,6 +1,6 @@
 [Package]
 name = "directnimrod"
-version = "0.1.0"
+version = "0.1.1"
 author = "Charlie Barto"
 description = """Nimrod wrapper for the
                direct3D 11 and 11.1 libraries

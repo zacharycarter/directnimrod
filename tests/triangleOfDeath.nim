@@ -10,8 +10,8 @@ var device: ptr ID3D11Device
 var ctx: ptr ID3D11DeviceContext
 var rtv: ptr ID3D11RenderTargetView
 var swapChain: ptr IDXGISwapChain
-var VertexShader: ptr ID3D11VertexShader
-var PixelShader: ptr ID3D11PixelShader
+var vertexShader: ptr ID3D11VertexShader
+var pixelShader: ptr ID3D11PixelShader
 var vertexBuffer: ptr ID3D11Buffer
 var indexBuffer: ptr ID3D11Buffer
 var inputLayout: ptr ID3D11InputLayout
@@ -66,10 +66,10 @@ proc BindShaders() =
   close(VSFile)
   close(PSFile)
   var result: HRESULT
-  result = device.lpvtbl.CreateVertexShader(device, addr VSData[0], len(VSData), nil, addr VertexShader)
+  result = device.lpvtbl.CreateVertexShader(device, addr VSData[0], len(VSData), nil, addr vertexShader)
   if result != S_OK:
     quit("could not make the vertex shader")
-  result = device.lpvtbl.CreatePixelShader(device, addr PSData[0], len(PSData), nil, addr PixelShader)
+  result = device.lpvtbl.CreatePixelShader(device, addr PSData[0], len(PSData), nil, addr pixelShader)
   if result != S_OK:
     quit("could not make the pixel shader")
   var inputLayoutDesc: array[0..0, D3D11_INPUT_ELEMENT_DESC]
@@ -98,7 +98,7 @@ proc BindShaders() =
   vbdata.SysMemPitch = 0
   vbdata.SysMemSlicePitch = 0
 
-  result = device.lpvtbl.CreateBuffer(device, addr bufferDesc, addr vbdata, addr VertexBuffer)
+  result = device.lpvtbl.CreateBuffer(device, addr bufferDesc, addr vbdata, addr vertexBuffer)
   if result != S_OK:
     quit("could not create the vertex buffer")
 
@@ -148,8 +148,8 @@ proc main() =
   #d3d stuff
   
   var swapChainDesc: DXGI_SWAP_CHAIN_DESC
-  swapChainDesc.BufferDesc.width = 0
-  swapChainDesc.BufferDesc.height = 0
+  swapChainDesc.BufferDesc.Width = 0
+  swapChainDesc.BufferDesc.Height = 0
   swapChainDesc.BufferDesc.RefreshRate.Numerator = 60
   swapChainDesc.BufferDesc.RefreshRate.Denominator = 1
   swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM
@@ -160,7 +160,7 @@ proc main() =
   swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT
   swapChainDesc.BufferCount = 1
   swapChainDesc.OutputWindow = wnd
-  swapChainDesc.Windowed = true
+  swapChainDesc.Windowed = 1
   swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD
   swapChainDesc.Flags = 0
 

@@ -3,6 +3,7 @@
 import dxgiformat
 type UINT = uint32
 type INT = int32
+type BOOL = int32
 const 
   FACDXGI = 0x0000087A
 

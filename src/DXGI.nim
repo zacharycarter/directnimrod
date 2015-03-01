@@ -13,6 +13,10 @@ type GUID = TGUID
 type IUnknown = object
 type UINT = int32
 type INT = int32
+type BYTE = TBYTE
+type BOOL = WINBOOL
+type FLOAT = float32
+type UINT64 = uint64
 
 
 
