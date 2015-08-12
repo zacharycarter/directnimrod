@@ -4,3 +4,4 @@ nimcache
 *.obj
 *.ilk
 *.pdb
+*.exe
