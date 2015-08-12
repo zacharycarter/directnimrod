@@ -3476,17 +3476,15 @@ type
     lpVtbl*: ptr ID3D12InfoQueueVtbl
 
 
-var IID_ID3D12Debug*: GUID
+var IID_ID3D12Debug* {.importc.}: GUID
 
-var IID_ID3D12DebugDevice*: GUID
+var IID_ID3D12DebugDevice* {.importc.}: GUID
 
-var IID_ID3D12DebugCommandQueue*: GUID
+var IID_ID3D12DebugCommandQueue* {.importc.}: GUID
 
-var IID_ID3D12DebugCommandList*: GUID
+var IID_ID3D12DebugCommandList* {.importc.}: GUID
 
-var IID_ID3D12InfoQueue*: GUID
-
-
+var IID_ID3D12InfoQueue* {.importc.}: GUID
 
 type 
   PFN_D3D12_CREATE_DEVICE* = proc (a2: ptr IUnknown; a3: D3D_FEATURE_LEVEL; 
@@ -3534,14 +3532,6 @@ var IID_ID3D12CommandQueue* {.importc.}: GUID
 
 var IID_ID3D12Device* {.importc.}: GUID
 
-var IID_ID3D12Debug* {.importc.}: GUID
 
-var IID_ID3D12DebugDevice* {.importc.}: GUID
-
-var IID_ID3D12DebugCommandQueue* {.importc.}: GUID
-
-var IID_ID3D12DebugCommandList* {.importc.}: GUID
-
-var IID_ID3D12InfoQueue* {.importc.}: GUID
 
 {.pop.}

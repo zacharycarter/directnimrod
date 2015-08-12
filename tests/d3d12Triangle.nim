@@ -7,6 +7,9 @@ const winClass = "directNimrod"
 #direct3D globals
 var debugLayer: ptr ID3D12Debug
 
+proc InitializePipeline() =
+  var result: HRESULT
+  result = D3D12GetDebugInterface(IID_ID3D12Debug, addr debugLayer)
 
 # windows API related things
 proc WndProc(wnd: HWND, message: int32, wp: WPARAM, lp: LPARAM): LRESULT {.stdcall.} =
@@ -48,6 +51,7 @@ proc main() =
   if wnd == 0:
     quit("failed to make hwnd")
 
+  InitializePipeline()
   discard ShowWindow(wnd, 10)
   discard UpdateWindow(wnd)
   var message: MSG
