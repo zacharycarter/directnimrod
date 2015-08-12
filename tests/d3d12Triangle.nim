@@ -6,10 +6,24 @@ const winClass = "directNimrod"
 
 #direct3D globals
 var debugLayer: ptr ID3D12Debug
+var device: ptr ID3D12Device
+var commandQueue: ptr ID3D12CommandQueue
 
 proc InitializePipeline() =
   var result: HRESULT
-  result = D3D12GetDebugInterface(IID_ID3D12Debug, addr debugLayer)
+  result = D3D12GetDebugInterface(addr IID_ID3D12Debug, cast[ptr pointer](addr debugLayer))
+  if result != S_OK: quit("Could not get debug interface")
+  result = D3D12CreateDevice(nil, D3D_FEATURE_LEVEL_12_1, addr IID_ID3D12Device, cast[ptr pointer](addr device))
+  if result != S_OK: quit("could not create the device")
+
+  #create the direct3D command queue
+  D3D12_COMMAND_QUEUE_DESC queueDesc
+  queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE
+  queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT
+
+  result = device.lpVtbl.CreateCommandQueue(device, addr IID_ID3D12CommandQueue, cast[ptr pointer](addr commandQueue))
+  if result != S_OK: quit("could not create the command queue")
+  
 
 # windows API related things
 proc WndProc(wnd: HWND, message: int32, wp: WPARAM, lp: LPARAM): LRESULT {.stdcall.} =
