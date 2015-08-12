@@ -3534,4 +3534,14 @@ var IID_ID3D12CommandQueue* {.importc.}: GUID
 
 var IID_ID3D12Device* {.importc.}: GUID
 
+var IID_ID3D12Debug* {.importc.}: GUID
+
+var IID_ID3D12DebugDevice* {.importc.}: GUID
+
+var IID_ID3D12DebugCommandQueue* {.importc.}: GUID
+
+var IID_ID3D12DebugCommandList* {.importc.}: GUID
+
+var IID_ID3D12InfoQueue* {.importc.}: GUID
+
 {.pop.}
