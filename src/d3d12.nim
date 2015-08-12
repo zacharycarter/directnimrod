@@ -3499,38 +3499,39 @@ type
   PFN_D3D12_GET_DEBUG_INTERFACE* = proc (a2: ptr IID; a3: ptr pointer): HRESULT
 
 proc D3D12GetDebugInterface*(riid: ptr IID; ppvDebug: ptr pointer): HRESULT {.importc.}
-var IID_ID3D12Object*: GUID
 
-var IID_ID3D12DeviceChild*: GUID
+var IID_ID3D12Object* {.importc.}: GUID
 
-var IID_ID3D12RootSignature*: GUID
+var IID_ID3D12DeviceChild* {.importc.}: GUID
 
-var IID_ID3D12RootSignatureDeserializer*: GUID
+var IID_ID3D12RootSignature* {.importc.}: GUID
 
-var IID_ID3D12Pageable*: GUID
+var IID_ID3D12RootSignatureDeserializer* {.importc.}: GUID
 
-var IID_ID3D12Heap*: GUID
+var IID_ID3D12Pageable* {.importc.}: GUID
 
-var IID_ID3D12Resource*: GUID
+var IID_ID3D12Heap* {.importc.}: GUID
 
-var IID_ID3D12CommandAllocator*: GUID
+var IID_ID3D12Resource* {.importc.}: GUID
 
-var IID_ID3D12Fence*: GUID
+var IID_ID3D12CommandAllocator* {.importc.}: GUID
 
-var IID_ID3D12PipelineState*: GUID
+var IID_ID3D12Fence* {.importc.}: GUID
 
-var IID_ID3D12DescriptorHeap*: GUID
+var IID_ID3D12PipelineState* {.importc.}: GUID
 
-var IID_ID3D12QueryHeap*: GUID
+var IID_ID3D12DescriptorHeap* {.importc.}: GUID
 
-var IID_ID3D12CommandSignature*: GUID
+var IID_ID3D12QueryHeap* {.importc.}: GUID
 
-var IID_ID3D12CommandList*: GUID
+var IID_ID3D12CommandSignature* {.importc.}: GUID
 
-var IID_ID3D12GraphicsCommandList*: GUID
+var IID_ID3D12CommandList* {.importc.}: GUID
 
-var IID_ID3D12CommandQueue*: GUID
+var IID_ID3D12GraphicsCommandList* {.importc.}: GUID
 
-var IID_ID3D12Device*: GUID
+var IID_ID3D12CommandQueue* {.importc.}: GUID
+
+var IID_ID3D12Device* {.importc.}: GUID
 
 {.pop.}
