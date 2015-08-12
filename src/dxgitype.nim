@@ -1,9 +1,11 @@
 ## DirectX bindings by charlie barto
-
+## this file mirrors the version of dxgitype.h
+## shipped with windows 10
 import dxgiformat
 type UINT = uint32
 type INT = int32
 type BOOL = int32
+type BYTE = cuchar
 const 
   FACDXGI = 0x0000087A
 
@@ -15,20 +17,12 @@ template MAKE_DXGI_STATUS*(code: expr): expr =
 
 # DXGI error messages have moved to winerror.h
 
-const 
-  DXGI_CPU_ACCESS_NONE* = (0)
-  DXGI_CPU_ACCESS_DYNAMIC* = (1)
-  DXGI_CPU_ACCESS_READ_WRITE* = (2)
-  DXGI_CPU_ACCESS_SCRATCH* = (3)
-  DXGI_CPU_ACCESS_FIELD* = 15
-  DXGI_USAGE_SHADER_INPUT* = (1 shl (0 + 4))
-  DXGI_USAGE_RENDER_TARGET_OUTPUT* = (1 shl (1 + 4))
-  DXGI_USAGE_BACK_BUFFER* = (1 shl (2 + 4))
-  DXGI_USAGE_SHARED* = (1 shl (3 + 4))
-  DXGI_USAGE_READ_ONLY* = (1 shl (4 + 4))
-  DXGI_USAGE_DISCARD_ON_PRESENT* = (1 shl (5 + 4))
-  DXGI_USAGE_UNORDERED_ACCESS* = (1 shl (6 + 4))
-
+# const 
+#   DXGI_CPU_ACCESS_NONE* = (0)
+#   DXGI_CPU_ACCESS_DYNAMIC* = (1)
+#   DXGI_CPU_ACCESS_READ_WRITE* = (2)
+#   DXGI_CPU_ACCESS_SCRATCH* = (3)
+#   DXGI_CPU_ACCESS_FIELD* = 15
 type 
   DXGI_RGB* = object 
     Red*: cfloat
@@ -83,8 +77,36 @@ type
     Format*: DXGI_FORMAT
     ScanlineOrdering*: DXGI_MODE_SCANLINE_ORDER
     Scaling*: DXGI_MODE_SCALING
-
   DXGI_SAMPLE_DESC* = object 
     Count*: UINT
     Quality*: UINT
+
+const DXGI_STANDARD_MULTISAMPLE_QUALITY_PATTERN* = 0xffffffff
+const DXGI_CENTER_MULTISAMPLE_QUALITY_PATTERN* = 0xfffffffe
+
+type 
+  DXGI_COLOR_SPACE_TYPE* = enum 
+    DXGI_COLOR_SPACE_RGB_FULL_G22_NONE_P709 = 0, 
+    DXGI_COLOR_SPACE_RGB_FULL_G10_NONE_P709 = 1, 
+    DXGI_COLOR_SPACE_RGB_STUDIO_G22_NONE_P709 = 2, 
+    DXGI_COLOR_SPACE_RGB_STUDIO_G22_NONE_P2020 = 3, 
+    DXGI_COLOR_SPACE_RESERVED = 4, 
+    DXGI_COLOR_SPACE_YCBCR_FULL_G22_NONE_P709_X601 = 5, 
+    DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P601 = 6, 
+    DXGI_COLOR_SPACE_YCBCR_FULL_G22_LEFT_P601 = 7, 
+    DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P709 = 8, 
+    DXGI_COLOR_SPACE_YCBCR_FULL_G22_LEFT_P709 = 9, 
+    DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P2020 = 10, 
+    DXGI_COLOR_SPACE_YCBCR_FULL_G22_LEFT_P2020 = 11, 
+    DXGI_COLOR_SPACE_CUSTOM = 0xFFFFFFFF
+  DXGI_JPEG_DC_HUFFMAN_TABLE* = object 
+    CodeCounts*: array[12, BYTE]
+    CodeValues*: array[12, BYTE]
+
+  DXGI_JPEG_AC_HUFFMAN_TABLE* = object 
+    CodeCounts*: array[16, BYTE]
+    CodeValues*: array[162, BYTE]
+
+  DXGI_JPEG_QUANTIZATION_TABLE* = object 
+    Elements*: array[64, BYTE]
 

@@ -1,4 +1,6 @@
 ##DirectX bindings by charlie barto
+## This file mirrors the version of dxgiformat shipped with
+## windows 10
 
 # this ALWAYS GENERATED file contains the definitions for the interfaces 
 # File created by MIDL compiler version 8.00.0603 
@@ -78,6 +80,8 @@ type
     DXGI_FORMAT_Y210 = 108, DXGI_FORMAT_Y216 = 109, DXGI_FORMAT_NV11 = 110, 
     DXGI_FORMAT_AI44 = 111, DXGI_FORMAT_IA44 = 112, DXGI_FORMAT_P8 = 113, 
     DXGI_FORMAT_A8P8 = 114, DXGI_FORMAT_B4G4R4A4_UNORM = 115, 
+    DXGI_FORMAT_P208 = 130, DXGI_FORMAT_V208 = 131,
+    DXGI_FORMAT_V408 = 132,
     DXGI_FORMAT_FORCE_UINT = 0xFFFFFFFF
 
 #var __MIDL_itf_dxgiformat_0000_0000_v0_0_c_ifspec* {.importc.}: RPC_IF_HANDLE

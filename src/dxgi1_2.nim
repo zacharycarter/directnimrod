@@ -1,10 +1,12 @@
 ## DirectX Bindings by Charlie Barto
+## This file mirrors the version shipped with windows 10
 import windows, dxgi
 type IID = TIID
 type GUID = TGUID
 type INT = int32
 type UINT = int32
 type FLOAT = float32
+type BOOL = int32
 type IUnknown = object
 type 
   IDXGIDisplayControlVtbl* = object 
@@ -511,10 +513,10 @@ type
   IDXGIOutput1* = object 
     lpVtbl*: ptr IDXGIOutput1Vtbl
 
-const DXGI_ENUM_MODES_STEREO*: culong = 4
-const DXGI_ENUM_MODES_DISABLED_STEREO*: culong = 8
-const DXGI_SHARED_RESOURCE_READ*: culong = 0x80000000
-const DXGI_SHARED_RESOURCE_WRITE*: culong = 1
+const DXGI_ENUM_MODES_STEREO* = 4
+const DXGI_ENUM_MODES_DISABLED_STEREO* = 8
+const DXGI_SHARED_RESOURCE_READ* = 0x80000000
+const DXGI_SHARED_RESOURCE_WRITE* = 1
 
 var IID_IDXGIDisplayControl* {.importc.} : GUID
 
