@@ -4,7 +4,7 @@
 # [local]
 {.link: "dxguid.lib".}
 {.link: "d3d11.lib".}
-import windows, dxgi, d3dcommon, macros
+import windows, dxgi, d3dcommon, macros, Unknwn
 export d3dcommon
 type IID = TIID
 type GUID = TGUID
@@ -15,7 +15,6 @@ type BYTE = TBYTE
 type BOOL = WINBOOL
 type UINT8 = uint8
 type UINT64 = uint64
-type IUnknown = object
 const 
   D3D11_16BIT_INDEX_STRIP_CUT_VALUE* = (0x0000FFFF)
   D3D11_32BIT_INDEX_STRIP_CUT_VALUE* = (0xFFFFFFFF)

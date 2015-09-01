@@ -1,13 +1,12 @@
 ## DirectX Bindings by Charlie Barto
 ## This file mirrors the version shipped with windows 10
-import windows, dxgi
+import windows, dxgi, Unknwn
 type IID = TIID
 type GUID = TGUID
 type INT = int32
 type UINT = int32
 type FLOAT = float32
 type BOOL = int32
-type IUnknown = object
 type 
   IDXGIDisplayControlVtbl* = object 
     QueryInterface*: proc (This: ptr IDXGIDisplayControl; riid: ptr IID; 

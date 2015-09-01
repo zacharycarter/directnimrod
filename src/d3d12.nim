@@ -1,7 +1,8 @@
+#direct3D wrapper by Charlie Barto
+# this file is generated from the version of d3d12.h shipped with windows 10
 {.link: "dxguid.lib".}
 {.link: "d3d12.lib".}
-
-import windows, dxgi, d3dcommon
+import windows, dxgi, d3dcommon, macros, Unknwn
 export d3dcommon
 type IID = TIID
 type GUID = TGUID
@@ -13,14 +14,15 @@ type BOOL = WINBOOL
 type UINT8 = uint8
 type UINT64 = uint64
 type UINT16 = uint16
-type IUnknown = object
-
+# Forward Declarations 
 #procs to make some cisms work
 proc `or`(a,b:enum): auto = ord(a) or ord(b)
 proc `or`(a: enum, b: int): auto = ord(a) or b
 proc `or`(a: int, b: enum): auto = a or ord(b)
 proc `+`(a: enum, b: int): auto = ord(a) + b
-{.push callconv: stdcall.}
+
+# interface __MIDL_itf_d3d12_0000_0000 
+# [local] 
 const 
   D3D12_16BIT_INDEX_STRIP_CUT_VALUE* = (0x0000FFFF)
   D3D12_32BIT_INDEX_STRIP_CUT_VALUE* = (0xFFFFFFFF)
@@ -418,20 +420,20 @@ const
   D3D12_WHQL_CONTEXT_COUNT_FOR_RESOURCE_LIMIT* = (10)
   D3D12_WHQL_DRAWINDEXED_INDEX_COUNT_2_TO_EXP* = (25)
   D3D12_WHQL_DRAW_VERTEX_COUNT_2_TO_EXP* = (25)
-
 type 
   D3D12_GPU_VIRTUAL_ADDRESS* = UINT64
-  D3D12_COMMAND_LIST_TYPE* = enum 
+  D3D12_COMMAND_LIST_TYPE* {.size: sizeof(cint).} = enum 
     D3D12_COMMAND_LIST_TYPE_DIRECT = 0, D3D12_COMMAND_LIST_TYPE_BUNDLE = 1, 
     D3D12_COMMAND_LIST_TYPE_COMPUTE = 2, D3D12_COMMAND_LIST_TYPE_COPY = 3
-  D3D12_COMMAND_QUEUE_FLAGS* = enum 
+  D3D12_COMMAND_QUEUE_FLAGS* {.size: sizeof(cint).} = enum 
     D3D12_COMMAND_QUEUE_FLAG_NONE = 0, 
     D3D12_COMMAND_QUEUE_FLAG_DISABLE_GPU_TIMEOUT = 0x00000001
 
 
 
+nil
 type 
-  D3D12_COMMAND_QUEUE_PRIORITY* = enum 
+  D3D12_COMMAND_QUEUE_PRIORITY* {.size: sizeof(cint).} = enum 
     D3D12_COMMAND_QUEUE_PRIORITY_NORMAL = 0, 
     D3D12_COMMAND_QUEUE_PRIORITY_HIGH = 100
   D3D12_COMMAND_QUEUE_DESC* = object 
@@ -440,13 +442,13 @@ type
     Flags*: D3D12_COMMAND_QUEUE_FLAGS
     NodeMask*: UINT
 
-  D3D12_PRIMITIVE_TOPOLOGY_TYPE* = enum 
+  D3D12_PRIMITIVE_TOPOLOGY_TYPE* {.size: sizeof(cint).} = enum 
     D3D12_PRIMITIVE_TOPOLOGY_TYPE_UNDEFINED = 0, 
     D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT = 1, 
     D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE = 2, 
     D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE = 3, 
     D3D12_PRIMITIVE_TOPOLOGY_TYPE_PATCH = 4
-  D3D12_INPUT_CLASSIFICATION* = enum 
+  D3D12_INPUT_CLASSIFICATION* {.size: sizeof(cint).} = enum 
     D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA = 0, 
     D3D12_INPUT_CLASSIFICATION_PER_INSTANCE_DATA = 1
   D3D12_INPUT_ELEMENT_DESC* = object 
@@ -458,11 +460,11 @@ type
     InputSlotClass*: D3D12_INPUT_CLASSIFICATION
     InstanceDataStepRate*: UINT
 
-  D3D12_FILL_MODE* = enum 
+  D3D12_FILL_MODE* {.size: sizeof(cint).} = enum 
     D3D12_FILL_MODE_WIREFRAME = 2, D3D12_FILL_MODE_SOLID = 3
   D3D12_PRIMITIVE_TOPOLOGY* = D3D_PRIMITIVE_TOPOLOGY
   D3D12_PRIMITIVE* = D3D_PRIMITIVE
-  D3D12_CULL_MODE* = enum 
+  D3D12_CULL_MODE* {.size: sizeof(cint).} = enum 
     D3D12_CULL_MODE_NONE = 1, D3D12_CULL_MODE_FRONT = 2, 
     D3D12_CULL_MODE_BACK = 3
   D3D12_SO_DECLARATION_ENTRY* = object 
@@ -481,7 +483,7 @@ type
     MinDepth*: FLOAT
     MaxDepth*: FLOAT
 
-  D3D12_RECT* = RECT
+  D3D12_RECT* = RECTL
   D3D12_BOX* = object 
     left*: UINT
     top*: UINT
@@ -490,14 +492,14 @@ type
     bottom*: UINT
     back*: UINT
 
-  D3D12_COMPARISON_FUNC* = enum 
+  D3D12_COMPARISON_FUNC* {.size: sizeof(cint).} = enum 
     D3D12_COMPARISON_FUNC_NEVER = 1, D3D12_COMPARISON_FUNC_LESS = 2, 
     D3D12_COMPARISON_FUNC_EQUAL = 3, D3D12_COMPARISON_FUNC_LESS_EQUAL = 4, 
     D3D12_COMPARISON_FUNC_GREATER = 5, D3D12_COMPARISON_FUNC_NOT_EQUAL = 6, 
     D3D12_COMPARISON_FUNC_GREATER_EQUAL = 7, D3D12_COMPARISON_FUNC_ALWAYS = 8
-  D3D12_DEPTH_WRITE_MASK* = enum 
+  D3D12_DEPTH_WRITE_MASK* {.size: sizeof(cint).} = enum 
     D3D12_DEPTH_WRITE_MASK_ZERO = 0, D3D12_DEPTH_WRITE_MASK_ALL = 1
-  D3D12_STENCIL_OP* = enum 
+  D3D12_STENCIL_OP* {.size: sizeof(cint).} = enum 
     D3D12_STENCIL_OP_KEEP = 1, D3D12_STENCIL_OP_ZERO = 2, 
     D3D12_STENCIL_OP_REPLACE = 3, D3D12_STENCIL_OP_INCR_SAT = 4, 
     D3D12_STENCIL_OP_DECR_SAT = 5, D3D12_STENCIL_OP_INVERT = 6, 
@@ -518,7 +520,7 @@ type
     FrontFace*: D3D12_DEPTH_STENCILOP_DESC
     BackFace*: D3D12_DEPTH_STENCILOP_DESC
 
-  D3D12_BLEND* = enum 
+  D3D12_BLEND* {.size: sizeof(cint).} = enum 
     D3D12_BLEND_ZERO = 1, D3D12_BLEND_ONE = 2, D3D12_BLEND_SRC_COLOR = 3, 
     D3D12_BLEND_INV_SRC_COLOR = 4, D3D12_BLEND_SRC_ALPHA = 5, 
     D3D12_BLEND_INV_SRC_ALPHA = 6, D3D12_BLEND_DEST_ALPHA = 7, 
@@ -527,16 +529,16 @@ type
     D3D12_BLEND_BLEND_FACTOR = 14, D3D12_BLEND_INV_BLEND_FACTOR = 15, 
     D3D12_BLEND_SRC1_COLOR = 16, D3D12_BLEND_INV_SRC1_COLOR = 17, 
     D3D12_BLEND_SRC1_ALPHA = 18, D3D12_BLEND_INV_SRC1_ALPHA = 19
-  D3D12_BLEND_OP* = enum 
+  D3D12_BLEND_OP* {.size: sizeof(cint).} = enum 
     D3D12_BLEND_OP_ADD = 1, D3D12_BLEND_OP_SUBTRACT = 2, 
     D3D12_BLEND_OP_REV_SUBTRACT = 3, D3D12_BLEND_OP_MIN = 4, 
     D3D12_BLEND_OP_MAX = 5
-  D3D12_COLOR_WRITE_ENABLE* = enum 
+  D3D12_COLOR_WRITE_ENABLE* {.size: sizeof(cint).} = enum 
     D3D12_COLOR_WRITE_ENABLE_RED = 1, D3D12_COLOR_WRITE_ENABLE_GREEN = 2, 
     D3D12_COLOR_WRITE_ENABLE_BLUE = 4, D3D12_COLOR_WRITE_ENABLE_ALPHA = 8, D3D12_COLOR_WRITE_ENABLE_ALL = (((
         D3D12_COLOR_WRITE_ENABLE_RED or D3D12_COLOR_WRITE_ENABLE_GREEN) or
         D3D12_COLOR_WRITE_ENABLE_BLUE) or D3D12_COLOR_WRITE_ENABLE_ALPHA)
-  D3D12_LOGIC_OP* = enum 
+  D3D12_LOGIC_OP* {.size: sizeof(cint).} = enum 
     D3D12_LOGIC_OP_CLEAR = 0, D3D12_LOGIC_OP_SET = (D3D12_LOGIC_OP_CLEAR + 1), 
     D3D12_LOGIC_OP_COPY = (D3D12_LOGIC_OP_SET + 1), 
     D3D12_LOGIC_OP_COPY_INVERTED = (D3D12_LOGIC_OP_COPY + 1), 
@@ -569,7 +571,24 @@ type
     IndependentBlendEnable*: BOOL
     RenderTarget*: array[8, D3D12_RENDER_TARGET_BLEND_DESC]
 
-  D3D12_CONSERVATIVE_RASTERIZATION_MODE* = enum 
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Note, the array size for RenderTarget[] above is D3D12_SIMULTANEOUS_RENDERTARGET_COUNT. 
+#   IDL processing/generation of this header replaces the define; this comment is merely explaining what happened. 
+
+type 
+  D3D12_CONSERVATIVE_RASTERIZATION_MODE* {.size: sizeof(cint).} = enum 
     D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF = 0, 
     D3D12_CONSERVATIVE_RASTERIZATION_MODE_ON = 1
   D3D12_RASTERIZER_DESC* = object 
@@ -586,65 +605,82 @@ type
     ConservativeRaster*: D3D12_CONSERVATIVE_RASTERIZATION_MODE
 
 
+
+
 type 
   ID3D12ObjectVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12Object; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12Object): ULONG
-    Release*: proc (This: ptr ID3D12Object): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12Object): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12Object): ULONG {.stdcall.}
     GetPrivateData*: proc (This: ptr ID3D12Object; guid: ptr GUID; 
-                           pDataSize: ptr UINT; pData: pointer): HRESULT
+                           pDataSize: ptr UINT; pData: pointer): HRESULT {.
+        stdcall.}
     SetPrivateData*: proc (This: ptr ID3D12Object; guid: ptr GUID; 
-                           DataSize: UINT; pData: pointer): HRESULT
+                           DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr ID3D12Object; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT
-    SetName*: proc (This: ptr ID3D12Object; Name: LPCWSTR): HRESULT
+                                    pData: ptr IUnknown): HRESULT {.stdcall.}
+    SetName*: proc (This: ptr ID3D12Object; Name: LPCWSTR): HRESULT {.stdcall.}
 
   ID3D12Object* = object 
     lpVtbl*: ptr ID3D12ObjectVtbl
 
 
+# interface ID3D12DeviceChild 
+# [unique][local][object][uuid] 
 
 type 
   ID3D12DeviceChildVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12DeviceChild; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12DeviceChild): ULONG
-    Release*: proc (This: ptr ID3D12DeviceChild): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12DeviceChild): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12DeviceChild): ULONG {.stdcall.}
     GetPrivateData*: proc (This: ptr ID3D12DeviceChild; guid: ptr GUID; 
-                           pDataSize: ptr UINT; pData: pointer): HRESULT
+                           pDataSize: ptr UINT; pData: pointer): HRESULT {.
+        stdcall.}
     SetPrivateData*: proc (This: ptr ID3D12DeviceChild; guid: ptr GUID; 
-                           DataSize: UINT; pData: pointer): HRESULT
+                           DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr ID3D12DeviceChild; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT
-    SetName*: proc (This: ptr ID3D12DeviceChild; Name: LPCWSTR): HRESULT
+                                    pData: ptr IUnknown): HRESULT {.stdcall.}
+    SetName*: proc (This: ptr ID3D12DeviceChild; Name: LPCWSTR): HRESULT {.
+        stdcall.}
     GetDevice*: proc (This: ptr ID3D12DeviceChild; riid: ptr IID; 
-                      ppvDevice: ptr pointer): HRESULT
+                      ppvDevice: ptr pointer): HRESULT {.stdcall.}
 
   ID3D12DeviceChild* = object 
     lpVtbl*: ptr ID3D12DeviceChildVtbl
 
 
+# interface ID3D12RootSignature 
+# [unique][local][object][uuid] 
 
 type 
   ID3D12RootSignatureVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12RootSignature; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12RootSignature): ULONG
-    Release*: proc (This: ptr ID3D12RootSignature): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12RootSignature): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12RootSignature): ULONG {.stdcall.}
     GetPrivateData*: proc (This: ptr ID3D12RootSignature; guid: ptr GUID; 
-                           pDataSize: ptr UINT; pData: pointer): HRESULT
+                           pDataSize: ptr UINT; pData: pointer): HRESULT {.
+        stdcall.}
     SetPrivateData*: proc (This: ptr ID3D12RootSignature; guid: ptr GUID; 
-                           DataSize: UINT; pData: pointer): HRESULT
+                           DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr ID3D12RootSignature; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT
-    SetName*: proc (This: ptr ID3D12RootSignature; Name: LPCWSTR): HRESULT
+                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+        stdcall.}
+    SetName*: proc (This: ptr ID3D12RootSignature; Name: LPCWSTR): HRESULT {.
+        stdcall.}
     GetDevice*: proc (This: ptr ID3D12RootSignature; riid: ptr IID; 
-                      ppvDevice: ptr pointer): HRESULT
+                      ppvDevice: ptr pointer): HRESULT {.stdcall.}
 
   ID3D12RootSignature* = object 
     lpVtbl*: ptr ID3D12RootSignatureVtbl
 
+
+# interface __MIDL_itf_d3d12_0000_0001 
+# [local] 
+
+type 
   D3D12_SHADER_BYTECODE* = object 
     pShaderBytecode*: pointer
     BytecodeLength*: SIZE_T
@@ -660,7 +696,7 @@ type
     pInputElementDescs*: ptr D3D12_INPUT_ELEMENT_DESC
     NumElements*: UINT
 
-  D3D12_INDEX_BUFFER_STRIP_CUT_VALUE* = enum 
+  D3D12_INDEX_BUFFER_STRIP_CUT_VALUE* {.size: sizeof(cint).} = enum 
     D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED = 0, 
     D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_0xFFFF = 1, 
     D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_0xFFFFFFFF = 2
@@ -668,12 +704,13 @@ type
     pCachedBlob*: pointer
     CachedBlobSizeInBytes*: SIZE_T
 
-  D3D12_PIPELINE_STATE_FLAGS* = enum 
+  D3D12_PIPELINE_STATE_FLAGS* {.size: sizeof(cint).} = enum 
     D3D12_PIPELINE_STATE_FLAG_NONE = 0, 
     D3D12_PIPELINE_STATE_FLAG_TOOL_DEBUG = 0x00000001
 
 
 
+nil
 type 
   D3D12_GRAPHICS_PIPELINE_STATE_DESC* = object 
     pRootSignature*: ptr ID3D12RootSignature
@@ -705,7 +742,7 @@ type
     CachedPSO*: D3D12_CACHED_PIPELINE_STATE
     Flags*: D3D12_PIPELINE_STATE_FLAGS
 
-  D3D12_FEATURE* = enum 
+  D3D12_FEATURE* {.size: sizeof(cint).} = enum 
     D3D12_FEATURE_D3D12_OPTIONS = 0, 
     D3D12_FEATURE_ARCHITECTURE = (D3D12_FEATURE_D3D12_OPTIONS + 1), 
     D3D12_FEATURE_FEATURE_LEVELS = (D3D12_FEATURE_ARCHITECTURE + 1), 
@@ -713,27 +750,28 @@ type
         D3D12_FEATURE_FORMAT_SUPPORT + 1), 
     D3D12_FEATURE_FORMAT_INFO = (D3D12_FEATURE_MULTISAMPLE_QUALITY_LEVELS + 1), 
     D3D12_FEATURE_GPU_VIRTUAL_ADDRESS_SUPPORT = (D3D12_FEATURE_FORMAT_INFO + 1)
-  D3D12_SHADER_MIN_PRECISION_SUPPORT* = enum 
+  D3D12_SHADER_MIN_PRECISION_SUPPORT* {.size: sizeof(cint).} = enum 
     D3D12_SHADER_MIN_PRECISION_SUPPORT_NONE = 0, 
     D3D12_SHADER_MIN_PRECISION_SUPPORT_10_BIT = 0x00000001, 
     D3D12_SHADER_MIN_PRECISION_SUPPORT_16_BIT = 0x00000002
 
 
 
+nil
 type 
-  D3D12_TILED_RESOURCES_TIER* = enum 
+  D3D12_TILED_RESOURCES_TIER* {.size: sizeof(cint).} = enum 
     D3D12_TILED_RESOURCES_TIER_NOT_SUPPORTED = 0, 
     D3D12_TILED_RESOURCES_TIER_1 = 1, D3D12_TILED_RESOURCES_TIER_2 = 2, 
     D3D12_TILED_RESOURCES_TIER_3 = 3
-  D3D12_RESOURCE_BINDING_TIER* = enum 
+  D3D12_RESOURCE_BINDING_TIER* {.size: sizeof(cint).} = enum 
     D3D12_RESOURCE_BINDING_TIER_1 = 1, D3D12_RESOURCE_BINDING_TIER_2 = 2, 
     D3D12_RESOURCE_BINDING_TIER_3 = 3
-  D3D12_CONSERVATIVE_RASTERIZATION_TIER* = enum 
+  D3D12_CONSERVATIVE_RASTERIZATION_TIER* {.size: sizeof(cint).} = enum 
     D3D12_CONSERVATIVE_RASTERIZATION_TIER_NOT_SUPPORTED = 0, 
     D3D12_CONSERVATIVE_RASTERIZATION_TIER_1 = 1, 
     D3D12_CONSERVATIVE_RASTERIZATION_TIER_2 = 2, 
     D3D12_CONSERVATIVE_RASTERIZATION_TIER_3 = 3
-  D3D12_FORMAT_SUPPORT1* = enum 
+  D3D12_FORMAT_SUPPORT1* {.size: sizeof(cint).} = enum 
     D3D12_FORMAT_SUPPORT1_NONE = 0, D3D12_FORMAT_SUPPORT1_BUFFER = 0x00000001, 
     D3D12_FORMAT_SUPPORT1_IA_VERTEX_BUFFER = 0x00000002, 
     D3D12_FORMAT_SUPPORT1_IA_INDEX_BUFFER = 0x00000004, 
@@ -768,8 +806,9 @@ type
 
 
 
+nil
 type 
-  D3D12_FORMAT_SUPPORT2* = enum 
+  D3D12_FORMAT_SUPPORT2* {.size: sizeof(cint).} = enum 
     D3D12_FORMAT_SUPPORT2_NONE = 0, 
     D3D12_FORMAT_SUPPORT2_UAV_ATOMIC_ADD = 0x00000001, 
     D3D12_FORMAT_SUPPORT2_UAV_ATOMIC_BITWISE_OPS = 0x00000002, D3D12_FORMAT_SUPPORT2_UAV_ATOMIC_COMPARE_STORE_OR_COMPARE_EXCHANGE = 0x00000004, 
@@ -783,18 +822,20 @@ type
     D3D12_FORMAT_SUPPORT2_MULTIPLANE_OVERLAY = 0x00004000
 
 
+nil
 type 
-  D3D12_MULTISAMPLE_QUALITY_LEVEL_FLAGS* = enum 
+  D3D12_MULTISAMPLE_QUALITY_LEVEL_FLAGS* {.size: sizeof(cint).} = enum 
     D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_NONE = 0, 
     D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_TILED_RESOURCE = 0x00000001
 
 
+nil
 type 
-  D3D12_CROSS_NODE_SHARING_TIER* = enum 
+  D3D12_CROSS_NODE_SHARING_TIER* {.size: sizeof(cint).} = enum 
     D3D12_CROSS_NODE_SHARING_TIER_NOT_SUPPORTED = 0, 
     D3D12_CROSS_NODE_SHARING_TIER_1_EMULATED = 1, 
     D3D12_CROSS_NODE_SHARING_TIER_1 = 2, D3D12_CROSS_NODE_SHARING_TIER_2 = 3
-  D3D12_RESOURCE_HEAP_TIER* = enum 
+  D3D12_RESOURCE_HEAP_TIER* {.size: sizeof(cint).} = enum 
     D3D12_RESOURCE_HEAP_TIER_1 = 1, D3D12_RESOURCE_HEAP_TIER_2 = 2
   D3D12_FEATURE_DATA_D3D12_OPTIONS* = object 
     DoublePrecisionFloatShaderOps*: BOOL
@@ -847,15 +888,15 @@ type
     SizeInBytes*: UINT64
     Alignment*: UINT64
 
-  D3D12_HEAP_TYPE* = enum 
+  D3D12_HEAP_TYPE* {.size: sizeof(cint).} = enum 
     D3D12_HEAP_TYPE_DEFAULT = 1, D3D12_HEAP_TYPE_UPLOAD = 2, 
     D3D12_HEAP_TYPE_READBACK = 3, D3D12_HEAP_TYPE_CUSTOM = 4
-  D3D12_CPU_PAGE_PROPERTY* = enum 
+  D3D12_CPU_PAGE_PROPERTY* {.size: sizeof(cint).} = enum 
     D3D12_CPU_PAGE_PROPERTY_UNKNOWN = 0, 
     D3D12_CPU_PAGE_PROPERTY_NOT_AVAILABLE = 1, 
     D3D12_CPU_PAGE_PROPERTY_WRITE_COMBINE = 2, 
     D3D12_CPU_PAGE_PROPERTY_WRITE_BACK = 3
-  D3D12_MEMORY_POOL* = enum 
+  D3D12_MEMORY_POOL* {.size: sizeof(cint).} = enum 
     D3D12_MEMORY_POOL_UNKNOWN = 0, D3D12_MEMORY_POOL_L0 = 1, 
     D3D12_MEMORY_POOL_L1 = 2
   D3D12_HEAP_PROPERTIES* = object 
@@ -865,7 +906,7 @@ type
     CreationNodeMask*: UINT
     VisibleNodeMask*: UINT
 
-  D3D12_HEAP_FLAGS* = enum 
+  D3D12_HEAP_FLAGS* {.size: sizeof(cint).} = enum 
     D3D12_HEAP_FLAG_NONE = 0, D3D12_HEAP_FLAG_SHARED = 0x00000001, 
     D3D12_HEAP_FLAG_DENY_BUFFERS = 0x00000004, 
     D3D12_HEAP_FLAG_ALLOW_DISPLAY = 0x00000008, 
@@ -884,6 +925,7 @@ type
 const 
   D3D12_HEAP_FLAG_ALLOW_ALL_BUFFERS_AND_TEXTURES = D3D12_HEAP_FLAG_NONE
 
+
 type 
   D3D12_HEAP_DESC* = object 
     SizeInBytes*: UINT64
@@ -891,16 +933,16 @@ type
     Alignment*: UINT64
     Flags*: D3D12_HEAP_FLAGS
 
-  D3D12_RESOURCE_DIMENSION* = enum 
+  D3D12_RESOURCE_DIMENSION* {.size: sizeof(cint).} = enum 
     D3D12_RESOURCE_DIMENSION_UNKNOWN = 0, D3D12_RESOURCE_DIMENSION_BUFFER = 1, 
     D3D12_RESOURCE_DIMENSION_TEXTURE1D = 2, 
     D3D12_RESOURCE_DIMENSION_TEXTURE2D = 3, 
     D3D12_RESOURCE_DIMENSION_TEXTURE3D = 4
-  D3D12_TEXTURE_LAYOUT* = enum 
+  D3D12_TEXTURE_LAYOUT* {.size: sizeof(cint).} = enum 
     D3D12_TEXTURE_LAYOUT_UNKNOWN = 0, D3D12_TEXTURE_LAYOUT_ROW_MAJOR = 1, 
     D3D12_TEXTURE_LAYOUT_64KB_UNDEFINED_SWIZZLE = 2, 
     D3D12_TEXTURE_LAYOUT_64KB_STANDARD_SWIZZLE = 3
-  D3D12_RESOURCE_FLAGS* = enum 
+  D3D12_RESOURCE_FLAGS* {.size: sizeof(cint).} = enum 
     D3D12_RESOURCE_FLAG_NONE = 0, 
     D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET = 0x00000001, 
     D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL = 0x00000002, 
@@ -912,8 +954,9 @@ type
 
 
 
+nil
 type 
-  INNER_C_UNION_9770189114542384394* = object  {.union.}
+  INNER_C_UNION_4727299717376012824* = object  {.union.}
     Color*: array[4, FLOAT]
     DepthStencil*: D3D12_DEPTH_STENCIL_VALUE
 
@@ -935,7 +978,7 @@ type
 
   D3D12_CLEAR_VALUE* = object 
     Format*: DXGI_FORMAT
-    ano_11874753544003262421*: INNER_C_UNION_9770189114542384394
+    ano_6428163915376192730*: INNER_C_UNION_4727299717376012824
 
   D3D12_RANGE* = object 
     Begin*: SIZE_T
@@ -959,7 +1002,7 @@ type
     Height*: UINT16
     Depth*: UINT16
 
-  D3D12_TILE_RANGE_FLAGS* = enum 
+  D3D12_TILE_RANGE_FLAGS* {.size: sizeof(cint).} = enum 
     D3D12_TILE_RANGE_FLAG_NONE = 0, D3D12_TILE_RANGE_FLAG_NULL = 1, 
     D3D12_TILE_RANGE_FLAG_SKIP = 2, D3D12_TILE_RANGE_FLAG_REUSE_SINGLE_TILE = 4
   D3D12_SUBRESOURCE_TILING* = object 
@@ -979,21 +1022,61 @@ type
     NumTilesForPackedMips*: UINT
     StartTileIndexInOverallResource*: UINT
 
-  D3D12_TILE_MAPPING_FLAGS* = enum 
+  D3D12_TILE_MAPPING_FLAGS* {.size: sizeof(cint).} = enum 
     D3D12_TILE_MAPPING_FLAG_NONE = 0, 
     D3D12_TILE_MAPPING_FLAG_NO_HAZARD = 0x00000001
 
 
-
 type 
-  D3D12_TILE_COPY_FLAGS* = enum 
+  ID3D12ResourceVtbl* = object 
+    QueryInterface*: proc (This: ptr ID3D12Resource; riid: ptr IID; 
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12Resource): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12Resource): ULONG {.stdcall.}
+    GetPrivateData*: proc (This: ptr ID3D12Resource; guid: ptr GUID; 
+                           pDataSize: ptr UINT; pData: pointer): HRESULT {.
+        stdcall.}
+    SetPrivateData*: proc (This: ptr ID3D12Resource; guid: ptr GUID; 
+                           DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
+    SetPrivateDataInterface*: proc (This: ptr ID3D12Resource; guid: ptr GUID; 
+                                    pData: ptr IUnknown): HRESULT {.stdcall.}
+    SetName*: proc (This: ptr ID3D12Resource; Name: LPCWSTR): HRESULT {.stdcall.}
+    GetDevice*: proc (This: ptr ID3D12Resource; riid: ptr IID; 
+                      ppvDevice: ptr pointer): HRESULT {.stdcall.}
+    Map*: proc (This: ptr ID3D12Resource; Subresource: UINT; 
+                pReadRange: ptr D3D12_RANGE; ppData: ptr pointer): HRESULT {.
+        stdcall.}
+    Unmap*: proc (This: ptr ID3D12Resource; Subresource: UINT; 
+                  pWrittenRange: ptr D3D12_RANGE) {.stdcall.}
+    GetDesc*: proc (This: ptr ID3D12Resource): D3D12_RESOURCE_DESC {.stdcall.}
+    GetGPUVirtualAddress*: proc (This: ptr ID3D12Resource): D3D12_GPU_VIRTUAL_ADDRESS {.
+        stdcall.}
+    WriteToSubresource*: proc (This: ptr ID3D12Resource; DstSubresource: UINT; 
+                               pDstBox: ptr D3D12_BOX; pSrcData: pointer; 
+                               SrcRowPitch: UINT; SrcDepthPitch: UINT): HRESULT {.
+        stdcall.}
+    ReadFromSubresource*: proc (This: ptr ID3D12Resource; pDstData: pointer; 
+                                DstRowPitch: UINT; DstDepthPitch: UINT; 
+                                SrcSubresource: UINT; pSrcBox: ptr D3D12_BOX): HRESULT {.
+        stdcall.}
+    GetHeapProperties*: proc (This: ptr ID3D12Resource; 
+                              pHeapProperties: ptr D3D12_HEAP_PROPERTIES; 
+                              pHeapFlags: ptr D3D12_HEAP_FLAGS): HRESULT {.
+        stdcall.}
+
+  ID3D12Resource* = object 
+    lpVtbl*: ptr ID3D12ResourceVtbl
+nil
+type 
+  D3D12_TILE_COPY_FLAGS* {.size: sizeof(cint).} = enum 
     D3D12_TILE_COPY_FLAG_NONE = 0, D3D12_TILE_COPY_FLAG_NO_HAZARD = 0x00000001, 
     D3D12_TILE_COPY_FLAG_LINEAR_BUFFER_TO_SWIZZLED_TILED_RESOURCE = 0x00000002, 
     D3D12_TILE_COPY_FLAG_SWIZZLED_TILED_RESOURCE_TO_LINEAR_BUFFER = 0x00000004
 
 
+nil
 type 
-  D3D12_RESOURCE_STATES* = enum 
+  D3D12_RESOURCE_STATES* {.size: sizeof(cint).} = enum 
     D3D12_RESOURCE_STATE_COMMON = 0, 
     D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER = 0x00000001, 
     D3D12_RESOURCE_STATE_INDEX_BUFFER = 0x00000002, 
@@ -1006,52 +1089,20 @@ type
     D3D12_RESOURCE_STATE_STREAM_OUT = 0x00000100, 
     D3D12_RESOURCE_STATE_INDIRECT_ARGUMENT = 0x00000200, 
     D3D12_RESOURCE_STATE_COPY_DEST = 0x00000400, 
-    D3D12_RESOURCE_STATE_COPY_SOURCE = 0x00000800,
-    D3D12_RESOURCE_STATE_GENERIC_READ = ((( #order changed due to nim enum rules
+    D3D12_RESOURCE_STATE_COPY_SOURCE = 0x00000800, 
+    D3D12_RESOURCE_STATE_GENERIC_READ = (((
         ((0x00000001 or 0x00000002) or 0x00000040) or 0x00000080) or
-        0x00000200) or 0x00000800)
+        0x00000200) or 0x00000800),
     D3D12_RESOURCE_STATE_RESOLVE_DEST = 0x00001000, 
     D3D12_RESOURCE_STATE_RESOLVE_SOURCE = 0x00002000, 
 
 
 const 
-  D3D12_RESOURCE_STATE_PRESENT = D3D12_RESOURCE_STATE_COMMON
-  D3D12_RESOURCE_STATE_PREDICATION = D3D12_RESOURCE_STATE_INDIRECT_ARGUMENT
-type 
-  ID3D12ResourceVtbl* = object 
-    QueryInterface*: proc (This: ptr ID3D12Resource; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12Resource): ULONG
-    Release*: proc (This: ptr ID3D12Resource): ULONG
-    GetPrivateData*: proc (This: ptr ID3D12Resource; guid: ptr GUID; 
-                           pDataSize: ptr UINT; pData: pointer): HRESULT
-    SetPrivateData*: proc (This: ptr ID3D12Resource; guid: ptr GUID; 
-                           DataSize: UINT; pData: pointer): HRESULT
-    SetPrivateDataInterface*: proc (This: ptr ID3D12Resource; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT
-    SetName*: proc (This: ptr ID3D12Resource; Name: LPCWSTR): HRESULT
-    GetDevice*: proc (This: ptr ID3D12Resource; riid: ptr IID; 
-                      ppvDevice: ptr pointer): HRESULT
-    Map*: proc (This: ptr ID3D12Resource; Subresource: UINT; 
-                pReadRange: ptr D3D12_RANGE; ppData: ptr pointer): HRESULT
-    Unmap*: proc (This: ptr ID3D12Resource; Subresource: UINT; 
-                  pWrittenRange: ptr D3D12_RANGE)
-    GetDesc*: proc (This: ptr ID3D12Resource): D3D12_RESOURCE_DESC
-    GetGPUVirtualAddress*: proc (This: ptr ID3D12Resource): D3D12_GPU_VIRTUAL_ADDRESS
-    WriteToSubresource*: proc (This: ptr ID3D12Resource; DstSubresource: UINT; 
-                               pDstBox: ptr D3D12_BOX; pSrcData: pointer; 
-                               SrcRowPitch: UINT; SrcDepthPitch: UINT): HRESULT
-    ReadFromSubresource*: proc (This: ptr ID3D12Resource; pDstData: pointer; 
-                                DstRowPitch: UINT; DstDepthPitch: UINT; 
-                                SrcSubresource: UINT; pSrcBox: ptr D3D12_BOX): HRESULT
-    GetHeapProperties*: proc (This: ptr ID3D12Resource; 
-                              pHeapProperties: ptr D3D12_HEAP_PROPERTIES; 
-                              pHeapFlags: ptr D3D12_HEAP_FLAGS): HRESULT
+  D3D12_RESOURCE_STATE_PRESENT* = D3D12_RESOURCE_STATE_COMMON
+  D3D12_RESOURCE_STATE_PREDICATION* = D3D12_RESOURCE_STATE_INDIRECT_ARGUMENT
 
-  ID3D12Resource* = object 
-    lpVtbl*: ptr ID3D12ResourceVtbl
 type 
-  D3D12_RESOURCE_BARRIER_TYPE* = enum 
+  D3D12_RESOURCE_BARRIER_TYPE* {.size: sizeof(cint).} = enum 
     D3D12_RESOURCE_BARRIER_TYPE_TRANSITION = 0, D3D12_RESOURCE_BARRIER_TYPE_ALIASING = (
         D3D12_RESOURCE_BARRIER_TYPE_TRANSITION + 1), D3D12_RESOURCE_BARRIER_TYPE_UAV = (
         D3D12_RESOURCE_BARRIER_TYPE_ALIASING + 1)
@@ -1068,26 +1119,28 @@ type
   D3D12_RESOURCE_UAV_BARRIER* = object 
     pResource*: ptr ID3D12Resource
 
-  D3D12_RESOURCE_BARRIER_FLAGS* = enum 
+  D3D12_RESOURCE_BARRIER_FLAGS* {.size: sizeof(cint).} = enum 
     D3D12_RESOURCE_BARRIER_FLAG_NONE = 0, 
     D3D12_RESOURCE_BARRIER_FLAG_BEGIN_ONLY = 0x00000001, 
     D3D12_RESOURCE_BARRIER_FLAG_END_ONLY = 0x00000002
 
 
- 
-  INNER_C_UNION_6835976654401565952* = object  {.union.}
+
+nil
+type 
+  INNER_C_UNION_10217599790570261081* = object  {.union.}
     Transition*: D3D12_RESOURCE_TRANSITION_BARRIER
     Aliasing*: D3D12_RESOURCE_ALIASING_BARRIER
     UAV*: D3D12_RESOURCE_UAV_BARRIER
 
-  INNER_C_UNION_17468501770005783192* = object  {.union.}
+  INNER_C_UNION_12117044248454607464* = object  {.union.}
     PlacedFootprint*: D3D12_PLACED_SUBRESOURCE_FOOTPRINT
     SubresourceIndex*: UINT
 
   D3D12_RESOURCE_BARRIER* = object 
     Type*: D3D12_RESOURCE_BARRIER_TYPE
     Flags*: D3D12_RESOURCE_BARRIER_FLAGS
-    ano_2442905687555896746*: INNER_C_UNION_6835976654401565952
+    Union*: INNER_C_UNION_10217599790570261081
 
   D3D12_SUBRESOURCE_FOOTPRINT* = object 
     Format*: DXGI_FORMAT
@@ -1100,28 +1153,30 @@ type
     Offset*: UINT64
     Footprint*: D3D12_SUBRESOURCE_FOOTPRINT
 
-  D3D12_TEXTURE_COPY_TYPE* = enum 
+  D3D12_TEXTURE_COPY_TYPE* {.size: sizeof(cint).} = enum 
     D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX = 0, 
     D3D12_TEXTURE_COPY_TYPE_PLACED_FOOTPRINT = 1
   D3D12_TEXTURE_COPY_LOCATION* = object 
     pResource*: ptr ID3D12Resource
     Type*: D3D12_TEXTURE_COPY_TYPE
-    ano_14930002075675714182*: INNER_C_UNION_17468501770005783192
+    ano_13142779812540204455*: INNER_C_UNION_12117044248454607464
 
-  D3D12_SHADER_COMPONENT_MAPPING* = enum 
+  D3D12_SHADER_COMPONENT_MAPPING* {.size: sizeof(cint).} = enum 
     D3D12_SHADER_COMPONENT_MAPPING_FROM_MEMORY_COMPONENT_0 = 0, 
     D3D12_SHADER_COMPONENT_MAPPING_FROM_MEMORY_COMPONENT_1 = 1, 
     D3D12_SHADER_COMPONENT_MAPPING_FROM_MEMORY_COMPONENT_2 = 2, 
     D3D12_SHADER_COMPONENT_MAPPING_FROM_MEMORY_COMPONENT_3 = 3, 
     D3D12_SHADER_COMPONENT_MAPPING_FORCE_VALUE_0 = 4, 
     D3D12_SHADER_COMPONENT_MAPPING_FORCE_VALUE_1 = 5
-
- 
-  D3D12_BUFFER_SRV_FLAGS* = enum 
+  D3D12_BUFFER_SRV_FLAGS* {.size: sizeof(cint).} = enum 
     D3D12_BUFFER_SRV_FLAG_NONE = 0, D3D12_BUFFER_SRV_FLAG_RAW = 0x00000001
 
- 
-  INNER_C_UNION_12108913931903453490* = object  {.union.}
+
+
+
+nil
+type 
+  INNER_C_UNION_8838039966115797993* = object  {.union.}
     Buffer*: D3D12_BUFFER_SRV
     Texture1D*: D3D12_TEX1D_SRV
     Texture1DArray*: D3D12_TEX1D_ARRAY_SRV
@@ -1189,7 +1244,7 @@ type
     FirstArraySlice*: UINT
     ArraySize*: UINT
 
-  D3D12_SRV_DIMENSION* = enum 
+  D3D12_SRV_DIMENSION* {.size: sizeof(cint).} = enum 
     D3D12_SRV_DIMENSION_UNKNOWN = 0, D3D12_SRV_DIMENSION_BUFFER = 1, 
     D3D12_SRV_DIMENSION_TEXTURE1D = 2, D3D12_SRV_DIMENSION_TEXTURE1DARRAY = 3, 
     D3D12_SRV_DIMENSION_TEXTURE2D = 4, D3D12_SRV_DIMENSION_TEXTURE2DARRAY = 5, 
@@ -1201,13 +1256,13 @@ type
     Format*: DXGI_FORMAT
     ViewDimension*: D3D12_SRV_DIMENSION
     Shader4ComponentMapping*: UINT
-    ano_6361068961913845557*: INNER_C_UNION_12108913931903453490
+    ano_15696235992120349969*: INNER_C_UNION_8838039966115797993
 
   D3D12_CONSTANT_BUFFER_VIEW_DESC* = object 
     BufferLocation*: D3D12_GPU_VIRTUAL_ADDRESS
     SizeInBytes*: UINT
 
-  D3D12_FILTER* = enum 
+  D3D12_FILTER* {.size: sizeof(cint).} = enum 
     D3D12_FILTER_MIN_MAG_MIP_POINT = 0, 
     D3D12_FILTER_MIN_MAG_POINT_MIP_LINEAR = 0x00000001, 
     D3D12_FILTER_MIN_POINT_MAG_LINEAR_MIP_POINT = 0x00000004, 
@@ -1244,17 +1299,14 @@ type
     D3D12_FILTER_MAXIMUM_MIN_MAG_LINEAR_MIP_POINT = 0x00000194, 
     D3D12_FILTER_MAXIMUM_MIN_MAG_MIP_LINEAR = 0x00000195, 
     D3D12_FILTER_MAXIMUM_ANISOTROPIC = 0x000001D5
-  D3D12_FILTER_TYPE* = enum 
+  D3D12_FILTER_TYPE* {.size: sizeof(cint).} = enum 
     D3D12_FILTER_TYPE_POINT = 0, D3D12_FILTER_TYPE_LINEAR = 1
-  D3D12_FILTER_REDUCTION_TYPE* = enum 
+  D3D12_FILTER_REDUCTION_TYPE* {.size: sizeof(cint).} = enum 
     D3D12_FILTER_REDUCTION_TYPE_STANDARD = 0, 
     D3D12_FILTER_REDUCTION_TYPE_COMPARISON = 1, 
     D3D12_FILTER_REDUCTION_TYPE_MINIMUM = 2, 
     D3D12_FILTER_REDUCTION_TYPE_MAXIMUM = 3
-
-
- 
-  D3D12_TEXTURE_ADDRESS_MODE* = enum 
+  D3D12_TEXTURE_ADDRESS_MODE* {.size: sizeof(cint).} = enum 
     D3D12_TEXTURE_ADDRESS_MODE_WRAP = 1, D3D12_TEXTURE_ADDRESS_MODE_MIRROR = 2, 
     D3D12_TEXTURE_ADDRESS_MODE_CLAMP = 3, D3D12_TEXTURE_ADDRESS_MODE_BORDER = 4, 
     D3D12_TEXTURE_ADDRESS_MODE_MIRROR_ONCE = 5
@@ -1270,10 +1322,11 @@ type
     MinLOD*: FLOAT
     MaxLOD*: FLOAT
 
-  D3D12_BUFFER_UAV_FLAGS* = enum 
+  D3D12_BUFFER_UAV_FLAGS* {.size: sizeof(cint).} = enum 
     D3D12_BUFFER_UAV_FLAG_NONE = 0, D3D12_BUFFER_UAV_FLAG_RAW = 0x00000001
- 
-  INNER_C_UNION_10541467572881473362* = object  {.union.}
+
+type 
+  INNER_C_UNION_8578129493610921043* = object  {.union.}
     Buffer*: D3D12_BUFFER_UAV
     Texture1D*: D3D12_TEX1D_UAV
     Texture1DArray*: D3D12_TEX1D_ARRAY_UAV
@@ -1281,7 +1334,7 @@ type
     Texture2DArray*: D3D12_TEX2D_ARRAY_UAV
     Texture3D*: D3D12_TEX3D_UAV
 
-  INNER_C_UNION_15938643856429047929* = object  {.union.}
+  INNER_C_UNION_5630856590804113740* = object  {.union.}
     Buffer*: D3D12_BUFFER_RTV
     Texture1D*: D3D12_TEX1D_RTV
     Texture1DArray*: D3D12_TEX1D_ARRAY_RTV
@@ -1321,7 +1374,7 @@ type
     FirstWSlice*: UINT
     WSize*: UINT
 
-  D3D12_UAV_DIMENSION* = enum 
+  D3D12_UAV_DIMENSION* {.size: sizeof(cint).} = enum 
     D3D12_UAV_DIMENSION_UNKNOWN = 0, D3D12_UAV_DIMENSION_BUFFER = 1, 
     D3D12_UAV_DIMENSION_TEXTURE1D = 2, D3D12_UAV_DIMENSION_TEXTURE1DARRAY = 3, 
     D3D12_UAV_DIMENSION_TEXTURE2D = 4, D3D12_UAV_DIMENSION_TEXTURE2DARRAY = 5, 
@@ -1329,7 +1382,7 @@ type
   D3D12_UNORDERED_ACCESS_VIEW_DESC* = object 
     Format*: DXGI_FORMAT
     ViewDimension*: D3D12_UAV_DIMENSION
-    ano_11993743663208663463*: INNER_C_UNION_10541467572881473362
+    ano_2322651162389907000*: INNER_C_UNION_8578129493610921043
 
   D3D12_BUFFER_RTV* = object 
     FirstElement*: UINT64
@@ -1365,7 +1418,7 @@ type
     FirstWSlice*: UINT
     WSize*: UINT
 
-  D3D12_RTV_DIMENSION* = enum 
+  D3D12_RTV_DIMENSION* {.size: sizeof(cint).} = enum 
     D3D12_RTV_DIMENSION_UNKNOWN = 0, D3D12_RTV_DIMENSION_BUFFER = 1, 
     D3D12_RTV_DIMENSION_TEXTURE1D = 2, D3D12_RTV_DIMENSION_TEXTURE1DARRAY = 3, 
     D3D12_RTV_DIMENSION_TEXTURE2D = 4, D3D12_RTV_DIMENSION_TEXTURE2DARRAY = 5, 
@@ -1374,7 +1427,7 @@ type
   D3D12_RENDER_TARGET_VIEW_DESC* = object 
     Format*: DXGI_FORMAT
     ViewDimension*: D3D12_RTV_DIMENSION
-    ano_12173003768673069035*: INNER_C_UNION_15938643856429047929
+    ano_4913377831060945013*: INNER_C_UNION_5630856590804113740
 
   D3D12_TEX1D_DSV* = object 
     MipSlice*: UINT
@@ -1399,12 +1452,12 @@ type
     FirstArraySlice*: UINT
     ArraySize*: UINT
 
-  D3D12_DSV_FLAGS* = enum 
+  D3D12_DSV_FLAGS* {.size: sizeof(cint).} = enum 
     D3D12_DSV_FLAG_NONE = 0, D3D12_DSV_FLAG_READ_ONLY_DEPTH = 0x00000001, 
     D3D12_DSV_FLAG_READ_ONLY_STENCIL = 0x00000002
 
- 
-  INNER_C_UNION_16726476220596269706* = object  {.union.}
+type 
+  INNER_C_UNION_15388372878276581740* = object  {.union.}
     Texture1D*: D3D12_TEX1D_DSV
     Texture1DArray*: D3D12_TEX1D_ARRAY_DSV
     Texture2D*: D3D12_TEX2D_DSV
@@ -1412,7 +1465,7 @@ type
     Texture2DMS*: D3D12_TEX2DMS_DSV
     Texture2DMSArray*: D3D12_TEX2DMS_ARRAY_DSV
 
-  D3D12_DSV_DIMENSION* = enum 
+  D3D12_DSV_DIMENSION* {.size: sizeof(cint).} = enum 
     D3D12_DSV_DIMENSION_UNKNOWN = 0, D3D12_DSV_DIMENSION_TEXTURE1D = 1, 
     D3D12_DSV_DIMENSION_TEXTURE1DARRAY = 2, D3D12_DSV_DIMENSION_TEXTURE2D = 3, 
     D3D12_DSV_DIMENSION_TEXTURE2DARRAY = 4, D3D12_DSV_DIMENSION_TEXTURE2DMS = 5, 
@@ -1421,28 +1474,27 @@ type
     Format*: DXGI_FORMAT
     ViewDimension*: D3D12_DSV_DIMENSION
     Flags*: D3D12_DSV_FLAGS
-    ano_1627136143892943100*: INNER_C_UNION_16726476220596269706
+    ano_4918216866525903652*: INNER_C_UNION_15388372878276581740
 
-  D3D12_CLEAR_FLAGS* = enum 
+  D3D12_CLEAR_FLAGS* {.size: sizeof(cint).} = enum 
     D3D12_CLEAR_FLAG_DEPTH = 0x00000001, D3D12_CLEAR_FLAG_STENCIL = 0x00000002
 
- 
-  D3D12_FENCE_FLAGS* = enum 
+type 
+  D3D12_FENCE_FLAGS* {.size: sizeof(cint).} = enum 
     D3D12_FENCE_FLAG_NONE = 0, D3D12_FENCE_FLAG_SHARED = 0x00000001, 
     D3D12_FENCE_FLAG_SHARED_CROSS_ADAPTER = 0x00000002
- 
-  D3D12_DESCRIPTOR_HEAP_TYPE* = enum 
+type 
+  D3D12_DESCRIPTOR_HEAP_TYPE* {.size: sizeof(cint).} = enum 
     D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV = 0, D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER = (
         D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV + 1), 
     D3D12_DESCRIPTOR_HEAP_TYPE_RTV = (D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER + 1), 
     D3D12_DESCRIPTOR_HEAP_TYPE_DSV = (D3D12_DESCRIPTOR_HEAP_TYPE_RTV + 1), 
     D3D12_DESCRIPTOR_HEAP_TYPE_NUM_TYPES = (D3D12_DESCRIPTOR_HEAP_TYPE_DSV + 1)
-  D3D12_DESCRIPTOR_HEAP_FLAGS* = enum 
+  D3D12_DESCRIPTOR_HEAP_FLAGS* {.size: sizeof(cint).} = enum 
     D3D12_DESCRIPTOR_HEAP_FLAG_NONE = 0, 
     D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE = 0x00000001
-
-
-  INNER_C_UNION_2561737540973167537* = object  {.union.}
+type 
+  INNER_C_UNION_5675138526744772573* = object  {.union.}
     DescriptorTable*: D3D12_ROOT_DESCRIPTOR_TABLE
     Constants*: D3D12_ROOT_CONSTANTS
     Descriptor*: D3D12_ROOT_DESCRIPTOR
@@ -1453,7 +1505,7 @@ type
     Flags*: D3D12_DESCRIPTOR_HEAP_FLAGS
     NodeMask*: UINT
 
-  D3D12_DESCRIPTOR_RANGE_TYPE* = enum 
+  D3D12_DESCRIPTOR_RANGE_TYPE* {.size: sizeof(cint).} = enum 
     D3D12_DESCRIPTOR_RANGE_TYPE_SRV = 0, 
     D3D12_DESCRIPTOR_RANGE_TYPE_UAV = (D3D12_DESCRIPTOR_RANGE_TYPE_SRV + 1), 
     D3D12_DESCRIPTOR_RANGE_TYPE_CBV = (D3D12_DESCRIPTOR_RANGE_TYPE_UAV + 1), 
@@ -1478,11 +1530,11 @@ type
     ShaderRegister*: UINT
     RegisterSpace*: UINT
 
-  D3D12_SHADER_VISIBILITY* = enum 
+  D3D12_SHADER_VISIBILITY* {.size: sizeof(cint).} = enum 
     D3D12_SHADER_VISIBILITY_ALL = 0, D3D12_SHADER_VISIBILITY_VERTEX = 1, 
     D3D12_SHADER_VISIBILITY_HULL = 2, D3D12_SHADER_VISIBILITY_DOMAIN = 3, 
     D3D12_SHADER_VISIBILITY_GEOMETRY = 4, D3D12_SHADER_VISIBILITY_PIXEL = 5
-  D3D12_ROOT_PARAMETER_TYPE* = enum 
+  D3D12_ROOT_PARAMETER_TYPE* {.size: sizeof(cint).} = enum 
     D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE = 0, D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS = (
         D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE + 1), D3D12_ROOT_PARAMETER_TYPE_CBV = (
         D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS + 1), 
@@ -1490,10 +1542,10 @@ type
     D3D12_ROOT_PARAMETER_TYPE_UAV = (D3D12_ROOT_PARAMETER_TYPE_SRV + 1)
   D3D12_ROOT_PARAMETER* = object 
     ParameterType*: D3D12_ROOT_PARAMETER_TYPE
-    ano_1197039551429262836*: INNER_C_UNION_2561737540973167537
+    ano_10046628659722980158*: INNER_C_UNION_5675138526744772573
     ShaderVisibility*: D3D12_SHADER_VISIBILITY
 
-  D3D12_ROOT_SIGNATURE_FLAGS* = enum 
+  D3D12_ROOT_SIGNATURE_FLAGS* {.size: sizeof(cint).} = enum 
     D3D12_ROOT_SIGNATURE_FLAG_NONE = 0, 
     D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT = 0x00000001, 
     D3D12_ROOT_SIGNATURE_FLAG_DENY_VERTEX_SHADER_ROOT_ACCESS = 0x00000002, 
@@ -1503,8 +1555,9 @@ type
     D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS = 0x00000020, 
     D3D12_ROOT_SIGNATURE_FLAG_ALLOW_STREAM_OUTPUT = 0x00000040
 
- 
-  D3D12_STATIC_BORDER_COLOR* = enum 
+
+type 
+  D3D12_STATIC_BORDER_COLOR* {.size: sizeof(cint).} = enum 
     D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK = 0, D3D12_STATIC_BORDER_COLOR_OPAQUE_BLACK = (
         D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK + 1), D3D12_STATIC_BORDER_COLOR_OPAQUE_WHITE = (
         D3D12_STATIC_BORDER_COLOR_OPAQUE_BLACK + 1)
@@ -1530,59 +1583,84 @@ type
     pStaticSamplers*: ptr D3D12_STATIC_SAMPLER_DESC
     Flags*: D3D12_ROOT_SIGNATURE_FLAGS
 
-  D3D_ROOT_SIGNATURE_VERSION* = enum 
+  D3D_ROOT_SIGNATURE_VERSION* {.size: sizeof(cint).} = enum 
     D3D_ROOT_SIGNATURE_VERSION_1 = 0x00000001
 
- 
+
+
+
+
+type 
   ID3D12RootSignatureDeserializerVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12RootSignatureDeserializer; 
-                           riid: ptr IID; ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12RootSignatureDeserializer): ULONG
-    Release*: proc (This: ptr ID3D12RootSignatureDeserializer): ULONG
-    GetRootSignatureDesc*: proc (This: ptr ID3D12RootSignatureDeserializer): ptr D3D12_ROOT_SIGNATURE_DESC
+                           riid: ptr IID; ppvObject: ptr pointer): HRESULT {.
+        stdcall.}
+    AddRef*: proc (This: ptr ID3D12RootSignatureDeserializer): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12RootSignatureDeserializer): ULONG {.stdcall.}
+    GetRootSignatureDesc*: proc (This: ptr ID3D12RootSignatureDeserializer): ptr D3D12_ROOT_SIGNATURE_DESC {.
+        stdcall.}
 
   ID3D12RootSignatureDeserializer* = object 
     lpVtbl*: ptr ID3D12RootSignatureDeserializerVtbl
 
+
+# interface __MIDL_itf_d3d12_0000_0002 
+# [local] 
+
+type 
   PFN_D3D12_SERIALIZE_ROOT_SIGNATURE* = proc (
       pRootSignature: ptr D3D12_ROOT_SIGNATURE_DESC; 
       Version: D3D_ROOT_SIGNATURE_VERSION; ppBlob: ptr ptr ID3DBlob; 
-      ppErrorBlob: ptr ptr ID3DBlob): HRESULT
+      ppErrorBlob: ptr ptr ID3DBlob): HRESULT {.stdcall.}
 
- 
+proc D3D12SerializeRootSignature*(pRootSignature: ptr D3D12_ROOT_SIGNATURE_DESC; 
+                                  Version: D3D_ROOT_SIGNATURE_VERSION; 
+                                  ppBlob: ptr ptr ID3DBlob; 
+                                  ppErrorBlob: ptr ptr ID3DBlob): HRESULT {.
+    stdcall, importc.}
+type 
   PFN_D3D12_CREATE_ROOT_SIGNATURE_DESERIALIZER* = proc (pSrcData: LPCVOID; 
       SrcDataSizeInBytes: SIZE_T; pRootSignatureDeserializerInterface: ptr IID; 
-      ppRootSignatureDeserializer: ptr pointer): HRESULT
- 
-  INNER_C_STRUCT_8984213591235870200* = object 
-    Slot*: UINT
+      ppRootSignatureDeserializer: ptr pointer): HRESULT {.stdcall.}
 
-  INNER_C_STRUCT_5145247449458213243* = object 
-    RootParameterIndex*: UINT
-    DestOffsetIn32BitValues*: UINT
-    Num32BitValuesToSet*: UINT
-
-  INNER_C_STRUCT_10038047358330527000* = object 
-    RootParameterIndex*: UINT
-
-  INNER_C_STRUCT_14325887984932509519* = object 
-    RootParameterIndex*: UINT
-
-  INNER_C_STRUCT_8514936415120616802* = object 
-    RootParameterIndex*: UINT
-
-  INNER_C_UNION_17270136828417896834* = object  {.union.}
-    VertexBuffer*: INNER_C_STRUCT_8984213591235870200
-    Constant*: INNER_C_STRUCT_5145247449458213243
-    ConstantBufferView*: INNER_C_STRUCT_10038047358330527000
-    ShaderResourceView*: INNER_C_STRUCT_14325887984932509519
-    UnorderedAccessView*: INNER_C_STRUCT_8514936415120616802
-
+proc D3D12CreateRootSignatureDeserializer*(pSrcData: LPCVOID; 
+    SrcDataSizeInBytes: SIZE_T; pRootSignatureDeserializerInterface: ptr IID; 
+    ppRootSignatureDeserializer: ptr pointer): HRESULT {.stdcall, importc.}
+type 
   D3D12_CPU_DESCRIPTOR_HANDLE* = object 
     `ptr`*: SIZE_T
 
   D3D12_GPU_DESCRIPTOR_HANDLE* = object 
     `ptr`*: UINT64
+
+
+# If rects are supplied in D3D12_DISCARD_REGION, below, the resource 
+# must have 2D subresources with all specified subresources the same dimension.
+
+type 
+  INNER_C_STRUCT_4487348530565364173* = object 
+    Slot*: UINT
+
+  INNER_C_STRUCT_3837263988364380471* = object 
+    RootParameterIndex*: UINT
+    DestOffsetIn32BitValues*: UINT
+    Num32BitValuesToSet*: UINT
+
+  INNER_C_STRUCT_17400908672726678848* = object 
+    RootParameterIndex*: UINT
+
+  INNER_C_STRUCT_16448473605256716114* = object 
+    RootParameterIndex*: UINT
+
+  INNER_C_STRUCT_12558089386176613029* = object 
+    RootParameterIndex*: UINT
+
+  INNER_C_UNION_1301674651468563092* = object  {.union.}
+    VertexBuffer*: INNER_C_STRUCT_4487348530565364173
+    Constant*: INNER_C_STRUCT_3837263988364380471
+    ConstantBufferView*: INNER_C_STRUCT_17400908672726678848
+    ShaderResourceView*: INNER_C_STRUCT_16448473605256716114
+    UnorderedAccessView*: INNER_C_STRUCT_12558089386176613029
 
   D3D12_DISCARD_REGION* = object 
     NumRects*: UINT
@@ -1590,7 +1668,7 @@ type
     FirstSubresource*: UINT
     NumSubresources*: UINT
 
-  D3D12_QUERY_HEAP_TYPE* = enum 
+  D3D12_QUERY_HEAP_TYPE* {.size: sizeof(cint).} = enum 
     D3D12_QUERY_HEAP_TYPE_OCCLUSION = 0, D3D12_QUERY_HEAP_TYPE_TIMESTAMP = 1, 
     D3D12_QUERY_HEAP_TYPE_PIPELINE_STATISTICS = 2, 
     D3D12_QUERY_HEAP_TYPE_SO_STATISTICS = 3
@@ -1599,14 +1677,14 @@ type
     Count*: UINT
     NodeMask*: UINT
 
-  D3D12_QUERY_TYPE* = enum 
+  D3D12_QUERY_TYPE* {.size: sizeof(cint).} = enum 
     D3D12_QUERY_TYPE_OCCLUSION = 0, D3D12_QUERY_TYPE_BINARY_OCCLUSION = 1, 
     D3D12_QUERY_TYPE_TIMESTAMP = 2, D3D12_QUERY_TYPE_PIPELINE_STATISTICS = 3, 
     D3D12_QUERY_TYPE_SO_STATISTICS_STREAM0 = 4, 
     D3D12_QUERY_TYPE_SO_STATISTICS_STREAM1 = 5, 
     D3D12_QUERY_TYPE_SO_STATISTICS_STREAM2 = 6, 
     D3D12_QUERY_TYPE_SO_STATISTICS_STREAM3 = 7
-  D3D12_PREDICATION_OP* = enum 
+  D3D12_PREDICATION_OP* {.size: sizeof(cint).} = enum 
     D3D12_PREDICATION_OP_EQUAL_ZERO = 0, D3D12_PREDICATION_OP_NOT_EQUAL_ZERO = 1
   D3D12_QUERY_DATA_PIPELINE_STATISTICS* = object 
     IAVertices*: UINT64
@@ -1658,7 +1736,7 @@ type
     SizeInBytes*: UINT
     Format*: DXGI_FORMAT
 
-  D3D12_INDIRECT_ARGUMENT_TYPE* = enum 
+  D3D12_INDIRECT_ARGUMENT_TYPE* {.size: sizeof(cint).} = enum 
     D3D12_INDIRECT_ARGUMENT_TYPE_DRAW = 0, D3D12_INDIRECT_ARGUMENT_TYPE_DRAW_INDEXED = (
         D3D12_INDIRECT_ARGUMENT_TYPE_DRAW + 1), D3D12_INDIRECT_ARGUMENT_TYPE_DISPATCH = (
         D3D12_INDIRECT_ARGUMENT_TYPE_DRAW_INDEXED + 1), D3D12_INDIRECT_ARGUMENT_TYPE_VERTEX_BUFFER_VIEW = (
@@ -1670,7 +1748,7 @@ type
         D3D12_INDIRECT_ARGUMENT_TYPE_SHADER_RESOURCE_VIEW + 1)
   D3D12_INDIRECT_ARGUMENT_DESC* = object 
     Type*: D3D12_INDIRECT_ARGUMENT_TYPE
-    ano_10649078075452078341*: INNER_C_UNION_17270136828417896834
+    ano_13459682869932804849*: INNER_C_UNION_1301674651468563092
 
   D3D12_COMMAND_SIGNATURE_DESC* = object 
     ByteStride*: UINT
@@ -1679,401 +1757,481 @@ type
     NodeMask*: UINT
 
 
+
+
+
 type 
   ID3D12PageableVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12Pageable; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12Pageable): ULONG
-    Release*: proc (This: ptr ID3D12Pageable): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12Pageable): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12Pageable): ULONG {.stdcall.}
     GetPrivateData*: proc (This: ptr ID3D12Pageable; guid: ptr GUID; 
-                           pDataSize: ptr UINT; pData: pointer): HRESULT
+                           pDataSize: ptr UINT; pData: pointer): HRESULT {.
+        stdcall.}
     SetPrivateData*: proc (This: ptr ID3D12Pageable; guid: ptr GUID; 
-                           DataSize: UINT; pData: pointer): HRESULT
+                           DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr ID3D12Pageable; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT
-    SetName*: proc (This: ptr ID3D12Pageable; Name: LPCWSTR): HRESULT
+                                    pData: ptr IUnknown): HRESULT {.stdcall.}
+    SetName*: proc (This: ptr ID3D12Pageable; Name: LPCWSTR): HRESULT {.stdcall.}
     GetDevice*: proc (This: ptr ID3D12Pageable; riid: ptr IID; 
-                      ppvDevice: ptr pointer): HRESULT
+                      ppvDevice: ptr pointer): HRESULT {.stdcall.}
 
   ID3D12Pageable* = object 
     lpVtbl*: ptr ID3D12PageableVtbl
 
- 
+
+# interface ID3D12Heap 
+# [unique][local][object][uuid] 
+
+
+type 
   ID3D12HeapVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12Heap; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12Heap): ULONG
-    Release*: proc (This: ptr ID3D12Heap): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12Heap): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12Heap): ULONG {.stdcall.}
     GetPrivateData*: proc (This: ptr ID3D12Heap; guid: ptr GUID; 
-                           pDataSize: ptr UINT; pData: pointer): HRESULT
+                           pDataSize: ptr UINT; pData: pointer): HRESULT {.
+        stdcall.}
     SetPrivateData*: proc (This: ptr ID3D12Heap; guid: ptr GUID; DataSize: UINT; 
-                           pData: pointer): HRESULT
+                           pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr ID3D12Heap; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT
-    SetName*: proc (This: ptr ID3D12Heap; Name: LPCWSTR): HRESULT
+                                    pData: ptr IUnknown): HRESULT {.stdcall.}
+    SetName*: proc (This: ptr ID3D12Heap; Name: LPCWSTR): HRESULT {.stdcall.}
     GetDevice*: proc (This: ptr ID3D12Heap; riid: ptr IID; 
-                      ppvDevice: ptr pointer): HRESULT
-    GetDesc*: proc (This: ptr ID3D12Heap): D3D12_HEAP_DESC
+                      ppvDevice: ptr pointer): HRESULT {.stdcall.}
+    GetDesc*: proc (This: ptr ID3D12Heap): D3D12_HEAP_DESC {.stdcall.}
 
   ID3D12Heap* = object 
     lpVtbl*: ptr ID3D12HeapVtbl
 
-type
+
+# interface ID3D12Resource 
+# [unique][local][object][uuid] 
+
+
+
+
+# interface ID3D12CommandAllocator 
+# [unique][local][object][uuid] 
+
+
+type 
   ID3D12CommandAllocatorVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12CommandAllocator; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12CommandAllocator): ULONG
-    Release*: proc (This: ptr ID3D12CommandAllocator): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12CommandAllocator): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12CommandAllocator): ULONG {.stdcall.}
     GetPrivateData*: proc (This: ptr ID3D12CommandAllocator; guid: ptr GUID; 
-                           pDataSize: ptr UINT; pData: pointer): HRESULT
+                           pDataSize: ptr UINT; pData: pointer): HRESULT {.
+        stdcall.}
     SetPrivateData*: proc (This: ptr ID3D12CommandAllocator; guid: ptr GUID; 
-                           DataSize: UINT; pData: pointer): HRESULT
+                           DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr ID3D12CommandAllocator; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT
-    SetName*: proc (This: ptr ID3D12CommandAllocator; Name: LPCWSTR): HRESULT
+                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+        stdcall.}
+    SetName*: proc (This: ptr ID3D12CommandAllocator; Name: LPCWSTR): HRESULT {.
+        stdcall.}
     GetDevice*: proc (This: ptr ID3D12CommandAllocator; riid: ptr IID; 
-                      ppvDevice: ptr pointer): HRESULT
-    Reset*: proc (This: ptr ID3D12CommandAllocator): HRESULT
+                      ppvDevice: ptr pointer): HRESULT {.stdcall.}
+    Reset*: proc (This: ptr ID3D12CommandAllocator): HRESULT {.stdcall.}
 
   ID3D12CommandAllocator* = object 
     lpVtbl*: ptr ID3D12CommandAllocatorVtbl
 
 
+# interface ID3D12Fence 
+# [unique][local][object][uuid] 
+
 
 type 
   ID3D12FenceVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12Fence; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12Fence): ULONG
-    Release*: proc (This: ptr ID3D12Fence): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12Fence): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12Fence): ULONG {.stdcall.}
     GetPrivateData*: proc (This: ptr ID3D12Fence; guid: ptr GUID; 
-                           pDataSize: ptr UINT; pData: pointer): HRESULT
+                           pDataSize: ptr UINT; pData: pointer): HRESULT {.
+        stdcall.}
     SetPrivateData*: proc (This: ptr ID3D12Fence; guid: ptr GUID; 
-                           DataSize: UINT; pData: pointer): HRESULT
+                           DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr ID3D12Fence; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT
-    SetName*: proc (This: ptr ID3D12Fence; Name: LPCWSTR): HRESULT
+                                    pData: ptr IUnknown): HRESULT {.stdcall.}
+    SetName*: proc (This: ptr ID3D12Fence; Name: LPCWSTR): HRESULT {.stdcall.}
     GetDevice*: proc (This: ptr ID3D12Fence; riid: ptr IID; 
-                      ppvDevice: ptr pointer): HRESULT
-    GetCompletedValue*: proc (This: ptr ID3D12Fence): UINT64
+                      ppvDevice: ptr pointer): HRESULT {.stdcall.}
+    GetCompletedValue*: proc (This: ptr ID3D12Fence): UINT64 {.stdcall.}
     SetEventOnCompletion*: proc (This: ptr ID3D12Fence; Value: UINT64; 
-                                 hEvent: HANDLE): HRESULT
-    Signal*: proc (This: ptr ID3D12Fence; Value: UINT64): HRESULT
+                                 hEvent: HANDLE): HRESULT {.stdcall.}
+    Signal*: proc (This: ptr ID3D12Fence; Value: UINT64): HRESULT {.stdcall.}
 
   ID3D12Fence* = object 
     lpVtbl*: ptr ID3D12FenceVtbl
 
 
+# interface ID3D12PipelineState 
+# [unique][local][object][uuid] 
+
 
 type 
   ID3D12PipelineStateVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12PipelineState; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12PipelineState): ULONG
-    Release*: proc (This: ptr ID3D12PipelineState): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12PipelineState): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12PipelineState): ULONG {.stdcall.}
     GetPrivateData*: proc (This: ptr ID3D12PipelineState; guid: ptr GUID; 
-                           pDataSize: ptr UINT; pData: pointer): HRESULT
+                           pDataSize: ptr UINT; pData: pointer): HRESULT {.
+        stdcall.}
     SetPrivateData*: proc (This: ptr ID3D12PipelineState; guid: ptr GUID; 
-                           DataSize: UINT; pData: pointer): HRESULT
+                           DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr ID3D12PipelineState; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT
-    SetName*: proc (This: ptr ID3D12PipelineState; Name: LPCWSTR): HRESULT
+                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+        stdcall.}
+    SetName*: proc (This: ptr ID3D12PipelineState; Name: LPCWSTR): HRESULT {.
+        stdcall.}
     GetDevice*: proc (This: ptr ID3D12PipelineState; riid: ptr IID; 
-                      ppvDevice: ptr pointer): HRESULT
+                      ppvDevice: ptr pointer): HRESULT {.stdcall.}
     GetCachedBlob*: proc (This: ptr ID3D12PipelineState; 
-                          ppBlob: ptr ptr ID3DBlob): HRESULT
+                          ppBlob: ptr ptr ID3DBlob): HRESULT {.stdcall.}
 
   ID3D12PipelineState* = object 
     lpVtbl*: ptr ID3D12PipelineStateVtbl
 
 
+# interface ID3D12DescriptorHeap 
+# [unique][local][object][uuid] 
+
 
 type 
   ID3D12DescriptorHeapVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12DescriptorHeap; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12DescriptorHeap): ULONG
-    Release*: proc (This: ptr ID3D12DescriptorHeap): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12DescriptorHeap): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12DescriptorHeap): ULONG {.stdcall.}
     GetPrivateData*: proc (This: ptr ID3D12DescriptorHeap; guid: ptr GUID; 
-                           pDataSize: ptr UINT; pData: pointer): HRESULT
+                           pDataSize: ptr UINT; pData: pointer): HRESULT {.
+        stdcall.}
     SetPrivateData*: proc (This: ptr ID3D12DescriptorHeap; guid: ptr GUID; 
-                           DataSize: UINT; pData: pointer): HRESULT
+                           DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr ID3D12DescriptorHeap; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT
-    SetName*: proc (This: ptr ID3D12DescriptorHeap; Name: LPCWSTR): HRESULT
+                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+        stdcall.}
+    SetName*: proc (This: ptr ID3D12DescriptorHeap; Name: LPCWSTR): HRESULT {.
+        stdcall.}
     GetDevice*: proc (This: ptr ID3D12DescriptorHeap; riid: ptr IID; 
-                      ppvDevice: ptr pointer): HRESULT
-    GetDesc*: proc (This: ptr ID3D12DescriptorHeap): D3D12_DESCRIPTOR_HEAP_DESC
-    GetCPUDescriptorHandleForHeapStart*: proc (This: ptr ID3D12DescriptorHeap): D3D12_CPU_DESCRIPTOR_HANDLE
-    GetGPUDescriptorHandleForHeapStart*: proc (This: ptr ID3D12DescriptorHeap): D3D12_GPU_DESCRIPTOR_HANDLE
+                      ppvDevice: ptr pointer): HRESULT {.stdcall.}
+    GetDesc*: proc (This: ptr ID3D12DescriptorHeap): D3D12_DESCRIPTOR_HEAP_DESC {.
+        stdcall.}
+    GetCPUDescriptorHandleForHeapStart*: proc (This: ptr ID3D12DescriptorHeap): D3D12_CPU_DESCRIPTOR_HANDLE {.
+        stdcall.}
+    GetGPUDescriptorHandleForHeapStart*: proc (This: ptr ID3D12DescriptorHeap): D3D12_GPU_DESCRIPTOR_HANDLE {.
+        stdcall.}
 
   ID3D12DescriptorHeap* = object 
     lpVtbl*: ptr ID3D12DescriptorHeapVtbl
 
 
+# interface ID3D12QueryHeap 
+# [unique][local][object][uuid] 
 
 type 
   ID3D12QueryHeapVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12QueryHeap; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12QueryHeap): ULONG
-    Release*: proc (This: ptr ID3D12QueryHeap): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12QueryHeap): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12QueryHeap): ULONG {.stdcall.}
     GetPrivateData*: proc (This: ptr ID3D12QueryHeap; guid: ptr GUID; 
-                           pDataSize: ptr UINT; pData: pointer): HRESULT
+                           pDataSize: ptr UINT; pData: pointer): HRESULT {.
+        stdcall.}
     SetPrivateData*: proc (This: ptr ID3D12QueryHeap; guid: ptr GUID; 
-                           DataSize: UINT; pData: pointer): HRESULT
+                           DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr ID3D12QueryHeap; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT
-    SetName*: proc (This: ptr ID3D12QueryHeap; Name: LPCWSTR): HRESULT
+                                    pData: ptr IUnknown): HRESULT {.stdcall.}
+    SetName*: proc (This: ptr ID3D12QueryHeap; Name: LPCWSTR): HRESULT {.stdcall.}
     GetDevice*: proc (This: ptr ID3D12QueryHeap; riid: ptr IID; 
-                      ppvDevice: ptr pointer): HRESULT
+                      ppvDevice: ptr pointer): HRESULT {.stdcall.}
 
   ID3D12QueryHeap* = object 
     lpVtbl*: ptr ID3D12QueryHeapVtbl
 
 
+# interface ID3D12CommandSignature 
+# [unique][local][object][uuid] 
+
 
 type 
   ID3D12CommandSignatureVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12CommandSignature; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12CommandSignature): ULONG
-    Release*: proc (This: ptr ID3D12CommandSignature): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12CommandSignature): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12CommandSignature): ULONG {.stdcall.}
     GetPrivateData*: proc (This: ptr ID3D12CommandSignature; guid: ptr GUID; 
-                           pDataSize: ptr UINT; pData: pointer): HRESULT
+                           pDataSize: ptr UINT; pData: pointer): HRESULT {.
+        stdcall.}
     SetPrivateData*: proc (This: ptr ID3D12CommandSignature; guid: ptr GUID; 
-                           DataSize: UINT; pData: pointer): HRESULT
+                           DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr ID3D12CommandSignature; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT
-    SetName*: proc (This: ptr ID3D12CommandSignature; Name: LPCWSTR): HRESULT
+                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+        stdcall.}
+    SetName*: proc (This: ptr ID3D12CommandSignature; Name: LPCWSTR): HRESULT {.
+        stdcall.}
     GetDevice*: proc (This: ptr ID3D12CommandSignature; riid: ptr IID; 
-                      ppvDevice: ptr pointer): HRESULT
+                      ppvDevice: ptr pointer): HRESULT {.stdcall.}
 
   ID3D12CommandSignature* = object 
     lpVtbl*: ptr ID3D12CommandSignatureVtbl
 
 
+# interface ID3D12CommandList 
+# [unique][local][object][uuid] 
 
 type 
   ID3D12CommandListVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12CommandList; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12CommandList): ULONG
-    Release*: proc (This: ptr ID3D12CommandList): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12CommandList): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12CommandList): ULONG {.stdcall.}
     GetPrivateData*: proc (This: ptr ID3D12CommandList; guid: ptr GUID; 
-                           pDataSize: ptr UINT; pData: pointer): HRESULT
+                           pDataSize: ptr UINT; pData: pointer): HRESULT {.
+        stdcall.}
     SetPrivateData*: proc (This: ptr ID3D12CommandList; guid: ptr GUID; 
-                           DataSize: UINT; pData: pointer): HRESULT
+                           DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr ID3D12CommandList; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT
-    SetName*: proc (This: ptr ID3D12CommandList; Name: LPCWSTR): HRESULT
+                                    pData: ptr IUnknown): HRESULT {.stdcall.}
+    SetName*: proc (This: ptr ID3D12CommandList; Name: LPCWSTR): HRESULT {.
+        stdcall.}
     GetDevice*: proc (This: ptr ID3D12CommandList; riid: ptr IID; 
-                      ppvDevice: ptr pointer): HRESULT
-    GetType*: proc (This: ptr ID3D12CommandList): D3D12_COMMAND_LIST_TYPE
+                      ppvDevice: ptr pointer): HRESULT {.stdcall.}
+    GetType*: proc (This: ptr ID3D12CommandList): D3D12_COMMAND_LIST_TYPE {.
+        stdcall.}
 
   ID3D12CommandList* = object 
     lpVtbl*: ptr ID3D12CommandListVtbl
 
 
+# interface ID3D12GraphicsCommandList 
+# [unique][local][object][uuid] 
+
 
 type 
   ID3D12GraphicsCommandListVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12GraphicsCommandList; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12GraphicsCommandList): ULONG
-    Release*: proc (This: ptr ID3D12GraphicsCommandList): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12GraphicsCommandList): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12GraphicsCommandList): ULONG {.stdcall.}
     GetPrivateData*: proc (This: ptr ID3D12GraphicsCommandList; guid: ptr GUID; 
-                           pDataSize: ptr UINT; pData: pointer): HRESULT
+                           pDataSize: ptr UINT; pData: pointer): HRESULT {.
+        stdcall.}
     SetPrivateData*: proc (This: ptr ID3D12GraphicsCommandList; guid: ptr GUID; 
-                           DataSize: UINT; pData: pointer): HRESULT
+                           DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr ID3D12GraphicsCommandList; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT
-    SetName*: proc (This: ptr ID3D12GraphicsCommandList; Name: LPCWSTR): HRESULT
+                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+        stdcall.}
+    SetName*: proc (This: ptr ID3D12GraphicsCommandList; Name: LPCWSTR): HRESULT {.
+        stdcall.}
     GetDevice*: proc (This: ptr ID3D12GraphicsCommandList; riid: ptr IID; 
-                      ppvDevice: ptr pointer): HRESULT
-    GetType*: proc (This: ptr ID3D12GraphicsCommandList): D3D12_COMMAND_LIST_TYPE
-    Close*: proc (This: ptr ID3D12GraphicsCommandList): HRESULT
+                      ppvDevice: ptr pointer): HRESULT {.stdcall.}
+    GetType*: proc (This: ptr ID3D12GraphicsCommandList): D3D12_COMMAND_LIST_TYPE {.
+        stdcall.}
+    Close*: proc (This: ptr ID3D12GraphicsCommandList): HRESULT {.stdcall.}
     Reset*: proc (This: ptr ID3D12GraphicsCommandList; 
                   pAllocator: ptr ID3D12CommandAllocator; 
-                  pInitialState: ptr ID3D12PipelineState): HRESULT
+                  pInitialState: ptr ID3D12PipelineState): HRESULT {.stdcall.}
     ClearState*: proc (This: ptr ID3D12GraphicsCommandList; 
-                       pPipelineState: ptr ID3D12PipelineState)
+                       pPipelineState: ptr ID3D12PipelineState) {.stdcall.}
     DrawInstanced*: proc (This: ptr ID3D12GraphicsCommandList; 
                           VertexCountPerInstance: UINT; InstanceCount: UINT; 
-                          StartVertexLocation: UINT; StartInstanceLocation: UINT)
+                          StartVertexLocation: UINT; StartInstanceLocation: UINT) {.
+        stdcall.}
     DrawIndexedInstanced*: proc (This: ptr ID3D12GraphicsCommandList; 
                                  IndexCountPerInstance: UINT; 
                                  InstanceCount: UINT; StartIndexLocation: UINT; 
                                  BaseVertexLocation: INT; 
-                                 StartInstanceLocation: UINT)
+                                 StartInstanceLocation: UINT) {.stdcall.}
     Dispatch*: proc (This: ptr ID3D12GraphicsCommandList; 
                      ThreadGroupCountX: UINT; ThreadGroupCountY: UINT; 
-                     ThreadGroupCountZ: UINT)
+                     ThreadGroupCountZ: UINT) {.stdcall.}
     CopyBufferRegion*: proc (This: ptr ID3D12GraphicsCommandList; 
                              pDstBuffer: ptr ID3D12Resource; DstOffset: UINT64; 
                              pSrcBuffer: ptr ID3D12Resource; SrcOffset: UINT64; 
-                             NumBytes: UINT64)
+                             NumBytes: UINT64) {.stdcall.}
     CopyTextureRegion*: proc (This: ptr ID3D12GraphicsCommandList; 
                               pDst: ptr D3D12_TEXTURE_COPY_LOCATION; DstX: UINT; 
                               DstY: UINT; DstZ: UINT; 
                               pSrc: ptr D3D12_TEXTURE_COPY_LOCATION; 
-                              pSrcBox: ptr D3D12_BOX)
+                              pSrcBox: ptr D3D12_BOX) {.stdcall.}
     CopyResource*: proc (This: ptr ID3D12GraphicsCommandList; 
                          pDstResource: ptr ID3D12Resource; 
-                         pSrcResource: ptr ID3D12Resource)
+                         pSrcResource: ptr ID3D12Resource) {.stdcall.}
     CopyTiles*: proc (This: ptr ID3D12GraphicsCommandList; 
                       pTiledResource: ptr ID3D12Resource; 
         pTileRegionStartCoordinate: ptr D3D12_TILED_RESOURCE_COORDINATE; 
                       pTileRegionSize: ptr D3D12_TILE_REGION_SIZE; 
                       pBuffer: ptr ID3D12Resource; 
                       BufferStartOffsetInBytes: UINT64; 
-                      Flags: D3D12_TILE_COPY_FLAGS)
+                      Flags: D3D12_TILE_COPY_FLAGS) {.stdcall.}
     ResolveSubresource*: proc (This: ptr ID3D12GraphicsCommandList; 
                                pDstResource: ptr ID3D12Resource; 
                                DstSubresource: UINT; 
                                pSrcResource: ptr ID3D12Resource; 
-                               SrcSubresource: UINT; Format: DXGI_FORMAT)
+                               SrcSubresource: UINT; Format: DXGI_FORMAT) {.
+        stdcall.}
     IASetPrimitiveTopology*: proc (This: ptr ID3D12GraphicsCommandList; 
-                                   PrimitiveTopology: D3D12_PRIMITIVE_TOPOLOGY)
+                                   PrimitiveTopology: D3D12_PRIMITIVE_TOPOLOGY) {.
+        stdcall.}
     RSSetViewports*: proc (This: ptr ID3D12GraphicsCommandList; 
-                           NumViewports: UINT; pViewports: ptr D3D12_VIEWPORT)
+                           NumViewports: UINT; pViewports: ptr D3D12_VIEWPORT) {.
+        stdcall.}
     RSSetScissorRects*: proc (This: ptr ID3D12GraphicsCommandList; 
-                              NumRects: UINT; pRects: ptr D3D12_RECT)
+                              NumRects: UINT; pRects: ptr D3D12_RECT) {.stdcall.}
     OMSetBlendFactor*: proc (This: ptr ID3D12GraphicsCommandList; 
-                             BlendFactor: array[4, FLOAT])
+                             BlendFactor: array[4, FLOAT]) {.stdcall.}
     OMSetStencilRef*: proc (This: ptr ID3D12GraphicsCommandList; 
-                            StencilRef: UINT)
+                            StencilRef: UINT) {.stdcall.}
     SetPipelineState*: proc (This: ptr ID3D12GraphicsCommandList; 
-                             pPipelineState: ptr ID3D12PipelineState)
+                             pPipelineState: ptr ID3D12PipelineState) {.stdcall.}
     ResourceBarrier*: proc (This: ptr ID3D12GraphicsCommandList; 
                             NumBarriers: UINT; 
-                            pBarriers: ptr D3D12_RESOURCE_BARRIER)
+                            pBarriers: ptr D3D12_RESOURCE_BARRIER) {.stdcall.}
     ExecuteBundle*: proc (This: ptr ID3D12GraphicsCommandList; 
-                          pCommandList: ptr ID3D12GraphicsCommandList)
+                          pCommandList: ptr ID3D12GraphicsCommandList) {.stdcall.}
     SetDescriptorHeaps*: proc (This: ptr ID3D12GraphicsCommandList; 
                                NumDescriptorHeaps: UINT; 
-                               ppDescriptorHeaps: ptr ptr ID3D12DescriptorHeap)
+                               ppDescriptorHeaps: ptr ptr ID3D12DescriptorHeap) {.
+        stdcall.}
     SetComputeRootSignature*: proc (This: ptr ID3D12GraphicsCommandList; 
-                                    pRootSignature: ptr ID3D12RootSignature)
+                                    pRootSignature: ptr ID3D12RootSignature) {.
+        stdcall.}
     SetGraphicsRootSignature*: proc (This: ptr ID3D12GraphicsCommandList; 
-                                     pRootSignature: ptr ID3D12RootSignature)
+                                     pRootSignature: ptr ID3D12RootSignature) {.
+        stdcall.}
     SetComputeRootDescriptorTable*: proc (This: ptr ID3D12GraphicsCommandList; 
-        RootParameterIndex: UINT; BaseDescriptor: D3D12_GPU_DESCRIPTOR_HANDLE)
+        RootParameterIndex: UINT; BaseDescriptor: D3D12_GPU_DESCRIPTOR_HANDLE) {.
+        stdcall.}
     SetGraphicsRootDescriptorTable*: proc (This: ptr ID3D12GraphicsCommandList; 
-        RootParameterIndex: UINT; BaseDescriptor: D3D12_GPU_DESCRIPTOR_HANDLE)
+        RootParameterIndex: UINT; BaseDescriptor: D3D12_GPU_DESCRIPTOR_HANDLE) {.
+        stdcall.}
     SetComputeRoot32BitConstant*: proc (This: ptr ID3D12GraphicsCommandList; 
                                         RootParameterIndex: UINT; SrcData: UINT; 
-                                        DestOffsetIn32BitValues: UINT)
+                                        DestOffsetIn32BitValues: UINT) {.stdcall.}
     SetGraphicsRoot32BitConstant*: proc (This: ptr ID3D12GraphicsCommandList; 
-        RootParameterIndex: UINT; SrcData: UINT; DestOffsetIn32BitValues: UINT)
+        RootParameterIndex: UINT; SrcData: UINT; DestOffsetIn32BitValues: UINT) {.
+        stdcall.}
     SetComputeRoot32BitConstants*: proc (This: ptr ID3D12GraphicsCommandList; 
         RootParameterIndex: UINT; Num32BitValuesToSet: UINT; pSrcData: pointer; 
-        DestOffsetIn32BitValues: UINT)
+        DestOffsetIn32BitValues: UINT) {.stdcall.}
     SetGraphicsRoot32BitConstants*: proc (This: ptr ID3D12GraphicsCommandList; 
         RootParameterIndex: UINT; Num32BitValuesToSet: UINT; pSrcData: pointer; 
-        DestOffsetIn32BitValues: UINT)
+        DestOffsetIn32BitValues: UINT) {.stdcall.}
     SetComputeRootConstantBufferView*: proc (
         This: ptr ID3D12GraphicsCommandList; RootParameterIndex: UINT; 
-        BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS)
+        BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS) {.stdcall.}
     SetGraphicsRootConstantBufferView*: proc (
         This: ptr ID3D12GraphicsCommandList; RootParameterIndex: UINT; 
-        BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS)
+        BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS) {.stdcall.}
     SetComputeRootShaderResourceView*: proc (
         This: ptr ID3D12GraphicsCommandList; RootParameterIndex: UINT; 
-        BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS)
+        BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS) {.stdcall.}
     SetGraphicsRootShaderResourceView*: proc (
         This: ptr ID3D12GraphicsCommandList; RootParameterIndex: UINT; 
-        BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS)
+        BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS) {.stdcall.}
     SetComputeRootUnorderedAccessView*: proc (
         This: ptr ID3D12GraphicsCommandList; RootParameterIndex: UINT; 
-        BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS)
+        BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS) {.stdcall.}
     SetGraphicsRootUnorderedAccessView*: proc (
         This: ptr ID3D12GraphicsCommandList; RootParameterIndex: UINT; 
-        BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS)
+        BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS) {.stdcall.}
     IASetIndexBuffer*: proc (This: ptr ID3D12GraphicsCommandList; 
-                             pView: ptr D3D12_INDEX_BUFFER_VIEW)
+                             pView: ptr D3D12_INDEX_BUFFER_VIEW) {.stdcall.}
     IASetVertexBuffers*: proc (This: ptr ID3D12GraphicsCommandList; 
                                StartSlot: UINT; NumViews: UINT; 
-                               pViews: ptr D3D12_VERTEX_BUFFER_VIEW)
+                               pViews: ptr D3D12_VERTEX_BUFFER_VIEW) {.stdcall.}
     SOSetTargets*: proc (This: ptr ID3D12GraphicsCommandList; StartSlot: UINT; 
                          NumViews: UINT; 
-                         pViews: ptr D3D12_STREAM_OUTPUT_BUFFER_VIEW)
+                         pViews: ptr D3D12_STREAM_OUTPUT_BUFFER_VIEW) {.stdcall.}
     OMSetRenderTargets*: proc (This: ptr ID3D12GraphicsCommandList; 
                                NumRenderTargetDescriptors: UINT; 
         pRenderTargetDescriptors: ptr D3D12_CPU_DESCRIPTOR_HANDLE; 
                                RTsSingleHandleToDescriptorRange: BOOL; 
-        pDepthStencilDescriptor: ptr D3D12_CPU_DESCRIPTOR_HANDLE)
+        pDepthStencilDescriptor: ptr D3D12_CPU_DESCRIPTOR_HANDLE) {.stdcall.}
     ClearDepthStencilView*: proc (This: ptr ID3D12GraphicsCommandList; 
         DepthStencilView: D3D12_CPU_DESCRIPTOR_HANDLE; 
                                   ClearFlags: D3D12_CLEAR_FLAGS; Depth: FLOAT; 
                                   Stencil: UINT8; NumRects: UINT; 
-                                  pRects: ptr D3D12_RECT)
+                                  pRects: ptr D3D12_RECT) {.stdcall.}
     ClearRenderTargetView*: proc (This: ptr ID3D12GraphicsCommandList; 
         RenderTargetView: D3D12_CPU_DESCRIPTOR_HANDLE; 
                                   ColorRGBA: array[4, FLOAT]; NumRects: UINT; 
-                                  pRects: ptr D3D12_RECT)
+                                  pRects: ptr D3D12_RECT) {.stdcall.}
     ClearUnorderedAccessViewUint*: proc (This: ptr ID3D12GraphicsCommandList; 
         ViewGPUHandleInCurrentHeap: D3D12_GPU_DESCRIPTOR_HANDLE; 
         ViewCPUHandle: D3D12_CPU_DESCRIPTOR_HANDLE; 
         pResource: ptr ID3D12Resource; Values: array[4, UINT]; NumRects: UINT; 
-        pRects: ptr D3D12_RECT)
+        pRects: ptr D3D12_RECT) {.stdcall.}
     ClearUnorderedAccessViewFloat*: proc (This: ptr ID3D12GraphicsCommandList; 
         ViewGPUHandleInCurrentHeap: D3D12_GPU_DESCRIPTOR_HANDLE; 
         ViewCPUHandle: D3D12_CPU_DESCRIPTOR_HANDLE; 
         pResource: ptr ID3D12Resource; Values: array[4, FLOAT]; NumRects: UINT; 
-        pRects: ptr D3D12_RECT)
+        pRects: ptr D3D12_RECT) {.stdcall.}
     DiscardResource*: proc (This: ptr ID3D12GraphicsCommandList; 
                             pResource: ptr ID3D12Resource; 
-                            pRegion: ptr D3D12_DISCARD_REGION)
+                            pRegion: ptr D3D12_DISCARD_REGION) {.stdcall.}
     BeginQuery*: proc (This: ptr ID3D12GraphicsCommandList; 
                        pQueryHeap: ptr ID3D12QueryHeap; Type: D3D12_QUERY_TYPE; 
-                       Index: UINT)
+                       Index: UINT) {.stdcall.}
     EndQuery*: proc (This: ptr ID3D12GraphicsCommandList; 
                      pQueryHeap: ptr ID3D12QueryHeap; Type: D3D12_QUERY_TYPE; 
-                     Index: UINT)
+                     Index: UINT) {.stdcall.}
     ResolveQueryData*: proc (This: ptr ID3D12GraphicsCommandList; 
                              pQueryHeap: ptr ID3D12QueryHeap; 
                              Type: D3D12_QUERY_TYPE; StartIndex: UINT; 
                              NumQueries: UINT; 
                              pDestinationBuffer: ptr ID3D12Resource; 
-                             AlignedDestinationBufferOffset: UINT64)
+                             AlignedDestinationBufferOffset: UINT64) {.stdcall.}
     SetPredication*: proc (This: ptr ID3D12GraphicsCommandList; 
                            pBuffer: ptr ID3D12Resource; 
                            AlignedBufferOffset: UINT64; 
-                           Operation: D3D12_PREDICATION_OP)
+                           Operation: D3D12_PREDICATION_OP) {.stdcall.}
     SetMarker*: proc (This: ptr ID3D12GraphicsCommandList; Metadata: UINT; 
-                      pData: pointer; Size: UINT)
+                      pData: pointer; Size: UINT) {.stdcall.}
     BeginEvent*: proc (This: ptr ID3D12GraphicsCommandList; Metadata: UINT; 
-                       pData: pointer; Size: UINT)
-    EndEvent*: proc (This: ptr ID3D12GraphicsCommandList)
+                       pData: pointer; Size: UINT) {.stdcall.}
+    EndEvent*: proc (This: ptr ID3D12GraphicsCommandList) {.stdcall.}
     ExecuteIndirect*: proc (This: ptr ID3D12GraphicsCommandList; 
                             pCommandSignature: ptr ID3D12CommandSignature; 
                             MaxCommandCount: UINT; 
                             pArgumentBuffer: ptr ID3D12Resource; 
                             ArgumentBufferOffset: UINT64; 
                             pCountBuffer: ptr ID3D12Resource; 
-                            CountBufferOffset: UINT64)
+                            CountBufferOffset: UINT64) {.stdcall.}
 
   ID3D12GraphicsCommandList* = object 
     lpVtbl*: ptr ID3D12GraphicsCommandListVtbl
 
 
+# interface ID3D12CommandQueue 
+# [unique][local][object][uuid] 
+
 
 type 
   ID3D12CommandQueueVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12CommandQueue; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12CommandQueue): ULONG
-    Release*: proc (This: ptr ID3D12CommandQueue): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12CommandQueue): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12CommandQueue): ULONG {.stdcall.}
     GetPrivateData*: proc (This: ptr ID3D12CommandQueue; guid: ptr GUID; 
-                           pDataSize: ptr UINT; pData: pointer): HRESULT
+                           pDataSize: ptr UINT; pData: pointer): HRESULT {.
+        stdcall.}
     SetPrivateData*: proc (This: ptr ID3D12CommandQueue; guid: ptr GUID; 
-                           DataSize: UINT; pData: pointer): HRESULT
+                           DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr ID3D12CommandQueue; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT
-    SetName*: proc (This: ptr ID3D12CommandQueue; Name: LPCWSTR): HRESULT
+                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+        stdcall.}
+    SetName*: proc (This: ptr ID3D12CommandQueue; Name: LPCWSTR): HRESULT {.
+        stdcall.}
     GetDevice*: proc (This: ptr ID3D12CommandQueue; riid: ptr IID; 
-                      ppvDevice: ptr pointer): HRESULT
+                      ppvDevice: ptr pointer): HRESULT {.stdcall.}
     UpdateTileMappings*: proc (This: ptr ID3D12CommandQueue; 
                                pResource: ptr ID3D12Resource; 
                                NumResourceRegions: UINT; 
@@ -2083,100 +2241,115 @@ type
                                pRangeFlags: ptr D3D12_TILE_RANGE_FLAGS; 
                                pHeapRangeStartOffsets: ptr UINT; 
                                pRangeTileCounts: ptr UINT; 
-                               Flags: D3D12_TILE_MAPPING_FLAGS)
+                               Flags: D3D12_TILE_MAPPING_FLAGS) {.stdcall.}
     CopyTileMappings*: proc (This: ptr ID3D12CommandQueue; 
                              pDstResource: ptr ID3D12Resource; 
         pDstRegionStartCoordinate: ptr D3D12_TILED_RESOURCE_COORDINATE; 
                              pSrcResource: ptr ID3D12Resource; 
         pSrcRegionStartCoordinate: ptr D3D12_TILED_RESOURCE_COORDINATE; 
                              pRegionSize: ptr D3D12_TILE_REGION_SIZE; 
-                             Flags: D3D12_TILE_MAPPING_FLAGS)
+                             Flags: D3D12_TILE_MAPPING_FLAGS) {.stdcall.}
     ExecuteCommandLists*: proc (This: ptr ID3D12CommandQueue; 
                                 NumCommandLists: UINT; 
-                                ppCommandLists: ptr ptr ID3D12CommandList)
+                                ppCommandLists: ptr ptr ID3D12CommandList) {.
+        stdcall.}
     SetMarker*: proc (This: ptr ID3D12CommandQueue; Metadata: UINT; 
-                      pData: pointer; Size: UINT)
+                      pData: pointer; Size: UINT) {.stdcall.}
     BeginEvent*: proc (This: ptr ID3D12CommandQueue; Metadata: UINT; 
-                       pData: pointer; Size: UINT)
-    EndEvent*: proc (This: ptr ID3D12CommandQueue)
+                       pData: pointer; Size: UINT) {.stdcall.}
+    EndEvent*: proc (This: ptr ID3D12CommandQueue) {.stdcall.}
     Signal*: proc (This: ptr ID3D12CommandQueue; pFence: ptr ID3D12Fence; 
-                   Value: UINT64): HRESULT
+                   Value: UINT64): HRESULT {.stdcall.}
     Wait*: proc (This: ptr ID3D12CommandQueue; pFence: ptr ID3D12Fence; 
-                 Value: UINT64): HRESULT
+                 Value: UINT64): HRESULT {.stdcall.}
     GetTimestampFrequency*: proc (This: ptr ID3D12CommandQueue; 
-                                  pFrequency: ptr UINT64): HRESULT
+                                  pFrequency: ptr UINT64): HRESULT {.stdcall.}
     GetClockCalibration*: proc (This: ptr ID3D12CommandQueue; 
                                 pGpuTimestamp: ptr UINT64; 
-                                pCpuTimestamp: ptr UINT64): HRESULT
-    GetDesc*: proc (This: ptr ID3D12CommandQueue): D3D12_COMMAND_QUEUE_DESC
+                                pCpuTimestamp: ptr UINT64): HRESULT {.stdcall.}
+    GetDesc*: proc (This: ptr ID3D12CommandQueue): D3D12_COMMAND_QUEUE_DESC {.
+        stdcall.}
 
   ID3D12CommandQueue* = object 
     lpVtbl*: ptr ID3D12CommandQueueVtbl
 
 
+# interface ID3D12Device 
+# [unique][local][object][uuid] 
 
 type 
   ID3D12DeviceVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12Device; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12Device): ULONG
-    Release*: proc (This: ptr ID3D12Device): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12Device): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12Device): ULONG {.stdcall.}
     GetPrivateData*: proc (This: ptr ID3D12Device; guid: ptr GUID; 
-                           pDataSize: ptr UINT; pData: pointer): HRESULT
+                           pDataSize: ptr UINT; pData: pointer): HRESULT {.
+        stdcall.}
     SetPrivateData*: proc (This: ptr ID3D12Device; guid: ptr GUID; 
-                           DataSize: UINT; pData: pointer): HRESULT
+                           DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr ID3D12Device; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT
-    SetName*: proc (This: ptr ID3D12Device; Name: LPCWSTR): HRESULT
-    GetNodeCount*: proc (This: ptr ID3D12Device): UINT
+                                    pData: ptr IUnknown): HRESULT {.stdcall.}
+    SetName*: proc (This: ptr ID3D12Device; Name: LPCWSTR): HRESULT {.stdcall.}
+    GetNodeCount*: proc (This: ptr ID3D12Device): UINT {.stdcall.}
     CreateCommandQueue*: proc (This: ptr ID3D12Device; 
                                pDesc: ptr D3D12_COMMAND_QUEUE_DESC; 
-                               riid: ptr IID; ppCommandQueue: ptr pointer): HRESULT
+                               riid: ptr IID; ppCommandQueue: ptr pointer): HRESULT {.
+        stdcall.}
     CreateCommandAllocator*: proc (This: ptr ID3D12Device; 
                                    `type`: D3D12_COMMAND_LIST_TYPE; 
                                    riid: ptr IID; 
-                                   ppCommandAllocator: ptr pointer): HRESULT
+                                   ppCommandAllocator: ptr pointer): HRESULT {.
+        stdcall.}
     CreateGraphicsPipelineState*: proc (This: ptr ID3D12Device; pDesc: ptr D3D12_GRAPHICS_PIPELINE_STATE_DESC; 
                                         riid: ptr IID; 
-                                        ppPipelineState: ptr pointer): HRESULT
+                                        ppPipelineState: ptr pointer): HRESULT {.
+        stdcall.}
     CreateComputePipelineState*: proc (This: ptr ID3D12Device; pDesc: ptr D3D12_COMPUTE_PIPELINE_STATE_DESC; 
                                        riid: ptr IID; 
-                                       ppPipelineState: ptr pointer): HRESULT
+                                       ppPipelineState: ptr pointer): HRESULT {.
+        stdcall.}
     CreateCommandList*: proc (This: ptr ID3D12Device; nodeMask: UINT; 
                               `type`: D3D12_COMMAND_LIST_TYPE; 
                               pCommandAllocator: ptr ID3D12CommandAllocator; 
                               pInitialState: ptr ID3D12PipelineState; 
-                              riid: ptr IID; ppCommandList: ptr pointer): HRESULT
+                              riid: ptr IID; ppCommandList: ptr pointer): HRESULT {.
+        stdcall.}
     CheckFeatureSupport*: proc (This: ptr ID3D12Device; Feature: D3D12_FEATURE; 
                                 pFeatureSupportData: pointer; 
-                                FeatureSupportDataSize: UINT): HRESULT
+                                FeatureSupportDataSize: UINT): HRESULT {.stdcall.}
     CreateDescriptorHeap*: proc (This: ptr ID3D12Device; pDescriptorHeapDesc: ptr D3D12_DESCRIPTOR_HEAP_DESC; 
-                                 riid: ptr IID; ppvHeap: ptr pointer): HRESULT
+                                 riid: ptr IID; ppvHeap: ptr pointer): HRESULT {.
+        stdcall.}
     GetDescriptorHandleIncrementSize*: proc (This: ptr ID3D12Device; 
-        DescriptorHeapType: D3D12_DESCRIPTOR_HEAP_TYPE): UINT
+        DescriptorHeapType: D3D12_DESCRIPTOR_HEAP_TYPE): UINT {.stdcall.}
     CreateRootSignature*: proc (This: ptr ID3D12Device; nodeMask: UINT; 
                                 pBlobWithRootSignature: pointer; 
                                 blobLengthInBytes: SIZE_T; riid: ptr IID; 
-                                ppvRootSignature: ptr pointer): HRESULT
+                                ppvRootSignature: ptr pointer): HRESULT {.
+        stdcall.}
     CreateConstantBufferView*: proc (This: ptr ID3D12Device; pDesc: ptr D3D12_CONSTANT_BUFFER_VIEW_DESC; 
-        DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE)
+        DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE) {.stdcall.}
     CreateShaderResourceView*: proc (This: ptr ID3D12Device; 
                                      pResource: ptr ID3D12Resource; pDesc: ptr D3D12_SHADER_RESOURCE_VIEW_DESC; 
-        DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE)
+        DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE) {.stdcall.}
     CreateUnorderedAccessView*: proc (This: ptr ID3D12Device; 
                                       pResource: ptr ID3D12Resource; 
                                       pCounterResource: ptr ID3D12Resource; 
-        pDesc: ptr D3D12_UNORDERED_ACCESS_VIEW_DESC; DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE)
+        pDesc: ptr D3D12_UNORDERED_ACCESS_VIEW_DESC; DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE) {.
+        stdcall.}
     CreateRenderTargetView*: proc (This: ptr ID3D12Device; 
                                    pResource: ptr ID3D12Resource; 
                                    pDesc: ptr D3D12_RENDER_TARGET_VIEW_DESC; 
-                                   DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE)
+                                   DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE) {.
+        stdcall.}
     CreateDepthStencilView*: proc (This: ptr ID3D12Device; 
                                    pResource: ptr ID3D12Resource; 
                                    pDesc: ptr D3D12_DEPTH_STENCIL_VIEW_DESC; 
-                                   DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE)
+                                   DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE) {.
+        stdcall.}
     CreateSampler*: proc (This: ptr ID3D12Device; pDesc: ptr D3D12_SAMPLER_DESC; 
-                          DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE)
+                          DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE) {.stdcall.}
     CopyDescriptors*: proc (This: ptr ID3D12Device; 
                             NumDestDescriptorRanges: UINT; 
         pDestDescriptorRangeStarts: ptr D3D12_CPU_DESCRIPTOR_HANDLE; 
@@ -2184,68 +2357,78 @@ type
                             NumSrcDescriptorRanges: UINT; 
         pSrcDescriptorRangeStarts: ptr D3D12_CPU_DESCRIPTOR_HANDLE; 
                             pSrcDescriptorRangeSizes: ptr UINT; 
-                            DescriptorHeapsType: D3D12_DESCRIPTOR_HEAP_TYPE)
+                            DescriptorHeapsType: D3D12_DESCRIPTOR_HEAP_TYPE) {.
+        stdcall.}
     CopyDescriptorsSimple*: proc (This: ptr ID3D12Device; NumDescriptors: UINT; 
         DestDescriptorRangeStart: D3D12_CPU_DESCRIPTOR_HANDLE; 
         SrcDescriptorRangeStart: D3D12_CPU_DESCRIPTOR_HANDLE; 
-        DescriptorHeapsType: D3D12_DESCRIPTOR_HEAP_TYPE)
+        DescriptorHeapsType: D3D12_DESCRIPTOR_HEAP_TYPE) {.stdcall.}
     GetResourceAllocationInfo*: proc (This: ptr ID3D12Device; visibleMask: UINT; 
                                       numResourceDescs: UINT; 
-                                      pResourceDescs: ptr D3D12_RESOURCE_DESC): D3D12_RESOURCE_ALLOCATION_INFO
+                                      pResourceDescs: ptr D3D12_RESOURCE_DESC): D3D12_RESOURCE_ALLOCATION_INFO {.
+        stdcall.}
     GetCustomHeapProperties*: proc (This: ptr ID3D12Device; nodeMask: UINT; 
-                                    heapType: D3D12_HEAP_TYPE): D3D12_HEAP_PROPERTIES
+                                    heapType: D3D12_HEAP_TYPE): D3D12_HEAP_PROPERTIES {.
+        stdcall.}
     CreateCommittedResource*: proc (This: ptr ID3D12Device; 
                                     pHeapProperties: ptr D3D12_HEAP_PROPERTIES; 
                                     HeapFlags: D3D12_HEAP_FLAGS; 
                                     pResourceDesc: ptr D3D12_RESOURCE_DESC; 
         InitialResourceState: D3D12_RESOURCE_STATES; pOptimizedClearValue: ptr D3D12_CLEAR_VALUE; 
                                     riidResource: ptr IID; 
-                                    ppvResource: ptr pointer): HRESULT
+                                    ppvResource: ptr pointer): HRESULT {.stdcall.}
     CreateHeap*: proc (This: ptr ID3D12Device; pDesc: ptr D3D12_HEAP_DESC; 
-                       riid: ptr IID; ppvHeap: ptr pointer): HRESULT
+                       riid: ptr IID; ppvHeap: ptr pointer): HRESULT {.stdcall.}
     CreatePlacedResource*: proc (This: ptr ID3D12Device; pHeap: ptr ID3D12Heap; 
                                  HeapOffset: UINT64; 
                                  pDesc: ptr D3D12_RESOURCE_DESC; 
                                  InitialState: D3D12_RESOURCE_STATES; 
                                  pOptimizedClearValue: ptr D3D12_CLEAR_VALUE; 
-                                 riid: ptr IID; ppvResource: ptr pointer): HRESULT
+                                 riid: ptr IID; ppvResource: ptr pointer): HRESULT {.
+        stdcall.}
     CreateReservedResource*: proc (This: ptr ID3D12Device; 
                                    pDesc: ptr D3D12_RESOURCE_DESC; 
                                    InitialState: D3D12_RESOURCE_STATES; 
                                    pOptimizedClearValue: ptr D3D12_CLEAR_VALUE; 
-                                   riid: ptr IID; ppvResource: ptr pointer): HRESULT
+                                   riid: ptr IID; ppvResource: ptr pointer): HRESULT {.
+        stdcall.}
     CreateSharedHandle*: proc (This: ptr ID3D12Device; 
                                pObject: ptr ID3D12DeviceChild; 
                                pAttributes: ptr SECURITY_ATTRIBUTES; 
-                               Access: DWORD; Name: LPCWSTR; pHandle: ptr HANDLE): HRESULT
+                               Access: DWORD; Name: LPCWSTR; pHandle: ptr HANDLE): HRESULT {.
+        stdcall.}
     OpenSharedHandle*: proc (This: ptr ID3D12Device; NTHandle: HANDLE; 
-                             riid: ptr IID; ppvObj: ptr pointer): HRESULT
+                             riid: ptr IID; ppvObj: ptr pointer): HRESULT {.
+        stdcall.}
     OpenSharedHandleByName*: proc (This: ptr ID3D12Device; Name: LPCWSTR; 
-                                   Access: DWORD; pNTHandle: ptr HANDLE): HRESULT
+                                   Access: DWORD; pNTHandle: ptr HANDLE): HRESULT {.
+        stdcall.}             # [annotation][out] 
     MakeResident*: proc (This: ptr ID3D12Device; NumObjects: UINT; 
-                         ppObjects: ptr ptr ID3D12Pageable): HRESULT
+                         ppObjects: ptr ptr ID3D12Pageable): HRESULT {.stdcall.}
     Evict*: proc (This: ptr ID3D12Device; NumObjects: UINT; 
-                  ppObjects: ptr ptr ID3D12Pageable): HRESULT
+                  ppObjects: ptr ptr ID3D12Pageable): HRESULT {.stdcall.}
     CreateFence*: proc (This: ptr ID3D12Device; InitialValue: UINT64; 
                         Flags: D3D12_FENCE_FLAGS; riid: ptr IID; 
-                        ppFence: ptr pointer): HRESULT
-    GetDeviceRemovedReason*: proc (This: ptr ID3D12Device): HRESULT
+                        ppFence: ptr pointer): HRESULT {.stdcall.}
+    GetDeviceRemovedReason*: proc (This: ptr ID3D12Device): HRESULT {.stdcall.}
     GetCopyableFootprints*: proc (This: ptr ID3D12Device; 
                                   pResourceDesc: ptr D3D12_RESOURCE_DESC; 
                                   FirstSubresource: UINT; NumSubresources: UINT; 
                                   BaseOffset: UINT64; pLayouts: ptr D3D12_PLACED_SUBRESOURCE_FOOTPRINT; 
                                   pNumRows: ptr UINT; 
                                   pRowSizeInBytes: ptr UINT64; 
-                                  pTotalBytes: ptr UINT64)
+                                  pTotalBytes: ptr UINT64) {.stdcall.}
     CreateQueryHeap*: proc (This: ptr ID3D12Device; 
                             pDesc: ptr D3D12_QUERY_HEAP_DESC; riid: ptr IID; 
-                            ppvHeap: ptr pointer): HRESULT
-    SetStablePowerState*: proc (This: ptr ID3D12Device; Enable: BOOL): HRESULT
+                            ppvHeap: ptr pointer): HRESULT {.stdcall.}
+    SetStablePowerState*: proc (This: ptr ID3D12Device; Enable: BOOL): HRESULT {.
+        stdcall.}
     CreateCommandSignature*: proc (This: ptr ID3D12Device; 
                                    pDesc: ptr D3D12_COMMAND_SIGNATURE_DESC; 
                                    pRootSignature: ptr ID3D12RootSignature; 
                                    riid: ptr IID; 
-                                   ppvCommandSignature: ptr pointer): HRESULT
+                                   ppvCommandSignature: ptr pointer): HRESULT {.
+        stdcall.}
     GetResourceTiling*: proc (This: ptr ID3D12Device; 
                               pTiledResource: ptr ID3D12Resource; 
                               pNumTilesForEntireResource: ptr UINT; 
@@ -2253,12 +2436,18 @@ type
         pStandardTileShapeForNonPackedMips: ptr D3D12_TILE_SHAPE; 
                               pNumSubresourceTilings: ptr UINT; 
                               FirstSubresourceTilingToGet: UINT; 
-        pSubresourceTilingsForNonPackedMips: ptr D3D12_SUBRESOURCE_TILING)
-    GetAdapterLuid*: proc (This: ptr ID3D12Device): LUID
+        pSubresourceTilingsForNonPackedMips: ptr D3D12_SUBRESOURCE_TILING) {.
+        stdcall.}
+    GetAdapterLuid*: proc (This: ptr ID3D12Device): LUID {.stdcall.}
 
   ID3D12Device* = object 
     lpVtbl*: ptr ID3D12DeviceVtbl
 
+
+# interface __MIDL_itf_d3d12_0000_0017 
+# [local] 
+
+type 
   D3D12_SUBRESOURCE_DATA* = object 
     pData*: pointer
     RowPitch*: LONG_PTR
@@ -2269,111 +2458,65 @@ type
     RowPitch*: SIZE_T
     SlicePitch*: SIZE_T
 
-const 
-  D3D12_SHADER_COMPONENT_MAPPING_MASK* = 0x00000007
-  D3D12_SHADER_COMPONENT_MAPPING_SHIFT* = 3
-  D3D12_SHADER_COMPONENT_MAPPING_ALWAYS_SET_BIT_AVOIDING_ZEROMEM_MISTAKES* = (
-    1 shl (D3D12_SHADER_COMPONENT_MAPPING_SHIFT * 4))
 
-template D3D12_ENCODE_SHADER_4_COMPONENT_MAPPING*(Src0, Src1, Src2, Src3: expr): expr = 
-  ((((Src0) and D3D12_SHADER_COMPONENT_MAPPING_MASK) or
-      (((Src1) and D3D12_SHADER_COMPONENT_MAPPING_MASK) shl
-      D3D12_SHADER_COMPONENT_MAPPING_SHIFT) or
-      (((Src2) and D3D12_SHADER_COMPONENT_MAPPING_MASK) shl
-      (D3D12_SHADER_COMPONENT_MAPPING_SHIFT * 2)) or
-      (((Src3) and D3D12_SHADER_COMPONENT_MAPPING_MASK) shl
-      (D3D12_SHADER_COMPONENT_MAPPING_SHIFT * 3)) or
-      D3D12_SHADER_COMPONENT_MAPPING_ALWAYS_SET_BIT_AVOIDING_ZEROMEM_MISTAKES))
+#-------------------------------------------------------------------------------------
+# 
+#  Copyright (c) Microsoft Corporation
+# 
+# -------------------------------------------------------------------------------------
+# this ALWAYS GENERATED file contains the definitions for the interfaces 
+# File created by MIDL compiler version 8.00.0613 
+# verify that the <rpcndr.h> version is high enough to compile this file
+# verify that the <rpcsal.h> version is high enough to compile this file
 
-template D3D12_DECODE_SHADER_4_COMPONENT_MAPPING*(
-    ComponentToExtract, Mapping: expr): expr = 
-  ((D3D12_SHADER_COMPONENT_MAPPING)(Mapping shr
-      (D3D12_SHADER_COMPONENT_MAPPING_SHIFT * ComponentToExtract) and
-      D3D12_SHADER_COMPONENT_MAPPING_MASK))
+# Forward Declarations 
 
-const 
-  D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING* = D3D12_ENCODE_SHADER_4_COMPONENT_MAPPING(
-      0, 1, 2, 3)
 
-const 
-  D3D12_FILTER_REDUCTION_TYPE_MASK* = (0x00000003)
-  D3D12_FILTER_REDUCTION_TYPE_SHIFT* = (7)
-  D3D12_FILTER_TYPE_MASK* = (0x00000003)
-  D3D12_MIN_FILTER_SHIFT* = (4)
-  D3D12_MAG_FILTER_SHIFT* = (2)
-  D3D12_MIP_FILTER_SHIFT* = (0)
-  D3D12_ANISOTROPIC_FILTERING_BIT* = (0x00000040)
+# header files for imported files 
 
-template D3D12_ENCODE_BASIC_FILTER*(min, mag, mip, reduction: expr): expr = 
-  ((D3D12_FILTER)((((min) and D3D12_FILTER_TYPE_MASK) shl
-      D3D12_MIN_FILTER_SHIFT) or
-      (((mag) and D3D12_FILTER_TYPE_MASK) shl D3D12_MAG_FILTER_SHIFT) or
-      (((mip) and D3D12_FILTER_TYPE_MASK) shl D3D12_MIP_FILTER_SHIFT) or
-      (((reduction) and D3D12_FILTER_REDUCTION_TYPE_MASK) shl
-      D3D12_FILTER_REDUCTION_TYPE_SHIFT)))
+#-------------------------------------------------------------------------------------
+# 
+#  Copyright (c) Microsoft Corporation
+# 
+# -------------------------------------------------------------------------------------
+# this ALWAYS GENERATED file contains the definitions for the interfaces 
+# File created by MIDL compiler version 8.00.0613 
+# verify that the <rpcndr.h> version is high enough to compile this file
+# verify that the <rpcsal.h> version is high enough to compile this file
 
-template D3D12_ENCODE_ANISOTROPIC_FILTER*(reduction: expr): expr = 
-  ((D3D12_FILTER)(D3D12_ANISOTROPIC_FILTERING_BIT or
-      D3D12_ENCODE_BASIC_FILTER(D3D12_FILTER_TYPE_LINEAR, 
-                                D3D12_FILTER_TYPE_LINEAR, 
-                                D3D12_FILTER_TYPE_LINEAR, reduction)))
+# interface __MIDL_itf_d3d12sdklayers_0000_0000 
+# [local] 
 
-template D3D12_DECODE_MIN_FILTER*(D3D12Filter: expr): expr = 
-  ((D3D12_FILTER_TYPE)(((D3D12Filter) shr D3D12_MIN_FILTER_SHIFT) and
-      D3D12_FILTER_TYPE_MASK))
 
-template D3D12_DECODE_MAG_FILTER*(D3D12Filter: expr): expr = 
-  ((D3D12_FILTER_TYPE)(((D3D12Filter) shr D3D12_MAG_FILTER_SHIFT) and
-      D3D12_FILTER_TYPE_MASK))
+# interface ID3D12Debug 
+# [unique][local][object][uuid] 
 
-template D3D12_DECODE_MIP_FILTER*(D3D12Filter: expr): expr = 
-  ((D3D12_FILTER_TYPE)(((D3D12Filter) shr D3D12_MIP_FILTER_SHIFT) and
-      D3D12_FILTER_TYPE_MASK))
-
-template D3D12_DECODE_FILTER_REDUCTION*(D3D12Filter: expr): expr = 
-  ((D3D12_FILTER_REDUCTION_TYPE)(((D3D12Filter) shr
-      D3D12_FILTER_REDUCTION_TYPE_SHIFT) and D3D12_FILTER_REDUCTION_TYPE_MASK))
-
-template D3D12_DECODE_IS_COMPARISON_FILTER*(D3D12Filter: expr): expr = 
-  (D3D12_DECODE_FILTER_REDUCTION(D3D12Filter) ==
-      D3D12_FILTER_REDUCTION_TYPE_COMPARISON)
-
-template D3D12_DECODE_IS_ANISOTROPIC_FILTER*(D3D12Filter: expr): expr = 
-  (((D3D12Filter) and D3D12_ANISOTROPIC_FILTERING_BIT) and
-      (D3D12_FILTER_TYPE_LINEAR == D3D12_DECODE_MIN_FILTER(D3D12Filter)) and
-      (D3D12_FILTER_TYPE_LINEAR == D3D12_DECODE_MAG_FILTER(D3D12Filter)) and
-      (D3D12_FILTER_TYPE_LINEAR == D3D12_DECODE_MIP_FILTER(D3D12Filter)))
-
-proc D3D12SerializeRootSignature*(pRootSignature: ptr D3D12_ROOT_SIGNATURE_DESC; 
-                                  Version: D3D_ROOT_SIGNATURE_VERSION; 
-                                  ppBlob: ptr ptr ID3DBlob; 
-                                  ppErrorBlob: ptr ptr ID3DBlob): HRESULT {.importc.}
-
-proc D3D12CreateRootSignatureDeserializer*(pSrcData: LPCVOID; 
-    SrcDataSizeInBytes: SIZE_T; pRootSignatureDeserializerInterface: ptr IID; 
-    ppRootSignatureDeserializer: ptr pointer): HRESULT {.importc.}
 type 
   ID3D12DebugVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12Debug; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12Debug): ULONG
-    Release*: proc (This: ptr ID3D12Debug): ULONG
-    EnableDebugLayer*: proc (This: ptr ID3D12Debug)
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12Debug): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12Debug): ULONG {.stdcall.}
+    EnableDebugLayer*: proc (This: ptr ID3D12Debug) {.stdcall.}
 
   ID3D12Debug* = object 
     lpVtbl*: ptr ID3D12DebugVtbl
 
-  D3D12_DEBUG_FEATURE* = enum 
+
+# interface __MIDL_itf_d3d12sdklayers_0000_0001 
+# [local] 
+
+type 
+  D3D12_DEBUG_FEATURE* {.size: sizeof(cint).} = enum 
     D3D12_DEBUG_FEATURE_NONE = 0, 
     D3D12_DEBUG_FEATURE_TREAT_BUNDLE_AS_DRAW = 0x00000001, 
     D3D12_DEBUG_FEATURE_TREAT_BUNDLE_AS_DISPATCH = 0x00000002
 
 
 type 
-  D3D12_RLDO_FLAGS* = enum 
+  D3D12_RLDO_FLAGS* {.size: sizeof(cint).} = enum 
     D3D12_RLDO_NONE = 0, D3D12_RLDO_SUMMARY = 0x00000001, 
     D3D12_RLDO_DETAIL = 0x00000002, D3D12_RLDO_IGNORE_INTERNAL = 0x00000004
-
 
 
 
@@ -2381,56 +2524,68 @@ type
 type 
   ID3D12DebugDeviceVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12DebugDevice; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12DebugDevice): ULONG
-    Release*: proc (This: ptr ID3D12DebugDevice): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12DebugDevice): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12DebugDevice): ULONG {.stdcall.}
     SetFeatureMask*: proc (This: ptr ID3D12DebugDevice; 
-                           Mask: D3D12_DEBUG_FEATURE): HRESULT
-    GetFeatureMask*: proc (This: ptr ID3D12DebugDevice): D3D12_DEBUG_FEATURE
+                           Mask: D3D12_DEBUG_FEATURE): HRESULT {.stdcall.}
+    GetFeatureMask*: proc (This: ptr ID3D12DebugDevice): D3D12_DEBUG_FEATURE {.
+        stdcall.}
     ReportLiveDeviceObjects*: proc (This: ptr ID3D12DebugDevice; 
-                                    Flags: D3D12_RLDO_FLAGS): HRESULT
+                                    Flags: D3D12_RLDO_FLAGS): HRESULT {.stdcall.}
 
   ID3D12DebugDevice* = object 
     lpVtbl*: ptr ID3D12DebugDeviceVtbl
 
 
-var DXGI_DEBUG_D3D12*: GUID
+# interface __MIDL_itf_d3d12sdklayers_0000_0002 
+# [local] 
 
 
-
+# interface ID3D12DebugCommandQueue 
+# [unique][local][object][uuid] 
 
 type 
   ID3D12DebugCommandQueueVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12DebugCommandQueue; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12DebugCommandQueue): ULONG
-    Release*: proc (This: ptr ID3D12DebugCommandQueue): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12DebugCommandQueue): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12DebugCommandQueue): ULONG {.stdcall.}
     AssertResourceState*: proc (This: ptr ID3D12DebugCommandQueue; 
                                 pResource: ptr ID3D12Resource; 
-                                Subresource: UINT; State: UINT): BOOL
+                                Subresource: UINT; State: UINT): BOOL {.stdcall.}
 
   ID3D12DebugCommandQueue* = object 
     lpVtbl*: ptr ID3D12DebugCommandQueueVtbl
 
 
+# interface ID3D12DebugCommandList 
+# [unique][local][object][uuid] 
+
 
 type 
   ID3D12DebugCommandListVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12DebugCommandList; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12DebugCommandList): ULONG
-    Release*: proc (This: ptr ID3D12DebugCommandList): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12DebugCommandList): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12DebugCommandList): ULONG {.stdcall.}
     AssertResourceState*: proc (This: ptr ID3D12DebugCommandList; 
                                 pResource: ptr ID3D12Resource; 
-                                Subresource: UINT; State: UINT): BOOL
+                                Subresource: UINT; State: UINT): BOOL {.stdcall.}
     SetFeatureMask*: proc (This: ptr ID3D12DebugCommandList; 
-                           Mask: D3D12_DEBUG_FEATURE): HRESULT
-    GetFeatureMask*: proc (This: ptr ID3D12DebugCommandList): D3D12_DEBUG_FEATURE
+                           Mask: D3D12_DEBUG_FEATURE): HRESULT {.stdcall.}
+    GetFeatureMask*: proc (This: ptr ID3D12DebugCommandList): D3D12_DEBUG_FEATURE {.
+        stdcall.}
 
   ID3D12DebugCommandList* = object 
     lpVtbl*: ptr ID3D12DebugCommandListVtbl
 
-  D3D12_MESSAGE_CATEGORY* = enum 
+
+# interface __MIDL_itf_d3d12sdklayers_0000_0004 
+# [local] 
+
+type 
+  D3D12_MESSAGE_CATEGORY* {.size: sizeof(cint).} = enum 
     D3D12_MESSAGE_CATEGORY_APPLICATION_DEFINED = 0, D3D12_MESSAGE_CATEGORY_MISCELLANEOUS = (
         D3D12_MESSAGE_CATEGORY_APPLICATION_DEFINED + 1), D3D12_MESSAGE_CATEGORY_INITIALIZATION = (
         D3D12_MESSAGE_CATEGORY_MISCELLANEOUS + 1), D3D12_MESSAGE_CATEGORY_CLEANUP = (
@@ -2442,14 +2597,14 @@ type
         D3D12_MESSAGE_CATEGORY_STATE_GETTING + 1), D3D12_MESSAGE_CATEGORY_EXECUTION = (
         D3D12_MESSAGE_CATEGORY_RESOURCE_MANIPULATION + 1), 
     D3D12_MESSAGE_CATEGORY_SHADER = (D3D12_MESSAGE_CATEGORY_EXECUTION + 1)
-  D3D12_MESSAGE_SEVERITY* = enum 
+  D3D12_MESSAGE_SEVERITY* {.size: sizeof(cint).} = enum 
     D3D12_MESSAGE_SEVERITY_CORRUPTION = 0, 
     D3D12_MESSAGE_SEVERITY_ERROR = (D3D12_MESSAGE_SEVERITY_CORRUPTION + 1), 
     D3D12_MESSAGE_SEVERITY_WARNING = (D3D12_MESSAGE_SEVERITY_ERROR + 1), 
     D3D12_MESSAGE_SEVERITY_INFO = (D3D12_MESSAGE_SEVERITY_WARNING + 1), 
     D3D12_MESSAGE_SEVERITY_MESSAGE = (D3D12_MESSAGE_SEVERITY_INFO + 1)
 discard """
-  D3D12_MESSAGE_ID* = enum 
+  D3D12_MESSAGE_ID* {.size: sizeof(cint).} = enum 
     D3D12_MESSAGE_ID_UNKNOWN = 0, 
     D3D12_MESSAGE_ID_STRING_FROM_APPLICATION = (D3D12_MESSAGE_ID_UNKNOWN + 1), D3D12_MESSAGE_ID_CORRUPTED_THIS = (
         D3D12_MESSAGE_ID_STRING_FROM_APPLICATION + 1), D3D12_MESSAGE_ID_CORRUPTED_PARAMETER1 = (
@@ -3385,7 +3540,7 @@ discard """
         D3D12_MESSAGE_ID_UNMAP_INVALID_NULLRANGE + 1), D3D12_MESSAGE_ID_NO_COMPUTE_API_SUPPORT = (
         D3D12_MESSAGE_ID_NO_GRAPHICS_API_SUPPORT + 1), D3D12_MESSAGE_ID_D3D12_MESSAGES_END = (
         D3D12_MESSAGE_ID_NO_COMPUTE_API_SUPPORT + 1)
-  """
+"""
 type
   D3D12_MESSAGE_ID = cint
   D3D12_MESSAGE* = object 
@@ -3408,130 +3563,156 @@ type
     DenyList*: D3D12_INFO_QUEUE_FILTER_DESC
 
 
+
 type 
   ID3D12InfoQueueVtbl* = object 
     QueryInterface*: proc (This: ptr ID3D12InfoQueue; riid: ptr IID; 
-                           ppvObject: ptr pointer): HRESULT
-    AddRef*: proc (This: ptr ID3D12InfoQueue): ULONG
-    Release*: proc (This: ptr ID3D12InfoQueue): ULONG
+                           ppvObject: ptr pointer): HRESULT {.stdcall.}
+    AddRef*: proc (This: ptr ID3D12InfoQueue): ULONG {.stdcall.}
+    Release*: proc (This: ptr ID3D12InfoQueue): ULONG {.stdcall.}
     SetMessageCountLimit*: proc (This: ptr ID3D12InfoQueue; 
-                                 MessageCountLimit: UINT64): HRESULT
-    ClearStoredMessages*: proc (This: ptr ID3D12InfoQueue)
+                                 MessageCountLimit: UINT64): HRESULT {.stdcall.}
+    ClearStoredMessages*: proc (This: ptr ID3D12InfoQueue) {.stdcall.}
     GetMessageA*: proc (This: ptr ID3D12InfoQueue; MessageIndex: UINT64; 
                         pMessage: ptr D3D12_MESSAGE; 
-                        pMessageByteLength: ptr SIZE_T): HRESULT
-    GetNumMessagesAllowedByStorageFilter*: proc (This: ptr ID3D12InfoQueue): UINT64
-    GetNumMessagesDeniedByStorageFilter*: proc (This: ptr ID3D12InfoQueue): UINT64
-    GetNumStoredMessages*: proc (This: ptr ID3D12InfoQueue): UINT64
+                        pMessageByteLength: ptr SIZE_T): HRESULT {.stdcall.}
+    GetNumMessagesAllowedByStorageFilter*: proc (This: ptr ID3D12InfoQueue): UINT64 {.
+        stdcall.}
+    GetNumMessagesDeniedByStorageFilter*: proc (This: ptr ID3D12InfoQueue): UINT64 {.
+        stdcall.}
+    GetNumStoredMessages*: proc (This: ptr ID3D12InfoQueue): UINT64 {.stdcall.}
     GetNumStoredMessagesAllowedByRetrievalFilter*: proc (
-        This: ptr ID3D12InfoQueue): UINT64
-    GetNumMessagesDiscardedByMessageCountLimit*: proc (This: ptr ID3D12InfoQueue): UINT64
-    GetMessageCountLimit*: proc (This: ptr ID3D12InfoQueue): UINT64
+        This: ptr ID3D12InfoQueue): UINT64 {.stdcall.}
+    GetNumMessagesDiscardedByMessageCountLimit*: proc (This: ptr ID3D12InfoQueue): UINT64 {.
+        stdcall.}
+    GetMessageCountLimit*: proc (This: ptr ID3D12InfoQueue): UINT64 {.stdcall.}
     AddStorageFilterEntries*: proc (This: ptr ID3D12InfoQueue; 
-                                    pFilter: ptr D3D12_INFO_QUEUE_FILTER): HRESULT
+                                    pFilter: ptr D3D12_INFO_QUEUE_FILTER): HRESULT {.
+        stdcall.}
     GetStorageFilter*: proc (This: ptr ID3D12InfoQueue; 
                              pFilter: ptr D3D12_INFO_QUEUE_FILTER; 
-                             pFilterByteLength: ptr SIZE_T): HRESULT
-    ClearStorageFilter*: proc (This: ptr ID3D12InfoQueue)
-    PushEmptyStorageFilter*: proc (This: ptr ID3D12InfoQueue): HRESULT
-    PushCopyOfStorageFilter*: proc (This: ptr ID3D12InfoQueue): HRESULT
+                             pFilterByteLength: ptr SIZE_T): HRESULT {.stdcall.}
+    ClearStorageFilter*: proc (This: ptr ID3D12InfoQueue) {.stdcall.}
+    PushEmptyStorageFilter*: proc (This: ptr ID3D12InfoQueue): HRESULT {.stdcall.}
+    PushCopyOfStorageFilter*: proc (This: ptr ID3D12InfoQueue): HRESULT {.
+        stdcall.}
     PushStorageFilter*: proc (This: ptr ID3D12InfoQueue; 
-                              pFilter: ptr D3D12_INFO_QUEUE_FILTER): HRESULT
-    PopStorageFilter*: proc (This: ptr ID3D12InfoQueue)
-    GetStorageFilterStackSize*: proc (This: ptr ID3D12InfoQueue): UINT
+                              pFilter: ptr D3D12_INFO_QUEUE_FILTER): HRESULT {.
+        stdcall.}
+    PopStorageFilter*: proc (This: ptr ID3D12InfoQueue) {.stdcall.}
+    GetStorageFilterStackSize*: proc (This: ptr ID3D12InfoQueue): UINT {.stdcall.}
     AddRetrievalFilterEntries*: proc (This: ptr ID3D12InfoQueue; 
-                                      pFilter: ptr D3D12_INFO_QUEUE_FILTER): HRESULT
+                                      pFilter: ptr D3D12_INFO_QUEUE_FILTER): HRESULT {.
+        stdcall.}
     GetRetrievalFilter*: proc (This: ptr ID3D12InfoQueue; 
                                pFilter: ptr D3D12_INFO_QUEUE_FILTER; 
-                               pFilterByteLength: ptr SIZE_T): HRESULT
-    ClearRetrievalFilter*: proc (This: ptr ID3D12InfoQueue)
-    PushEmptyRetrievalFilter*: proc (This: ptr ID3D12InfoQueue): HRESULT
-    PushCopyOfRetrievalFilter*: proc (This: ptr ID3D12InfoQueue): HRESULT
+                               pFilterByteLength: ptr SIZE_T): HRESULT {.stdcall.}
+    ClearRetrievalFilter*: proc (This: ptr ID3D12InfoQueue) {.stdcall.}
+    PushEmptyRetrievalFilter*: proc (This: ptr ID3D12InfoQueue): HRESULT {.
+        stdcall.}
+    PushCopyOfRetrievalFilter*: proc (This: ptr ID3D12InfoQueue): HRESULT {.
+        stdcall.}
     PushRetrievalFilter*: proc (This: ptr ID3D12InfoQueue; 
-                                pFilter: ptr D3D12_INFO_QUEUE_FILTER): HRESULT
-    PopRetrievalFilter*: proc (This: ptr ID3D12InfoQueue)
-    GetRetrievalFilterStackSize*: proc (This: ptr ID3D12InfoQueue): UINT
+                                pFilter: ptr D3D12_INFO_QUEUE_FILTER): HRESULT {.
+        stdcall.}
+    PopRetrievalFilter*: proc (This: ptr ID3D12InfoQueue) {.stdcall.}
+    GetRetrievalFilterStackSize*: proc (This: ptr ID3D12InfoQueue): UINT {.
+        stdcall.}
     AddMessage*: proc (This: ptr ID3D12InfoQueue; 
                        Category: D3D12_MESSAGE_CATEGORY; 
                        Severity: D3D12_MESSAGE_SEVERITY; ID: D3D12_MESSAGE_ID; 
-                       pDescription: LPCSTR): HRESULT
+                       pDescription: LPCSTR): HRESULT {.stdcall.}
     AddApplicationMessage*: proc (This: ptr ID3D12InfoQueue; 
                                   Severity: D3D12_MESSAGE_SEVERITY; 
-                                  pDescription: LPCSTR): HRESULT
+                                  pDescription: LPCSTR): HRESULT {.stdcall.}
     SetBreakOnCategory*: proc (This: ptr ID3D12InfoQueue; 
-                               Category: D3D12_MESSAGE_CATEGORY; bEnable: BOOL): HRESULT
+                               Category: D3D12_MESSAGE_CATEGORY; bEnable: BOOL): HRESULT {.
+        stdcall.}
     SetBreakOnSeverity*: proc (This: ptr ID3D12InfoQueue; 
-                               Severity: D3D12_MESSAGE_SEVERITY; bEnable: BOOL): HRESULT
+                               Severity: D3D12_MESSAGE_SEVERITY; bEnable: BOOL): HRESULT {.
+        stdcall.}
     SetBreakOnID*: proc (This: ptr ID3D12InfoQueue; ID: D3D12_MESSAGE_ID; 
-                         bEnable: BOOL): HRESULT
+                         bEnable: BOOL): HRESULT {.stdcall.}
     GetBreakOnCategory*: proc (This: ptr ID3D12InfoQueue; 
-                               Category: D3D12_MESSAGE_CATEGORY): BOOL
+                               Category: D3D12_MESSAGE_CATEGORY): BOOL {.stdcall.}
     GetBreakOnSeverity*: proc (This: ptr ID3D12InfoQueue; 
-                               Severity: D3D12_MESSAGE_SEVERITY): BOOL
-    GetBreakOnID*: proc (This: ptr ID3D12InfoQueue; ID: D3D12_MESSAGE_ID): BOOL
-    SetMuteDebugOutput*: proc (This: ptr ID3D12InfoQueue; bMute: BOOL)
-    GetMuteDebugOutput*: proc (This: ptr ID3D12InfoQueue): BOOL
+                               Severity: D3D12_MESSAGE_SEVERITY): BOOL {.stdcall.}
+    GetBreakOnID*: proc (This: ptr ID3D12InfoQueue; ID: D3D12_MESSAGE_ID): BOOL {.
+        stdcall.}
+    SetMuteDebugOutput*: proc (This: ptr ID3D12InfoQueue; bMute: BOOL) {.stdcall.}
+    GetMuteDebugOutput*: proc (This: ptr ID3D12InfoQueue): BOOL {.stdcall.}
 
   ID3D12InfoQueue* = object 
     lpVtbl*: ptr ID3D12InfoQueueVtbl
 
 
+# interface __MIDL_itf_d3d12sdklayers_0000_0005 
+# [local] 
+
 var IID_ID3D12Debug* {.importc.}: GUID
-
 var IID_ID3D12DebugDevice* {.importc.}: GUID
-
 var IID_ID3D12DebugCommandQueue* {.importc.}: GUID
-
 var IID_ID3D12DebugCommandList* {.importc.}: GUID
-
 var IID_ID3D12InfoQueue* {.importc.}: GUID
+
+
+# Additional Prototypes for ALL interfaces 
+# end of Additional Prototypes 
+
+#/////////////////////////////////////////////////////////////////////////
+# D3D12CreateDevice
+# ------------------
+#
+# pAdapter
+#      If NULL, D3D12CreateDevice will choose the primary adapter.
+#      If non-NULL, D3D12CreateDevice will use the provided adapter.
+# MinimumFeatureLevel
+#      The minimum feature level required for successful device creation.
+# riid
+#      The interface IID of the device to be returned. Expected: ID3D12Device.
+# ppDevice
+#      Pointer to returned interface. May be NULL.
+#
+# Return Values
+#  Any of those documented for 
+#          CreateDXGIFactory1
+#          IDXGIFactory::EnumAdapters
+#          D3D12CreateDevice
+#
+#/////////////////////////////////////////////////////////////////////////
 
 type 
   PFN_D3D12_CREATE_DEVICE* = proc (a2: ptr IUnknown; a3: D3D_FEATURE_LEVEL; 
-                                   a4: ptr IID; a5: ptr pointer): HRESULT
+                                   a4: ptr IID; a5: ptr pointer): HRESULT {.
+      stdcall.}
 
 proc D3D12CreateDevice*(pAdapter: ptr IUnknown; 
                         MinimumFeatureLevel: D3D_FEATURE_LEVEL; riid: ptr IID; 
-                        ppDevice: ptr pointer): HRESULT {.importc.}
+                        ppDevice: ptr pointer): HRESULT {.stdcall, importc.}
+  # Expected: ID3D12Device
 type 
-  PFN_D3D12_GET_DEBUG_INTERFACE* = proc (a2: ptr IID; a3: ptr pointer): HRESULT
+  PFN_D3D12_GET_DEBUG_INTERFACE* = proc (a2: ptr IID; a3: ptr pointer): HRESULT {.
+      stdcall.}
 
-proc D3D12GetDebugInterface*(riid: ptr IID; ppvDebug: ptr pointer): HRESULT {.importc.}
-
+proc D3D12GetDebugInterface*(riid: ptr IID; ppvDebug: ptr pointer): HRESULT {.
+    stdcall, importc.}
 var IID_ID3D12Object* {.importc.}: GUID
-
 var IID_ID3D12DeviceChild* {.importc.}: GUID
-
 var IID_ID3D12RootSignature* {.importc.}: GUID
-
 var IID_ID3D12RootSignatureDeserializer* {.importc.}: GUID
-
 var IID_ID3D12Pageable* {.importc.}: GUID
-
 var IID_ID3D12Heap* {.importc.}: GUID
-
 var IID_ID3D12Resource* {.importc.}: GUID
-
 var IID_ID3D12CommandAllocator* {.importc.}: GUID
-
 var IID_ID3D12Fence* {.importc.}: GUID
-
 var IID_ID3D12PipelineState* {.importc.}: GUID
-
 var IID_ID3D12DescriptorHeap* {.importc.}: GUID
-
 var IID_ID3D12QueryHeap* {.importc.}: GUID
-
 var IID_ID3D12CommandSignature* {.importc.}: GUID
-
 var IID_ID3D12CommandList* {.importc.}: GUID
-
 var IID_ID3D12GraphicsCommandList* {.importc.}: GUID
-
 var IID_ID3D12CommandQueue* {.importc.}: GUID
-
 var IID_ID3D12Device* {.importc.}: GUID
 
-
-
-{.pop.}
+# Additional Prototypes for ALL interfaces 
+# end of Additional Prototypes 
