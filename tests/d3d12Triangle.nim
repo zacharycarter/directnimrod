@@ -3,7 +3,7 @@ import dxgi, dxgi1_2, dxgi1_3, dxgi1_4
 import d3d12
 import d3dcompiler
 import Unknwn
-
+{.warning[ProveInit]: off.}
 const winClass = "directNimrod"
 #rendering constants
 const width = 800
@@ -67,21 +67,20 @@ proc InitializePipeline(hwnd: HWND) =
   # this code creates a "real device"
   result = D3D12CreateDevice(nil, D3D_FEATURE_LEVEL_11_0, addr IID_ID3D12Device, cast[ptr pointer](addr device))
   if result != S_OK: quit("could not create the device")
-  
+
   #create a WARP device
   #var warpAdapter: ptr IDXGIAdapter
   #result = factory.lpVtbl.EnumWarpAdapter(factory, addr IID_IDXGIAdapter, cast[ptr pointer](addr warpAdapter))
   #if result != S_OK: quit("could not enum warp adapter")
   #result = D3D12CreateDevice(cast[ptr IUnknown](warpAdapter), D3D_FEATURE_LEVEL_11_0, addr IID_ID3D12Device, cast[ptr pointer](addr device))
   #if result != S_OK: quit("could not create WARP adapter")
-  
+
   #create the direct3D command queue
   var queueDesc: D3D12_COMMAND_QUEUE_DESC
   queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE
   queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT
 
   result = device.lpVtbl.CreateCommandQueue(device, addr queueDesc, addr IID_ID3D12CommandQueue, cast[ptr pointer](addr commandQueue))
-  echo result
   if result != S_OK: quit("could not create the command queue")
   var tmpSwapChain: ptr IDXGISwapChain
   var swapChainDesc: DXGI_SWAP_CHAIN_DESC
@@ -94,7 +93,6 @@ proc InitializePipeline(hwnd: HWND) =
   swapChainDesc.OutputWindow = hwnd
   swapChainDesc.SampleDesc.Count = 1
   swapChainDesc.Windowed = WINBOOL(true)
-  echo "initWnd ", hwnd
   result = factory.lpVtbl.CreateSwapChain(factory, cast[ptr IUnknown](commandQueue), addr swapChainDesc, addr tmpSwapChain)
   if result != S_OK: quit("could not create the swap chain")
   result = tmpSwapChain.lpVtbl.QueryInterface(tmpSwapChain, addr IID_IDXGISwapChain3, cast[ptr pointer](addr swapChain))
@@ -111,22 +109,16 @@ proc InitializePipeline(hwnd: HWND) =
   rtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE
   result = device.lpVtbl.CreateDescriptorHeap(device, addr rtvHeapDesc, addr IID_ID3D12DescriptorHeap, cast[ptr pointer](addr rtvHeap))
   if result != S_OK: quit("could not create descriptor heap")
-  echo sizeof(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)
-  echo sizeof(device)
   rtvDescriptorSize = device.lpVtbl.GetDescriptorHandleIncrementSize(device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV)
 
   #create frame resources
   var rtvHandle: D3D12_CPU_DESCRIPTOR_HANDLE
-  echo rtvDescriptorSize
-  echo repr(rtvHeap)
-  echo repr(rtvHandle)
-  rtvHandle = rtvHeap.lpVtbl.GetCPUDescriptorHandleForHeapStart(rtvHeap)
-  echo repr(rtvHandle)
-  #for n in 0..1:
-  #  result = swapChain.lpVtbl.GetBuffer(swapChain, uint32(n), addr IID_ID3D12Resource, cast[ptr pointer](addr renderTargets[n]))
-  #  if result != S_OK: quit("could not get render target")
-  #  device.lpVtbl.CreateRenderTargetView(device, renderTargets[n], nil, rtvHandle)
-  #  rtvHandle.`ptr` += SIZE_T(rtvDescriptorSize)
+  discard rtvHeap.lpVtbl.GetCPUDescriptorHandleForHeapStart(rtvHeap, addr rtvHandle)
+  for n in 0..1:
+    result = swapChain.lpVtbl.GetBuffer(swapChain, uint32(n), addr IID_ID3D12Resource, cast[ptr pointer](addr renderTargets[n]))
+    if result != S_OK: quit("could not get render target")
+    device.lpVtbl.CreateRenderTargetView(device, renderTargets[n], nil, rtvHandle)
+    rtvHandle.`ptr` += SIZE_T(rtvDescriptorSize)
 
   result = device.lpVtbl.CreateCommandAllocator(device, D3D12_COMMAND_LIST_TYPE_DIRECT, addr IID_ID3D12CommandAllocator, cast[ptr pointer](addr commandAllocator))
   if result != S_OK: quit("could not create command commandAllocator")
@@ -146,8 +138,8 @@ proc LoadAssets() =
   var hr: HRESULT
   hr = D3D12SerializeRootSignature(addr rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1, addr signature, addr error)
   if hr != S_OK: quit("could not serialize the root signature")
-  hr = device.lpVtbl.CreateRootSignature(device, 0, 
-    signature.lpVtbl.GetBufferPointer(signature), 
+  hr = device.lpVtbl.CreateRootSignature(device, 0,
+    signature.lpVtbl.GetBufferPointer(signature),
     signature.lpVtbl.GetBufferSize(signature),
     addr IID_ID3D12RootSignature, cast[ptr pointer](addr rootSignature))
   if hr != S_OK: quit("could not create root signature")
@@ -337,7 +329,7 @@ proc PopulateCommandList() =
   commandList.lpVtbl.ResourceBarrier(commandList, 1, addr barrier)
 
   var descriptorHandle: D3D12_CPU_DESCRIPTOR_HANDLE
-  descriptorHandle.`ptr` = rtvHeap.lpVtbl.GetCPUDescriptorHandleForHeapStart(rtvHeap).`ptr`
+  discard rtvHeap.lpVtbl.GetCPUDescriptorHandleForHeapStart(rtvHeap, addr descriptorHandle)
   descriptorHandle.`ptr` += SIZE_T(frameIndex) * SIZE_T(rtvDescriptorSize)
   commandList.lpVtbl.OMSetRenderTargets(commandList, 1.uint32, addr descriptorHandle, false.WINBOOL, nil)
 
@@ -347,11 +339,15 @@ proc PopulateCommandList() =
   commandList.lpVtbl.IASetPrimitiveTopology(commandList, D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
   commandList.lpVtbl.IASetVertexBuffers(commandList, 0, 1, addr vertexBufferView)
   commandList.lpVtbl.DrawInstanced(commandList, 3, 1, 0, 0)
+  var barrier2: D3D12_RESOURCE_BARRIER
+  barrier2.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION
+  barrier2.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE
+  barrier2.Union.Transition.pResource = renderTargets[frameIndex]
+  barrier2.Union.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET
+  barrier2.Union.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT
+  barrier2.Union.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES.uint32
 
-  barrier.Union.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET
-  barrier.Union.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT
-
-  commandList.lpVtbl.ResourceBarrier(commandList, 1, addr barrier)
+  commandList.lpVtbl.ResourceBarrier(commandList, 1, addr barrier2)
   hr = commandList.lpVtbl.Close(commandList)
   if hr != S_OK: quit("could not close command list")
 
@@ -399,28 +395,26 @@ proc main() =
                       0, GetModuleHandle(nil), nil)
   if wnd == 0:
     quit("failed to make hwnd")
-  echo "wnd ", wnd
   var hr: HRESULT
   InitializePipeline(wnd)
-  #LoadAssets()
+  LoadAssets()
   discard ShowWindow(wnd, 10)
   discard UpdateWindow(wnd)
-  
+
   var message: MSG
   while message.message != WM_QUIT:
     if PeekMessage(addr message, cast[HWND](nil), 0, 0, PM_REMOVE) > 0:
       discard TranslateMessage(addr message)
       discard DispatchMessage(addr message)
-    #PopulateCommandList()
-    #var ppCommandLists: array[1, ptr ID3D12CommandList] = [cast[ptr ID3D12CommandList](commandList)]
-    #commandQueue.lpVtbl.ExecuteCommandLists(commandQueue, 1, addr ppCommandLists[0])
-    #hr = swapChain.lpVtbl.Present(swapChain, 1, 0)
-    #if hr != S_OK: quit("could not present frame")
-    #WaitForPreviousFrame()
+    PopulateCommandList()
+    var ppCommandLists: array[1, ptr ID3D12CommandList] = [cast[ptr ID3D12CommandList](commandList)]
+    commandQueue.lpVtbl.ExecuteCommandLists(commandQueue, 1, addr ppCommandLists[0])
+    hr = swapChain.lpVtbl.Present(swapChain, 1, 0)
+    if hr != S_OK: quit("could not present frame")
+    WaitForPreviousFrame()
 
   #cleanup
-  #WaitForPreviousFrame()
+  WaitForPreviousFrame()
   discard CloseHandle(fenceEvent)
 
 main()
-
