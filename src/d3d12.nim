@@ -1918,7 +1918,7 @@ type
     # in the microsoft IDL compiler
     GetCPUDescriptorHandleForHeapStart*: proc (This: ptr ID3D12DescriptorHeap, outVal: ptr D3D12_CPU_DESCRIPTOR_HANDLE): ptr D3D12_CPU_DESCRIPTOR_HANDLE {.
         stdcall.}
-    GetGPUDescriptorHandleForHeapStart*: proc (This: ptr ID3D12DescriptorHeap, outVal: ptr D3D12_CPU_DESCRIPTOR_HANDLE): ptr D3D12_GPU_DESCRIPTOR_HANDLE {.
+    GetGPUDescriptorHandleForHeapStart*: proc (This: ptr ID3D12DescriptorHeap, outVal: ptr D3D12_GPU_DESCRIPTOR_HANDLE): ptr D3D12_GPU_DESCRIPTOR_HANDLE {.
         stdcall.}
 
   ID3D12DescriptorHeap* = object
