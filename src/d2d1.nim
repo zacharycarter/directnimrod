@@ -5,8 +5,6 @@ import winim
 import d2dbasetypes
 import d3dcommon
 import dcommon
-type IID = TIID
-type GUID = TGUID
 type IUnknown = object
 type INT = int32
 type UINT = uint32

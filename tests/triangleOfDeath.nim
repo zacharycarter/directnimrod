@@ -4,7 +4,6 @@
 import winim
 import dxgi
 import d3d11
-import unsigned
 var winClass = "nimrodWindow"
 var device: ptr ID3D11Device
 var ctx: ptr ID3D11DeviceContext
@@ -66,10 +65,10 @@ proc BindShaders() =
   close(VSFile)
   close(PSFile)
   var result: HRESULT
-  result = device.lpvtbl.CreateVertexShader(device, addr VSData[0], len(VSData), nil, addr vertexShader)
+  result = device.lpvtbl.CreateVertexShader(device, addr VSData[0], SIZE_T(len(VSData)), nil, addr vertexShader)
   if result != S_OK:
     quit("could not make the vertex shader")
-  result = device.lpvtbl.CreatePixelShader(device, addr PSData[0], len(PSData), nil, addr pixelShader)
+  result = device.lpvtbl.CreatePixelShader(device, addr PSData[0], SIZE_T(len(PSData)), nil, addr pixelShader)
   if result != S_OK:
     quit("could not make the pixel shader")
   var inputLayoutDesc: array[0..0, D3D11_INPUT_ELEMENT_DESC]
@@ -81,7 +80,7 @@ proc BindShaders() =
   inputLayoutDesc[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA
   inputLayoutDesc[0].InstanceDataStepRate = 0
 
-  result = device.lpvtbl.CreateInputLayout(device, addr inputLayoutDesc[0], len(inputLayoutDesc).uint32, addr VSData[0], len(VSData), addr inputLayout)
+  result = device.lpvtbl.CreateInputLayout(device, addr inputLayoutDesc[0], len(inputLayoutDesc).uint32, addr VSData[0], SIZE_T(len(VSData)), addr inputLayout)
   if result != S_OK:
     quit("could not create the input layout")
 
