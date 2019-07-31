@@ -2,9 +2,7 @@
 #this file was generated from the version of dxgi1_4.h shipped with windows 10
 {.link: "dxguid.lib"}
 {.link: "dxgi.lib"}
-import windows, dxgi, dxgi1_2, dxgi1_3, Unknwn
-type IID = TIID
-type GUID = TGUID
+import winim, dxgi, dxgi1_2, dxgi1_3, Unknwn
 type UINT = uint32
 type INT = int32
 type FLOAT = float32
@@ -44,10 +42,10 @@ type
                                                                                 # 
                                                                                 # [annotation][in] 
     SetPrivateDataInterface*: proc (This: ptr IDXGISwapChain3; Name: ptr GUID; 
-                                    pUnknown: ptr IUnknown): HRESULT {.stdcall.} # 
-                                                                                 # [annotation][in] 
-                                                                                 # 
-                                                                                 # [annotation][in] 
+                                    pUnknown: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
+                                                                                        # [annotation][in] 
+                                                                                        # 
+                                                                                        # [annotation][in] 
     GetPrivateData*: proc (This: ptr IDXGISwapChain3; Name: ptr GUID; 
                            pDataSize: ptr UINT; pData: pointer): HRESULT {.
         stdcall.}             # [annotation][in] 
@@ -166,7 +164,7 @@ type
     ResizeBuffers1*: proc (This: ptr IDXGISwapChain3; BufferCount: UINT; 
                            Width: UINT; Height: UINT; Format: DXGI_FORMAT; 
                            SwapChainFlags: UINT; pCreationNodeMask: ptr UINT; 
-                           ppPresentQueue: ptr ptr IUnknown): HRESULT {.stdcall.} # 
+                           ppPresentQueue: ptr ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                                   # [annotation][in] 
                                                                                   # 
                                                                                   # [annotation][in] 
@@ -212,7 +210,7 @@ type
                                                                                 # 
                                                                                 # [annotation][in] 
     SetPrivateDataInterface*: proc (This: ptr IDXGIOutput4; Name: ptr GUID; 
-                                    pUnknown: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pUnknown: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                                  # [annotation][in] 
                                                                                  # 
                                                                                  # [annotation][in] 
@@ -241,12 +239,12 @@ type
     FindClosestMatchingMode*: proc (This: ptr IDXGIOutput4; 
                                     pModeToMatch: ptr DXGI_MODE_DESC; 
                                     pClosestMatch: ptr DXGI_MODE_DESC; 
-                                    pConcernedDevice: ptr IUnknown): HRESULT {.
+                                    pConcernedDevice: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation][in] 
                               # [annotation][out] 
                               # [annotation][in] 
     WaitForVBlank*: proc (This: ptr IDXGIOutput4): HRESULT {.stdcall.}
-    TakeOwnership*: proc (This: ptr IDXGIOutput4; pDevice: ptr IUnknown; 
+    TakeOwnership*: proc (This: ptr IDXGIOutput4; pDevice: ptr Unknwn.IUnknown; 
                           Exclusive: BOOL): HRESULT {.stdcall.} # [annotation][in] 
     ReleaseOwnership*: proc (This: ptr IDXGIOutput4) {.stdcall.}
     GetGammaControlCapabilities*: proc (This: ptr IDXGIOutput4; pGammaCaps: ptr DXGI_GAMMA_CONTROL_CAPABILITIES): HRESULT {.
@@ -279,26 +277,26 @@ type
     FindClosestMatchingMode1*: proc (This: ptr IDXGIOutput4; 
                                      pModeToMatch: ptr DXGI_MODE_DESC1; 
                                      pClosestMatch: ptr DXGI_MODE_DESC1; 
-                                     pConcernedDevice: ptr IUnknown): HRESULT {.
+                                     pConcernedDevice: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation][in] 
                               # [annotation][out] 
                               # [annotation][in] 
     GetDisplaySurfaceData1*: proc (This: ptr IDXGIOutput4; 
                                    pDestination: ptr IDXGIResource): HRESULT {.
         stdcall.}             # [annotation][in] 
-    DuplicateOutput*: proc (This: ptr IDXGIOutput4; pDevice: ptr IUnknown; 
+    DuplicateOutput*: proc (This: ptr IDXGIOutput4; pDevice: ptr Unknwn.IUnknown; 
                             ppOutputDuplication: ptr ptr IDXGIOutputDuplication): HRESULT {.
         stdcall.}             # [annotation][in] 
                               # [annotation][out] 
     SupportsOverlays*: proc (This: ptr IDXGIOutput4): BOOL {.stdcall.}
     CheckOverlaySupport*: proc (This: ptr IDXGIOutput4; EnumFormat: DXGI_FORMAT; 
-                                pConcernedDevice: ptr IUnknown; pFlags: ptr UINT): HRESULT {.
+                                pConcernedDevice: ptr Unknwn.IUnknown; pFlags: ptr UINT): HRESULT {.
         stdcall.}             # [annotation][in] 
                               # [annotation][out] 
                               # [annotation][out] 
     CheckOverlayColorSpaceSupport*: proc (This: ptr IDXGIOutput4; 
         Format: DXGI_FORMAT; ColorSpace: DXGI_COLOR_SPACE_TYPE; 
-        pConcernedDevice: ptr IUnknown; pFlags: ptr UINT): HRESULT {.stdcall.} # 
+        pConcernedDevice: ptr Unknwn.IUnknown; pFlags: ptr UINT): HRESULT {.stdcall.} # 
                                                                                # [annotation][in] 
                                                                                # 
                                                                                # [annotation][in] 
@@ -330,7 +328,7 @@ type
                                                                                 # 
                                                                                 # [annotation][in] 
     SetPrivateDataInterface*: proc (This: ptr IDXGIFactory4; Name: ptr GUID; 
-                                    pUnknown: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pUnknown: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                                  # [annotation][in] 
                                                                                  # 
                                                                                  # [annotation][in] 
@@ -354,7 +352,7 @@ type
     GetWindowAssociation*: proc (This: ptr IDXGIFactory4; 
                                  pWindowHandle: ptr HWND): HRESULT {.stdcall.} # 
                                                                                # [annotation][out] 
-    CreateSwapChain*: proc (This: ptr IDXGIFactory4; pDevice: ptr IUnknown; 
+    CreateSwapChain*: proc (This: ptr IDXGIFactory4; pDevice: ptr Unknwn.IUnknown; 
                             pDesc: ptr DXGI_SWAP_CHAIN_DESC; 
                             ppSwapChain: ptr ptr IDXGISwapChain): HRESULT {.
         stdcall.}             # [annotation][in] 
@@ -372,7 +370,7 @@ type
     IsCurrent*: proc (This: ptr IDXGIFactory4): BOOL {.stdcall.}
     IsWindowedStereoEnabled*: proc (This: ptr IDXGIFactory4): BOOL {.stdcall.}
     CreateSwapChainForHwnd*: proc (This: ptr IDXGIFactory4; 
-                                   pDevice: ptr IUnknown; hWnd: HWND; 
+                                   pDevice: ptr Unknwn.IUnknown; hWnd: HWND; 
                                    pDesc: ptr DXGI_SWAP_CHAIN_DESC1; 
         pFullscreenDesc: ptr DXGI_SWAP_CHAIN_FULLSCREEN_DESC; 
                                    pRestrictToOutput: ptr IDXGIOutput; 
@@ -384,7 +382,7 @@ type
                               # [annotation][in] 
                               # [annotation][out] 
     CreateSwapChainForCoreWindow*: proc (This: ptr IDXGIFactory4; 
-        pDevice: ptr IUnknown; pWindow: ptr IUnknown; 
+        pDevice: ptr Unknwn.IUnknown; pWindow: ptr Unknwn.IUnknown; 
         pDesc: ptr DXGI_SWAP_CHAIN_DESC1; pRestrictToOutput: ptr IDXGIOutput; 
         ppSwapChain: ptr ptr IDXGISwapChain1): HRESULT {.stdcall.} # 
                                                                    # [annotation][in] 
@@ -429,7 +427,7 @@ type
     UnregisterOcclusionStatus*: proc (This: ptr IDXGIFactory4; dwCookie: DWORD) {.
         stdcall.}             # [annotation][in] 
     CreateSwapChainForComposition*: proc (This: ptr IDXGIFactory4; 
-        pDevice: ptr IUnknown; pDesc: ptr DXGI_SWAP_CHAIN_DESC1; 
+        pDevice: ptr Unknwn.IUnknown; pDesc: ptr DXGI_SWAP_CHAIN_DESC1; 
         pRestrictToOutput: ptr IDXGIOutput; ppSwapChain: ptr ptr IDXGISwapChain1): HRESULT {.
         stdcall.}             # [annotation][in] 
                               # [annotation][in] 
@@ -485,7 +483,7 @@ type
                                                                                 # 
                                                                                 # [annotation][in] 
     SetPrivateDataInterface*: proc (This: ptr IDXGIAdapter3; Name: ptr GUID; 
-                                    pUnknown: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pUnknown: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                                  # [annotation][in] 
                                                                                  # 
                                                                                  # [annotation][in] 

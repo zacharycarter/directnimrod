@@ -4,10 +4,8 @@
 # [local]
 {.link: "dxguid.lib".}
 {.link: "d3d11.lib".}
-import windows, dxgi, d3dcommon, macros, Unknwn
+import winim, dxgi, d3dcommon, macros, Unknwn
 export d3dcommon
-type IID = TIID
-type GUID = TGUID
 type UINT = uint32
 type INT = int32
 type FLOAT = float32
@@ -395,10 +393,10 @@ const
 
 # Direct3D errors are now found in winerror.h 
 
-template MAKE_D3D11_HRESULT*(code: expr): expr = 
+template MAKE_D3D11_HRESULT*(code: untyped): untyped = 
   MAKE_HRESULT(1, U_FACD3D11, code)
 
-template MAKE_D3D11_STATUS*(code: expr): expr = 
+template MAKE_D3D11_STATUS*(code: untyped): untyped = 
   MAKE_HRESULT(0, U_FACD3D11, code)
 #enums
 type

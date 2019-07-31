@@ -3,13 +3,11 @@
 # Forward Declarations 
 {.link: "dxguid.lib".}
 {.link: "d3d11.lib".}
-import windows
+import winim
 import dxgi
 import dxgi1_2
 import d3dcommon
 import d3d11
-type IID = TIID
-type GUID = TGUID
 type UINT = uint32
 type INT = int32
 type FLOAT = float32

@@ -2,8 +2,7 @@
 #This file is generated from the version of Unknwn.h that ships with Windows 10
 
 {.link: "Uuid.lib"}
-import windows
-type IID = TIID
+import winim
 type BOOL = WINBOOL
 # this ALWAYS GENERATED file contains the definitions for the interfaces 
 # File created by MIDL compiler version 8.00.0613 

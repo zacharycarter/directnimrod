@@ -1,4 +1,4 @@
-import windows
+import winim
 import dxgi, dxgi1_2, dxgi1_3, dxgi1_4
 import d3d12
 import d3dcompiler
@@ -72,7 +72,7 @@ proc InitializePipeline(hwnd: HWND) =
   #var warpAdapter: ptr IDXGIAdapter
   #result = factory.lpVtbl.EnumWarpAdapter(factory, addr IID_IDXGIAdapter, cast[ptr pointer](addr warpAdapter))
   #if result != S_OK: quit("could not enum warp adapter")
-  #result = D3D12CreateDevice(cast[ptr IUnknown](warpAdapter), D3D_FEATURE_LEVEL_11_0, addr IID_ID3D12Device, cast[ptr pointer](addr device))
+  #result = D3D12CreateDevice(cast[ptr Unknwn.IUnknown](warpAdapter), D3D_FEATURE_LEVEL_11_0, addr IID_ID3D12Device, cast[ptr pointer](addr device))
   #if result != S_OK: quit("could not create WARP adapter")
 
   #create the direct3D command queue
@@ -93,7 +93,7 @@ proc InitializePipeline(hwnd: HWND) =
   swapChainDesc.OutputWindow = hwnd
   swapChainDesc.SampleDesc.Count = 1
   swapChainDesc.Windowed = WINBOOL(true)
-  result = factory.lpVtbl.CreateSwapChain(factory, cast[ptr IUnknown](commandQueue), addr swapChainDesc, addr tmpSwapChain)
+  result = factory.lpVtbl.CreateSwapChain(factory, cast[ptr Unknwn.IUnknown](commandQueue), addr swapChainDesc, addr tmpSwapChain)
   if result != S_OK: quit("could not create the swap chain")
   result = tmpSwapChain.lpVtbl.QueryInterface(tmpSwapChain, addr IID_IDXGISwapChain3, cast[ptr pointer](addr swapChain))
   if result != S_OK: quit("could not QI to SwapChain3")
@@ -202,9 +202,9 @@ proc LoadAssets() =
   psoDesc.InputLayout.NumElements = len(inputElementDesc).uint32
   psoDesc.pRootSignature = rootSignature
   psoDesc.VS.pShaderBytecode = addr VSData[0]
-  psoDesc.VS.BytecodeLength = len(VSData)
+  psoDesc.VS.BytecodeLength = uint64(len(VSData))
   psoDesc.PS.pShaderBytecode = addr PSData[0]
-  psoDesc.PS.BytecodeLength = len(PSData)
+  psoDesc.PS.BytecodeLength = uint64(len(PSData))
   psoDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID
   psoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK
   psoDesc.RasterizerState.FrontCounterClockwise = false.WINBOOL
@@ -363,7 +363,7 @@ proc WndProc(wnd: HWND, message: int32, wp: WPARAM, lp: LPARAM): LRESULT {.stdca
     of WM_DESTROY:
       PostQuitMessage(0)
     else:
-      return windows.DefWindowProc(wnd, message, wp, lp)
+      return winim.DefWindowProc(wnd, message, wp, lp)
   return 0.LRESULT
 
 proc main() =
@@ -388,7 +388,7 @@ proc main() =
   winRect.top = 0
   winRect.right = width
   winRect.bottom = height
-  discard AdjustWindowRect(cast[ptr TRECT](addr winRect), WS_OVERLAPPEDWINDOW, false.WINBOOL)
+  discard AdjustWindowRect(cast[ptr RECT](addr winRect), WS_OVERLAPPEDWINDOW, false.WINBOOL)
   var wnd: HWND
   wnd = CreateWindow(winClass, winClass, WS_OVERLAPPEDWINDOW,
                       CW_USEDEFAULT, 0, winRect.right - winRect.left, winRect.bottom - winRect.top, 0,

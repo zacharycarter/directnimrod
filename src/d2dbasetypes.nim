@@ -1,5 +1,5 @@
 ## directX bindings by Charlie Barto
-import windows
+import winim
 import dxgitype
 type UINT = uint32
 type INT = int32

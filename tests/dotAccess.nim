@@ -1,7 +1,7 @@
 # this test program should display a solid red window
 # just over 100 lines, not half bad :D
 
-import windows
+import winim
 import dxgi
 import d3d11
 import macros
@@ -24,7 +24,7 @@ proc WndProc(wnd: HWND, message: int32, wp: WPARAM, lp: LPARAM): LRESULT {.stdca
     of WM_DESTROY:
       PostQuitMessage(0)
     else:
-      return windows.DefWindowProc(wnd, message, wp, lp)
+      return winim.DefWindowProc(wnd, message, wp, lp)
   return 0.LRESULT
   
 proc Update() =

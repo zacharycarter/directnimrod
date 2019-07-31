@@ -1,8 +1,6 @@
 ## DirectX Bindings by Charlie Barto
 ## This file mirrors the version shipped with windows 10
-import windows, dxgi, Unknwn
-type IID = TIID
-type GUID = TGUID
+import winim, dxgi, Unknwn
 type INT = int32
 type UINT = int32
 type FLOAT = float32
@@ -62,7 +60,7 @@ type
     SetPrivateData*: proc (This: ptr IDXGIOutputDuplication; Name: ptr GUID; 
                            DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr IDXGIOutputDuplication; 
-                                    Name: ptr GUID; pUnknown: ptr IUnknown): HRESULT {.
+                                    Name: ptr GUID; pUnknown: ptr Unknwn.Unknwn.IUnknown): HRESULT {.
         stdcall.}
     GetPrivateData*: proc (This: ptr IDXGIOutputDuplication; Name: ptr GUID; 
                            pDataSize: ptr UINT; pData: pointer): HRESULT {.
@@ -114,7 +112,7 @@ type
     SetPrivateData*: proc (This: ptr IDXGISurface2; Name: ptr GUID; 
                            DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr IDXGISurface2; Name: ptr GUID; 
-                                    pUnknown: ptr IUnknown): HRESULT {.stdcall.}
+                                    pUnknown: ptr Unknwn.Unknwn.IUnknown): HRESULT {.stdcall.}
     GetPrivateData*: proc (This: ptr IDXGISurface2; Name: ptr GUID; 
                            pDataSize: ptr UINT; pData: pointer): HRESULT {.
         stdcall.}
@@ -146,7 +144,7 @@ type
     SetPrivateData*: proc (This: ptr IDXGIResource1; Name: ptr GUID; 
                            DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr IDXGIResource1; Name: ptr GUID; 
-                                    pUnknown: ptr IUnknown): HRESULT {.stdcall.}
+                                    pUnknown: ptr Unknwn.IUnknown): HRESULT {.stdcall.}
     GetPrivateData*: proc (This: ptr IDXGIResource1; Name: ptr GUID; 
                            pDataSize: ptr UINT; pData: pointer): HRESULT {.
         stdcall.}
@@ -185,7 +183,7 @@ type
     SetPrivateData*: proc (This: ptr IDXGIDevice2; Name: ptr GUID; 
                            DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr IDXGIDevice2; Name: ptr GUID; 
-                                    pUnknown: ptr IUnknown): HRESULT {.stdcall.}
+                                    pUnknown: ptr Unknwn.IUnknown): HRESULT {.stdcall.}
     GetPrivateData*: proc (This: ptr IDXGIDevice2; Name: ptr GUID; 
                            pDataSize: ptr UINT; pData: pointer): HRESULT {.
         stdcall.}
@@ -198,7 +196,7 @@ type
                           pSharedResource: ptr DXGI_SHARED_RESOURCE; 
                           ppSurface: ptr ptr IDXGISurface): HRESULT {.stdcall.}
     QueryResourceResidency*: proc (This: ptr IDXGIDevice2; 
-                                   ppResources: ptr ptr IUnknown; 
+                                   ppResources: ptr ptr Unknwn.IUnknown; 
                                    pResidencyStatus: ptr DXGI_RESIDENCY; 
                                    NumResources: UINT): HRESULT {.stdcall.}
     SetGPUThreadPriority*: proc (This: ptr IDXGIDevice2; Priority: INT): HRESULT {.
@@ -269,7 +267,7 @@ type
     SetPrivateData*: proc (This: ptr IDXGISwapChain1; Name: ptr GUID; 
                            DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr IDXGISwapChain1; Name: ptr GUID; 
-                                    pUnknown: ptr IUnknown): HRESULT {.stdcall.}
+                                    pUnknown: ptr Unknwn.IUnknown): HRESULT {.stdcall.}
     GetPrivateData*: proc (This: ptr IDXGISwapChain1; Name: ptr GUID; 
                            pDataSize: ptr UINT; pData: pointer): HRESULT {.
         stdcall.}
@@ -338,7 +336,7 @@ type
     SetPrivateData*: proc (This: ptr IDXGIFactory2; Name: ptr GUID; 
                            DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr IDXGIFactory2; Name: ptr GUID; 
-                                    pUnknown: ptr IUnknown): HRESULT {.stdcall.}
+                                    pUnknown: ptr Unknwn.IUnknown): HRESULT {.stdcall.}
     GetPrivateData*: proc (This: ptr IDXGIFactory2; Name: ptr GUID; 
                            pDataSize: ptr UINT; pData: pointer): HRESULT {.
         stdcall.}
@@ -350,7 +348,7 @@ type
                                   Flags: UINT): HRESULT {.stdcall.}
     GetWindowAssociation*: proc (This: ptr IDXGIFactory2; 
                                  pWindowHandle: ptr HWND): HRESULT {.stdcall.}
-    CreateSwapChain*: proc (This: ptr IDXGIFactory2; pDevice: ptr IUnknown; 
+    CreateSwapChain*: proc (This: ptr IDXGIFactory2; pDevice: ptr Unknwn.IUnknown; 
                             pDesc: ptr DXGI_SWAP_CHAIN_DESC; 
                             ppSwapChain: ptr ptr IDXGISwapChain): HRESULT {.
         stdcall.}
@@ -362,14 +360,14 @@ type
     IsCurrent*: proc (This: ptr IDXGIFactory2): BOOL {.stdcall.}
     IsWindowedStereoEnabled*: proc (This: ptr IDXGIFactory2): BOOL {.stdcall.}
     CreateSwapChainForHwnd*: proc (This: ptr IDXGIFactory2; 
-                                   pDevice: ptr IUnknown; hWnd: HWND; 
+                                   pDevice: ptr Unknwn.IUnknown; hWnd: HWND; 
                                    pDesc: ptr DXGI_SWAP_CHAIN_DESC1; 
         pFullscreenDesc: ptr DXGI_SWAP_CHAIN_FULLSCREEN_DESC; 
                                    pRestrictToOutput: ptr IDXGIOutput; 
                                    ppSwapChain: ptr ptr IDXGISwapChain1): HRESULT {.
         stdcall.}
     CreateSwapChainForCoreWindow*: proc (This: ptr IDXGIFactory2; 
-        pDevice: ptr IUnknown; pWindow: ptr IUnknown; 
+        pDevice: ptr Unknwn.IUnknown; pWindow: ptr Unknwn.IUnknown; 
         pDesc: ptr DXGI_SWAP_CHAIN_DESC1; pRestrictToOutput: ptr IDXGIOutput; 
         ppSwapChain: ptr ptr IDXGISwapChain1): HRESULT {.stdcall.}
     GetSharedResourceAdapterLuid*: proc (This: ptr IDXGIFactory2; 
@@ -388,7 +386,7 @@ type
     UnregisterOcclusionStatus*: proc (This: ptr IDXGIFactory2; dwCookie: DWORD) {.
         stdcall.}
     CreateSwapChainForComposition*: proc (This: ptr IDXGIFactory2; 
-        pDevice: ptr IUnknown; pDesc: ptr DXGI_SWAP_CHAIN_DESC1; 
+        pDevice: ptr Unknwn.IUnknown; pDesc: ptr DXGI_SWAP_CHAIN_DESC1; 
         pRestrictToOutput: ptr IDXGIOutput; ppSwapChain: ptr ptr IDXGISwapChain1): HRESULT {.
         stdcall.}
 
@@ -429,7 +427,7 @@ type
     SetPrivateData*: proc (This: ptr IDXGIAdapter2; Name: ptr GUID; 
                            DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr IDXGIAdapter2; Name: ptr GUID; 
-                                    pUnknown: ptr IUnknown): HRESULT {.stdcall.}
+                                    pUnknown: ptr Unknwn.IUnknown): HRESULT {.stdcall.}
     GetPrivateData*: proc (This: ptr IDXGIAdapter2; Name: ptr GUID; 
                            pDataSize: ptr UINT; pData: pointer): HRESULT {.
         stdcall.}
@@ -459,7 +457,7 @@ type
     SetPrivateData*: proc (This: ptr IDXGIOutput1; Name: ptr GUID; 
                            DataSize: UINT; pData: pointer): HRESULT {.stdcall.}
     SetPrivateDataInterface*: proc (This: ptr IDXGIOutput1; Name: ptr GUID; 
-                                    pUnknown: ptr IUnknown): HRESULT {.stdcall.}
+                                    pUnknown: ptr Unknwn.IUnknown): HRESULT {.stdcall.}
     GetPrivateData*: proc (This: ptr IDXGIOutput1; Name: ptr GUID; 
                            pDataSize: ptr UINT; pData: pointer): HRESULT {.
         stdcall.}
@@ -473,10 +471,10 @@ type
     FindClosestMatchingMode*: proc (This: ptr IDXGIOutput1; 
                                     pModeToMatch: ptr DXGI_MODE_DESC; 
                                     pClosestMatch: ptr DXGI_MODE_DESC; 
-                                    pConcernedDevice: ptr IUnknown): HRESULT {.
+                                    pConcernedDevice: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}
     WaitForVBlank*: proc (This: ptr IDXGIOutput1): HRESULT {.stdcall.}
-    TakeOwnership*: proc (This: ptr IDXGIOutput1; pDevice: ptr IUnknown; 
+    TakeOwnership*: proc (This: ptr IDXGIOutput1; pDevice: ptr Unknwn.IUnknown; 
                           Exclusive: BOOL): HRESULT {.stdcall.}
     ReleaseOwnership*: proc (This: ptr IDXGIOutput1) {.stdcall.}
     GetGammaControlCapabilities*: proc (This: ptr IDXGIOutput1; pGammaCaps: ptr DXGI_GAMMA_CONTROL_CAPABILITIES): HRESULT {.
@@ -500,12 +498,12 @@ type
     FindClosestMatchingMode1*: proc (This: ptr IDXGIOutput1; 
                                      pModeToMatch: ptr DXGI_MODE_DESC1; 
                                      pClosestMatch: ptr DXGI_MODE_DESC1; 
-                                     pConcernedDevice: ptr IUnknown): HRESULT {.
+                                     pConcernedDevice: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}
     GetDisplaySurfaceData1*: proc (This: ptr IDXGIOutput1; 
                                    pDestination: ptr IDXGIResource): HRESULT {.
         stdcall.}
-    DuplicateOutput*: proc (This: ptr IDXGIOutput1; pDevice: ptr IUnknown; 
+    DuplicateOutput*: proc (This: ptr IDXGIOutput1; pDevice: ptr Unknwn.IUnknown; 
                             ppOutputDuplication: ptr ptr IDXGIOutputDuplication): HRESULT {.
         stdcall.}
 

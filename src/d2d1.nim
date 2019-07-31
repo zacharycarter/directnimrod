@@ -1,7 +1,7 @@
 ## DirectX bindings by Charlie Barto
 {.link: "dxguid.lib".}
 {.link: "d2d1.lib".}
-import windows
+import winim
 import d2dbasetypes
 import d3dcommon
 import dcommon

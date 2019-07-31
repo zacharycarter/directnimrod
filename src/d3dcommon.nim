@@ -3,9 +3,7 @@
 ## in the windows 10 SDK
 # interface __MIDL_itf_d3dcommon_0000_0000 
 # [local] 
-import windows
-type GUID = TGUID
-type IID = TIID
+import winim
 type UINT = uint32
 type BYTE = TBYTE
 type 

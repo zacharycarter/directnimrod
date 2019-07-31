@@ -1,6 +1,6 @@
 import d3d11
 import dxgi
-import windows
+import winim
 proc main() =
   var device: ptr ID3D11Device
   var ctx: ptr ID3D11DeviceContext

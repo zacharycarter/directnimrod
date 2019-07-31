@@ -1,9 +1,7 @@
 {.link: "d3dCompiler.lib".}
 # this file is generated from the version of d3dcompiler.h shipped with windows 10
 import d3dcommon
-import windows
-type IID = TIID
-type GUID = TGUID
+import winim
 type UINT = uint32
 type INT = int32
 type FLOAT = float32

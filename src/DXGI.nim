@@ -7,11 +7,9 @@
 
 # interface __MIDL_itf_dxgi_0000_0000 
 # [local] 
-import windows, dxgitype, dxgiformat
+import winim, dxgitype, dxgiformat
 export dxgitype
 export dxgiformat
-type IID = TIID
-type GUID = TGUID
 type IUnknown = object
 type UINT = int32
 type INT = int32

@@ -9,10 +9,10 @@ type BYTE = cuchar
 const 
   FACDXGI = 0x0000087A
 
-template MAKE_DXGI_HRESULT*(code: expr): expr = 
+template MAKE_DXGI_HRESULT*(code: untyped): untyped = 
   MAKE_HRESULT(1, FACDXGI, code)
 
-template MAKE_DXGI_STATUS*(code: expr): expr = 
+template MAKE_DXGI_STATUS*(code: untyped): untyped = 
   MAKE_HRESULT(0, FACDXGI, code)
 
 # DXGI error messages have moved to winerror.h
