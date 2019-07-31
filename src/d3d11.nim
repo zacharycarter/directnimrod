@@ -894,7 +894,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11DeviceChild; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pData: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                               # [annotation] 
                                                                               # 
                                                                               # [annotation] 
@@ -944,7 +944,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11DepthStencilState; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetDesc*: proc (This: ptr ID3D11DepthStencilState; 
@@ -995,7 +995,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11BlendState; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pData: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                               # [annotation] 
                                                                               # 
                                                                               # [annotation] 
@@ -1043,7 +1043,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11RasterizerState; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetDesc*: proc (This: ptr ID3D11RasterizerState; 
@@ -1088,7 +1088,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11Resource; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pData: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                               # [annotation] 
                                                                               # 
                                                                               # [annotation] 
@@ -1136,7 +1136,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11Buffer; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pData: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                               # [annotation] 
                                                                               # 
                                                                               # [annotation] 
@@ -1188,7 +1188,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11Texture1D; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pData: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                               # [annotation] 
                                                                               # 
                                                                               # [annotation] 
@@ -1242,7 +1242,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11Texture2D; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pData: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                               # [annotation] 
                                                                               # 
                                                                               # [annotation] 
@@ -1295,7 +1295,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11Texture3D; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pData: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                               # [annotation] 
                                                                               # 
                                                                               # [annotation] 
@@ -1334,7 +1334,7 @@ type
                                                                 # [annotation] 
                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11View; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pData: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                               # [annotation] 
                                                                               # 
                                                                               # [annotation] 
@@ -1442,7 +1442,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11ShaderResourceView; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetResource*: proc (This: ptr ID3D11ShaderResourceView; 
@@ -1533,7 +1533,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11RenderTargetView; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetResource*: proc (This: ptr ID3D11RenderTargetView; 
@@ -1610,7 +1610,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11DepthStencilView; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetResource*: proc (This: ptr ID3D11DepthStencilView; 
@@ -1692,7 +1692,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11UnorderedAccessView; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetResource*: proc (This: ptr ID3D11UnorderedAccessView; 
@@ -1729,7 +1729,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11VertexShader; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
   
@@ -1760,7 +1760,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11HullShader; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pData: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                               # [annotation] 
                                                                               # 
                                                                               # [annotation] 
@@ -1792,7 +1792,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11DomainShader; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
   
@@ -1823,7 +1823,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11GeometryShader; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
   
@@ -1854,7 +1854,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11PixelShader; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pData: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                               # [annotation] 
                                                                               # 
                                                                               # [annotation] 
@@ -1886,7 +1886,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11ComputeShader; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
   
@@ -1917,7 +1917,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11InputLayout; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pData: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                               # [annotation] 
                                                                               # 
                                                                               # [annotation] 
@@ -1964,7 +1964,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11SamplerState; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetDesc*: proc (This: ptr ID3D11SamplerState; pDesc: ptr D3D11_SAMPLER_DESC) {.
@@ -1999,7 +1999,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11Asynchronous; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetDataSize*: proc (This: ptr ID3D11Asynchronous): UINT {.stdcall.}
@@ -2037,7 +2037,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11Query; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pData: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                               # [annotation] 
                                                                               # 
                                                                               # [annotation] 
@@ -2072,7 +2072,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11Predicate; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pData: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                               # [annotation] 
                                                                               # 
                                                                               # [annotation] 
@@ -2139,7 +2139,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11Counter; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pData: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                               # [annotation] 
                                                                               # 
                                                                               # [annotation] 
@@ -2186,7 +2186,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11ClassInstance; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetClassLinkage*: proc (This: ptr ID3D11ClassInstance; 
@@ -2229,7 +2229,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11ClassLinkage; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetClassInstance*: proc (This: ptr ID3D11ClassLinkage; 
@@ -2278,7 +2278,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11CommandList; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pData: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                               # [annotation] 
                                                                               # 
                                                                               # [annotation] 
@@ -2400,7 +2400,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11DeviceContext; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     VSSetConstantBuffers*: proc (This: ptr ID3D11DeviceContext; StartSlot: UINT; 
@@ -3133,7 +3133,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11VideoDecoder; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetCreationParameters*: proc (This: ptr ID3D11VideoDecoder; 
@@ -3220,7 +3220,7 @@ type
                               # [annotation] 
                               # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11VideoProcessorEnumerator; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetVideoProcessorContentDesc*: proc (
@@ -3315,7 +3315,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11VideoProcessor; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetContentDesc*: proc (This: ptr ID3D11VideoProcessor; 
@@ -3356,7 +3356,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11AuthenticatedChannel; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetCertificateSize*: proc (This: ptr ID3D11AuthenticatedChannel; 
@@ -3543,7 +3543,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11CryptoSession; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetCryptoType*: proc (This: ptr ID3D11CryptoSession; pCryptoType: ptr GUID) {.
@@ -3601,7 +3601,7 @@ type
                               # [annotation] 
                               # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11VideoDecoderOutputView; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetResource*: proc (This: ptr ID3D11VideoDecoderOutputView; 
@@ -3649,7 +3649,7 @@ type
                               # [annotation] 
                               # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11VideoProcessorInputView; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetResource*: proc (This: ptr ID3D11VideoProcessorInputView; 
@@ -3702,7 +3702,7 @@ type
                               # [annotation] 
                               # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11VideoProcessorOutputView; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetResource*: proc (This: ptr ID3D11VideoProcessorOutputView; 
@@ -3739,7 +3739,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11VideoContext; 
-                                    guid: ptr GUID; pData: ptr IUnknown): HRESULT {.
+                                    guid: ptr GUID; pData: ptr Unknwn.IUnknown): HRESULT {.
         stdcall.}             # [annotation] 
                               # [annotation] 
     GetDecoderBuffer*: proc (This: ptr ID3D11VideoContext; 
@@ -4279,7 +4279,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11VideoDevice; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pData: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                               # [annotation] 
                                                                               # 
                                                                               # [annotation] 
@@ -4544,7 +4544,7 @@ type
                                                                                 # 
                                                                                 # [annotation] 
     SetPrivateDataInterface*: proc (This: ptr ID3D11Device; guid: ptr GUID; 
-                                    pData: ptr IUnknown): HRESULT {.stdcall.} # 
+                                    pData: ptr Unknwn.IUnknown): HRESULT {.stdcall.} # 
                                                                               # [annotation] 
                                                                               # 
                                                                               # [annotation] 
