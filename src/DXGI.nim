@@ -11,7 +11,7 @@ import winim, dxgitype, dxgiformat
 export dxgitype
 export dxgiformat
 type IUnknown = object
-type UINT = int32
+type UINT = uint32
 type INT = int32
 type BYTE = TBYTE
 type BOOL = WINBOOL
